@@ -4,6 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "BeliWood — Masívne drevo a nábytok",
   description: "Predaj masívneho dreva — dosky, hranoly, živá hrana. Dub, orech, buk. Nábytok na mieru.",
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
