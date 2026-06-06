@@ -1,0 +1,80 @@
+{
+  "nav": { "home": "Strona główna", "wood": "Lite drewno", "kolekcia": "Portfolio", "furniture": "Meble", "about": "O nas", "cartLabel": "Otwórz koszyk", "menuLabel": "Menu" },
+  "hero": { "tagline": "Prosto z tartaku · Suszone komorowo", "line1": "Masywne", "line2": "deski", "sub": "Sprzedajemy naturalne drewno — deski, kantówki, żywa krawędź. Dąb, orzech, buk, klon i inne gatunki bezpośrednio od nas.", "ctaWood": "Zobacz drewno", "ctaFurniture": "Meble na wymiar", "scroll": "Przewiń" },
+  "statsLabels": ["Gatunków drewna", "Lat na rynku", "Naturalne materiały", "Zadowolonych klientów"],
+  "marquee": ["Masywne deski", "Żywa krawędź", "Suszone komorowo", "Dąb · Orzech · Buk", "Prosto z tartaku", "Drewno stolarskie", "Czereśnia · Suar · Oliwa", "Suszone powietrzem", "Dąb szypułkowy", "Stoły jadalniowe", "Monolity XXL", "Przekroje", "Kantówki", "Tarcica", "Zegary", "Orzech amerykański", "Korzenie", "Atypowe"],
+  "home": {
+    "woodBadge": "Drewno",
+    "woodTitle": "Masywne deski i kantówki",
+    "woodSub": "Suszone komorowo, certyfikowane drewno bezpośrednio od nas. Dąb, orzech, buk i inne gatunki.",
+    "naturalEdge": "Żywa krawędź",
+    "woodCtaTitle": "Znajdź odpowiednie drewno",
+    "woodCtaSub": "Filtruj według gatunku, grubości i powierzchni. Wszystko w magazynie, dostępne od razu.",
+    "woodCtaBtn": "Przejdź do drewna →",
+    "furnitureTitle": "Meble na wymiar",
+    "furnitureSub": "Oprócz drewna wykonujemy również meble. Każdy element ręcznie, z materiału, który wybierasz.",
+    "hsBadge": "Kolekcja",
+    "hsTitle1": "Ręcznie",
+    "hsTitle2": "wykonane",
+    "hsScroll": "Przewiń →",
+    "aboutBadge": "O nas",
+    "aboutTitle": "Rzemiosło przekazywane\nz pokolenia na pokolenie",
+    "aboutP1": "BeliWood powstał z miłości do drewna i tradycyjnego rzemiosła. Każdy nasz produkt przechodzi przez ręce doświadczonych stolarzy, którzy szanują naturalność materiału.",
+    "aboutP2": "Nie używamy tanich zamienników — tylko lite drewno, naturalne oleje i wosk. Efektem są meble, które pięknie się starzeją i wytrzymują całe pokolenia.",
+    "aboutLink": "Nasza kolekcja →"
+  },
+  "products": {
+    "badge": "Kolekcja", "title": "Nasze produkty", "sub": "Każdy element wykonany ręcznie z miłością do drewna i rzemiosła.",
+    "all": "Wszystko", "catFurniture": "Meble", "catAccessories": "Akcesoria", "catKitchen": "Kuchnia",
+    "count1": "produkt", "count2": "produkty", "count5": "produktów", "addToCart": "Do koszyka"
+  },
+  "wood": {
+    "badge": "Lite drewno", "title": "Sprzedaż drewna",
+    "sub": "Masywne deski i kantówki bezpośrednio z magazynu. Dębowe, orzechowe, bukowe i inne gatunki — suszone i świeże, w różnych wymiarach.",
+    "filters": "Filtry", "clearAll": "Usuń wszystkie filtry", "clearCount": "Usuń filtry",
+    "noResults": "Brak wyników", "noResultsSub": "Spróbuj zmienić kombinację filtrów.", "resetFilters": "Usuń wszystkie filtry",
+    "inStockOnly": "Tylko w magazynie", "filterState": "Stan drewna", "filterSpecies": "Gatunek",
+    "filterThickness": "Grubość (mm)", "filterSurface": "Wykończenie", "filterAvailability": "Dostępność",
+    "stateAll": "Wszystko", "stateFresh": "Świeże", "stateAirDry": "Suszone powietrzem", "stateKiln": "Suszone komorowo",
+    "naturalEdge": "Żywa krawędź", "inStock": "W magazynie", "onOrder": "Na zamówienie",
+    "filterCategory": "Typ produktu", "filterPrice": "Cena (€)", "priceFrom": "Od", "priceTo": "Do",
+    "availAll": "Wszystko", "availInStock": "W magazynie", "availOnOrder": "Na zamówienie",
+    "specThickness": "Grubość", "specWidth": "Szerokość", "specLength": "Długość", "specMoisture": "Wilgotność", "specSurface": "Powierzchnia",
+    "perPiece": "/ szt", "addToCart": "Do koszyka", "inquire": "Zapytaj",
+    "catHodiny": "Zegary", "catStoly": "Stoły jadalniowe", "catKonferencny": "Stół kawowy",
+    "catPostele": "Łóżka", "catKniznice": "Regały", "catDoskaUmyvadlo": "Blat pod umywalkę",
+    "catForsty": "Deski / tarcica", "catMonolity": "Monolity XXL", "catHranoly": "Kantówki",
+    "catPriecneRezy": "Przekroje / plastry", "catKorene": "Korzenie", "catAtyp": "Atypowe"
+  },
+  "detail": {
+    "home": "Strona główna", "products": "Produkty", "material": "Materiał", "dimensions": "Wymiary",
+    "production": "Produkcja", "productionValue": "Ręczna, Słowacja",
+    "addToCart": "Do koszyka", "orderNow": "Zamów teraz",
+    "delivery": "Dostawa na terenie Słowacji · Wymiary niestandardowe na życzenie",
+    "related": "Może Cię zainteresować"
+  },
+  "cart": {
+    "title": "Koszyk", "close": "Zamknij koszyk", "empty": "Koszyk jest pusty",
+    "browse": "Przeglądaj produkty →", "perPiece": "/ szt", "remove": "Usuń",
+    "total": "Łączna kwota", "toCheckout": "Przejdź do zamówienia"
+  },
+  "kolekcia": {
+    "badge": "Portfolio",
+    "title": "Ręcznie wykonane\nz naszego drewna",
+    "sub": "Każdy element powstał w naszym warsztacie — z drewna, które sami suszymy i sprzedajemy. Rzemiosło widoczne w każdym szczególe.",
+    "madeFrom": "Wykonane z"
+  },
+  "checkout": { "badge": "Wiążące zamówienie", "title": "Zamówienie" },
+  "success": {
+    "badge": "Zamówienie przyjęte", "title": "Dziękujemy!",
+    "sub": "Twoje zamówienie zostało pomyślnie wysłane. Wkrótce skontaktujemy się z Tobą w celu ustalenia szczegółów dostawy.",
+    "email": "Sprawdź swoją skrzynkę e-mail — potwierdzenie zamówienia otrzymasz w ciągu kilku minut.",
+    "continue": "Kontynuuj zakupy", "home": "Strona główna"
+  },
+  "footer": {
+    "tagline": "Ręcznie wytwarzane drewniane meble i akcesoria z naciskiem na jakość materiałów i doskonałość rzemieślniczą.",
+    "navTitle": "Nawigacja", "home": "Strona główna", "products": "Produkty", "about": "O nas", "order": "Zamówienie",
+    "contactTitle": "Kontakt", "rights": "Wszystkie prawa zastrzeżone.",
+    "bottomTag": "Ręczna produkcja · Naturalne materiały · Słowacka jakość"
+  }
+}

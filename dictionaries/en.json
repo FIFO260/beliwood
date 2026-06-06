@@ -1,0 +1,80 @@
+{
+  "nav": { "home": "Home", "wood": "Solid Wood", "kolekcia": "Portfolio", "furniture": "Furniture", "about": "About", "cartLabel": "Open cart", "menuLabel": "Menu" },
+  "hero": { "tagline": "Direct from sawmill · Kiln dried", "line1": "Solid", "line2": "wood", "sub": "We sell natural wood — boards, beams, live edge. Oak, walnut, beech, maple and more, directly from us.", "ctaWood": "Browse wood", "ctaFurniture": "Custom furniture", "scroll": "Scroll" },
+  "statsLabels": ["Wood species", "Years in business", "Natural materials", "Happy customers"],
+  "marquee": ["Solid boards", "Live edge", "Kiln dried", "Oak · Walnut · Beech", "Direct from sawmill", "Joinery wood", "Cherry · Suar · Olive", "Air dried", "Bog oak", "Dining tables", "Monoliths XXL", "Cross cuts", "Beams", "Planks", "Clocks", "American walnut", "Roots", "Atypical"],
+  "home": {
+    "woodBadge": "Wood",
+    "woodTitle": "Solid boards and beams",
+    "woodSub": "Kiln dried, certified wood directly from us. Oak, walnut, beech and other species.",
+    "naturalEdge": "Live edge",
+    "woodCtaTitle": "Find the right wood",
+    "woodCtaSub": "Filter by species, thickness and finish. All in stock, available immediately.",
+    "woodCtaBtn": "Go to wood →",
+    "furnitureTitle": "Custom furniture",
+    "furnitureSub": "Besides wood, we also make furniture. Every piece by hand, from material you choose.",
+    "hsBadge": "Collection",
+    "hsTitle1": "Hand-",
+    "hsTitle2": "crafted",
+    "hsScroll": "Scroll →",
+    "aboutBadge": "About us",
+    "aboutTitle": "A craft passed down\nthrough generations",
+    "aboutP1": "BeliWood was born from a love of wood and traditional craftsmanship. Every product passes through the hands of skilled carpenters who respect the natural quality of the material.",
+    "aboutP2": "We use no cheap substitutes — only solid wood, natural oils and waxes. The result is furniture that ages beautifully and lasts for generations.",
+    "aboutLink": "Our collection →"
+  },
+  "products": {
+    "badge": "Collection", "title": "Our products", "sub": "Every piece handcrafted with love for wood and craftsmanship.",
+    "all": "All", "catFurniture": "Furniture", "catAccessories": "Accessories", "catKitchen": "Kitchen",
+    "count1": "product", "count2": "products", "count5": "products", "addToCart": "Add to cart"
+  },
+  "wood": {
+    "badge": "Solid wood", "title": "Wood for sale",
+    "sub": "Solid boards and beams from stock. Oak, walnut, beech and other species — dried and fresh, in various dimensions.",
+    "filters": "Filters", "clearAll": "Clear all filters", "clearCount": "Clear filters",
+    "noResults": "No results", "noResultsSub": "Try changing the filter combination.", "resetFilters": "Clear all filters",
+    "inStockOnly": "In stock only", "filterState": "Wood state", "filterSpecies": "Species",
+    "filterThickness": "Thickness (mm)", "filterSurface": "Surface finish", "filterAvailability": "Availability",
+    "stateAll": "All", "stateFresh": "Fresh", "stateAirDry": "Air dried", "stateKiln": "Kiln dried",
+    "naturalEdge": "Live edge", "inStock": "In stock", "onOrder": "On order",
+    "filterCategory": "Product type", "filterPrice": "Price (€)", "priceFrom": "From", "priceTo": "To",
+    "availAll": "All", "availInStock": "In stock", "availOnOrder": "On order",
+    "specThickness": "Thickness", "specWidth": "Width", "specLength": "Length", "specMoisture": "Moisture", "specSurface": "Surface",
+    "perPiece": "/ pc", "addToCart": "Add to cart", "inquire": "Inquire",
+    "catHodiny": "Clocks", "catStoly": "Dining tables", "catKonferencny": "Coffee table",
+    "catPostele": "Beds", "catKniznice": "Bookcases", "catDoskaUmyvadlo": "Vanity top",
+    "catForsty": "Planks / boards", "catMonolity": "Monoliths XXL", "catHranoly": "Beams",
+    "catPriecneRezy": "Cross cuts / slices", "catKorene": "Roots", "catAtyp": "Atypical"
+  },
+  "detail": {
+    "home": "Home", "products": "Products", "material": "Material", "dimensions": "Dimensions",
+    "production": "Production", "productionValue": "Handmade, Slovakia",
+    "addToCart": "Add to cart", "orderNow": "Order now",
+    "delivery": "Delivery across Slovakia · Custom dimensions on request",
+    "related": "You might also like"
+  },
+  "cart": {
+    "title": "Cart", "close": "Close cart", "empty": "Your cart is empty",
+    "browse": "Browse products →", "perPiece": "/ pc", "remove": "Remove",
+    "total": "Total", "toCheckout": "Go to checkout"
+  },
+  "kolekcia": {
+    "badge": "Portfolio",
+    "title": "Handcrafted\nfrom our wood",
+    "sub": "Every piece was made right in our workshop — from the wood we dry and sell ourselves. Craftsmanship visible in every detail.",
+    "madeFrom": "Made from"
+  },
+  "checkout": { "badge": "Binding order", "title": "Order" },
+  "success": {
+    "badge": "Order received", "title": "Thank you!",
+    "sub": "Your order has been successfully sent. We will contact you soon to arrange delivery details.",
+    "email": "Check your email inbox — you will receive an order confirmation within a few minutes.",
+    "continue": "Continue shopping", "home": "Home page"
+  },
+  "footer": {
+    "tagline": "Handcrafted wooden furniture and accessories with emphasis on material quality and craftsmanship.",
+    "navTitle": "Navigation", "home": "Home", "products": "Products", "about": "About", "order": "Order",
+    "contactTitle": "Contact", "rights": "All rights reserved.",
+    "bottomTag": "Handcrafted · Natural materials · Slovak quality"
+  }
+}

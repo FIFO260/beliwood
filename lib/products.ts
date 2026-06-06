@@ -1,0 +1,79 @@
+export type Category = "nábytok" | "doplnky" | "kuchyňa";
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: Category;
+  img: string;
+  description: string;
+  material: string;
+  dimensions: string;
+}
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: "Dubový jedálenský stôl",
+    price: 890,
+    category: "nábytok",
+    img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
+    description: "Masívny jedálenský stôl z dubového dreva s prírodným olejovým náterom. Každý kus je ručne spracovaný a nesie charakter prírodného dreva. Ideálny pre 6–8 osôb.",
+    material: "Masívny dub, prírodný olej",
+    dimensions: "200 × 90 × 75 cm",
+  },
+  {
+    id: 2,
+    name: "Bukové stoličky (2 ks)",
+    price: 340,
+    category: "nábytok",
+    img: "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=800&q=80",
+    description: "Elegantné jedálenské stoličky z bukového dreva s čalúneným sedákom. Trvácna konštrukcia, príjemné sedenie. Predávané v páre.",
+    material: "Masívny buk, tkanina",
+    dimensions: "45 × 50 × 90 cm (1 ks)",
+  },
+  {
+    id: 3,
+    name: "Nástenná polica",
+    price: 185,
+    category: "doplnky",
+    img: "https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=800&q=80",
+    description: "Plávajúca nástenná polica z masívneho dreva. Minimalistický dizajn vhodný do každého interiéru. Montáž na skrytých konzolách.",
+    material: "Masívna borovica, biely vosk",
+    dimensions: "80 × 20 × 4 cm",
+  },
+  {
+    id: 4,
+    name: "Orechová miska",
+    price: 65,
+    category: "doplnky",
+    img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80",
+    description: "Ručne sústružená miska z orechového dreva. Jemná textúra a teplé odtiene orechového dreva robia z každého kusu unikátnu dekoráciu.",
+    material: "Masívny orech, potravinárský olej",
+    dimensions: "⌀ 25 × 8 cm",
+  },
+  {
+    id: 5,
+    name: "Nočný stolík",
+    price: 210,
+    category: "nábytok",
+    img: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=800&q=80",
+    description: "Kompaktný nočný stolík s jednou zásuvkou. Tichý sklz, dovetail spoje. Vyrobený z masívneho dreva s matným lakom.",
+    material: "Masívna bučina, matný lak",
+    dimensions: "45 × 40 × 55 cm",
+  },
+  {
+    id: 6,
+    name: "Javorový lopár",
+    price: 48,
+    category: "kuchyňa",
+    img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
+    description: "Ručne vyrobený kuchynský lopár z javorového dreva. Odolný voči vlhkosti, bezpečný pre potraviny. Prirodzená antibakteriálna povrchová úprava.",
+    material: "Masívny javor, minerálny olej",
+    dimensions: "38 × 28 × 2 cm",
+  },
+];
+
+export function getProduct(id: number): Product | undefined {
+  return products.find((p) => p.id === id);
+}

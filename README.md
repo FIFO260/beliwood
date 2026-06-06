@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BeliWood — E-shop s ručne vyrábaným dreveným nábytkom
 
-## Getting Started
+Moderný e-shop postavený na Next.js 14 (App Router), Tailwind CSS, GSAP animáciách a Zustand košíku.
 
-First, run the development server:
+## Spustenie
+
+### 1. Inštalácia závislostí
+
+```bash
+npm install
+```
+
+### 2. Nastavenie premenných prostredia
+
+Skopírujte `.env.local` a vyplňte hodnoty:
+
+```bash
+RESEND_API_KEY=re_your_key_here   # z resend.com
+ORDER_EMAIL=info@beliwood.sk       # kam chodia objednávky
+```
+
+> Ak Resend nemáte, zaregistrujte sa na [resend.com](https://resend.com) — free tier stačí na 3 000 emailov/mesiac.
+
+### 3. Spustenie vývojového servera
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Otvorte [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Štruktúra projektu
 
-## Learn More
+```
+/app
+  /page.tsx               — homepage (hero, produkty, o nás, štatistiky)
+  /products/page.tsx      — zoznam produktov s filtrom
+  /products/[id]/page.tsx — detail produktu
+  /checkout/page.tsx      — objednávkový formulár
+  /success/page.tsx       — poďakovanie
+  /api/order/route.ts     — API endpoint, odosiela email cez Resend
+/components
+  Navbar.tsx              — fixná navbar, hide/show pri scrolle (GSAP)
+  Hero.tsx                — hero sekcia s animovaným textom
+  ProductCard.tsx         — karta produktu
+  ProductGrid.tsx         — mriežka produktov so stagger animáciou
+  Cart.tsx                — slide-in košík panel (GSAP)
+  OrderForm.tsx           — objednávkový formulár
+  Footer.tsx
+/lib
+  products.ts             — mock dáta produktov (6 kusov)
+/store
+  cartStore.ts            — Zustand store, persisted v localStorage
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Pridanie Stripe platieb (neskôr)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Nainštalujte `@stripe/stripe-js` a `stripe`
+2. Pridajte do `.env.local`:
+   ```
+   STRIPE_SECRET_KEY=sk_...
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_...
+   ```
+3. Vytvorte `/app/api/checkout/route.ts` — vytvorí Stripe Checkout Session
+4. V `OrderForm.tsx` nahraďte `fetch('/api/order')` za `fetch('/api/checkout')` a presmerujte na Stripe URL
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Technológia | Verzia |
+|---|---|
+| Next.js | 16.x (App Router) |
+| TypeScript | 5.x |
+| Tailwind CSS | 4.x |
+| GSAP | 3.x |
+| Zustand | 5.x |
+| Resend | 4.x |

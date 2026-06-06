@@ -1,0 +1,80 @@
+{
+  "nav": { "home": "Startseite", "wood": "Massivholz", "kolekcia": "Portfolio", "furniture": "Möbel", "about": "Über uns", "cartLabel": "Warenkorb öffnen", "menuLabel": "Menü" },
+  "hero": { "tagline": "Direkt aus der Säge · Kammergetrocknet", "line1": "Massiv-", "line2": "holz", "sub": "Wir verkaufen Naturholz — Bretter, Balken, Baumkante. Eiche, Nuss, Buche, Ahorn und weitere Arten direkt von uns.", "ctaWood": "Holz ansehen", "ctaFurniture": "Maßmöbel", "scroll": "Scrollen" },
+  "statsLabels": ["Holzarten", "Jahre am Markt", "Natürliche Materialien", "Zufriedene Kunden"],
+  "marquee": ["Massivbretter", "Baumkante", "Kammergetrocknet", "Eiche · Nuss · Buche", "Direkt aus der Säge", "Tischlerholz", "Kirsche · Suar · Olive", "Luftgetrocknet", "Mooreiche", "Esstische", "Monolithen XXL", "Querschnitte", "Balken", "Bretter", "Uhren", "Amerikanische Nuss", "Wurzeln", "Atypisch"],
+  "home": {
+    "woodBadge": "Holz",
+    "woodTitle": "Massivbretter und Balken",
+    "woodSub": "Kammergetrocknetes, zertifiziertes Holz direkt von uns. Eiche, Nuss, Buche und andere Arten.",
+    "naturalEdge": "Baumkante",
+    "woodCtaTitle": "Das richtige Holz finden",
+    "woodCtaSub": "Nach Art, Stärke und Oberfläche filtern. Alles auf Lager, sofort verfügbar.",
+    "woodCtaBtn": "Zum Holz →",
+    "furnitureTitle": "Maßmöbel",
+    "furnitureSub": "Neben Holz fertigen wir auch Möbel. Jedes Stück von Hand, aus dem Material Ihrer Wahl.",
+    "hsBadge": "Kollektion",
+    "hsTitle1": "Hand-",
+    "hsTitle2": "gefertigt",
+    "hsScroll": "Scrollen →",
+    "aboutBadge": "Über uns",
+    "aboutTitle": "Ein Handwerk, das durch\nGenerationen weitergegeben wird",
+    "aboutP1": "BeliWood entstand aus der Liebe zum Holz und zum traditionellen Handwerk. Jedes unserer Produkte geht durch die Hände erfahrener Tischler, die die Natürlichkeit des Materials respektieren.",
+    "aboutP2": "Wir verwenden keine billigen Ersatzstoffe — nur Massivholz, natürliche Öle und Wachse. Das Ergebnis sind Möbel, die schön altern und Generationen überdauern.",
+    "aboutLink": "Unsere Kollektion →"
+  },
+  "products": {
+    "badge": "Kollektion", "title": "Unsere Produkte", "sub": "Jedes Stück handgefertigt mit Liebe zum Holz und Handwerkskunst.",
+    "all": "Alle", "catFurniture": "Möbel", "catAccessories": "Zubehör", "catKitchen": "Küche",
+    "count1": "Produkt", "count2": "Produkte", "count5": "Produkte", "addToCart": "In den Warenkorb"
+  },
+  "wood": {
+    "badge": "Massivholz", "title": "Holzverkauf",
+    "sub": "Massivbretter und Balken direkt aus dem Lager. Eiche, Nuss, Buche und andere Arten — getrocknet und frisch, in verschiedenen Maßen.",
+    "filters": "Filter", "clearAll": "Alle Filter löschen", "clearCount": "Filter löschen",
+    "noResults": "Keine Ergebnisse", "noResultsSub": "Versuchen Sie, die Filterkombination zu ändern.", "resetFilters": "Alle Filter löschen",
+    "inStockOnly": "Nur vorrätig", "filterState": "Holzzustand", "filterSpecies": "Holzart",
+    "filterThickness": "Stärke (mm)", "filterSurface": "Oberfläche", "filterAvailability": "Verfügbarkeit",
+    "stateAll": "Alle", "stateFresh": "Frisch", "stateAirDry": "Luftgetrocknet", "stateKiln": "Kammergetrocknet",
+    "naturalEdge": "Baumkante", "inStock": "Vorrätig", "onOrder": "Auf Bestellung",
+    "filterCategory": "Produkttyp", "filterPrice": "Preis (€)", "priceFrom": "Von", "priceTo": "Bis",
+    "availAll": "Alle", "availInStock": "Vorrätig", "availOnOrder": "Auf Bestellung",
+    "specThickness": "Stärke", "specWidth": "Breite", "specLength": "Länge", "specMoisture": "Feuchte", "specSurface": "Oberfläche",
+    "perPiece": "/ Stk", "addToCart": "In den Warenkorb", "inquire": "Anfragen",
+    "catHodiny": "Uhren", "catStoly": "Esstische", "catKonferencny": "Couchtisch",
+    "catPostele": "Betten", "catKniznice": "Regale", "catDoskaUmyvadlo": "Waschtischplatte",
+    "catForsty": "Bretter / Dielen", "catMonolity": "Monolithen XXL", "catHranoly": "Balken",
+    "catPriecneRezy": "Querschnitte / Scheiben", "catKorene": "Wurzeln", "catAtyp": "Atypisch"
+  },
+  "detail": {
+    "home": "Startseite", "products": "Produkte", "material": "Material", "dimensions": "Abmessungen",
+    "production": "Fertigung", "productionValue": "Handgefertigt, Slowakei",
+    "addToCart": "In den Warenkorb", "orderNow": "Jetzt bestellen",
+    "delivery": "Lieferung in die Slowakei · Individuelle Maße auf Anfrage",
+    "related": "Das könnte Ihnen gefallen"
+  },
+  "cart": {
+    "title": "Warenkorb", "close": "Warenkorb schließen", "empty": "Ihr Warenkorb ist leer",
+    "browse": "Produkte ansehen →", "perPiece": "/ Stk", "remove": "Entfernen",
+    "total": "Gesamtbetrag", "toCheckout": "Zur Bestellung"
+  },
+  "kolekcia": {
+    "badge": "Portfolio",
+    "title": "Handgefertigt\naus unserem Holz",
+    "sub": "Jedes Stück entstand direkt in unserer Werkstatt — aus Holz, das wir selbst trocknen und verkaufen. Handwerk, das in jedem Detail sichtbar ist.",
+    "madeFrom": "Hergestellt aus"
+  },
+  "checkout": { "badge": "Verbindliche Bestellung", "title": "Bestellung" },
+  "success": {
+    "badge": "Bestellung eingegangen", "title": "Danke!",
+    "sub": "Ihre Bestellung wurde erfolgreich gesendet. Wir werden Sie bald kontaktieren, um die Lieferdetails zu vereinbaren.",
+    "email": "Überprüfen Sie Ihren E-Mail-Posteingang — Sie erhalten die Bestellbestätigung innerhalb weniger Minuten.",
+    "continue": "Weiter einkaufen", "home": "Startseite"
+  },
+  "footer": {
+    "tagline": "Handgefertigte Holzmöbel und Zubehör mit Schwerpunkt auf Materialqualität und Handwerkskunst.",
+    "navTitle": "Navigation", "home": "Startseite", "products": "Produkte", "about": "Über uns", "order": "Bestellung",
+    "contactTitle": "Kontakt", "rights": "Alle Rechte vorbehalten.",
+    "bottomTag": "Handgefertigt · Natürliche Materialien · Slowakische Qualität"
+  }
+}

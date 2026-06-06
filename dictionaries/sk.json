@@ -1,0 +1,80 @@
+{
+  "nav": { "home": "Domov", "wood": "Masívne drevo", "kolekcia": "Portfolio", "furniture": "Nábytok", "about": "O nás", "cartLabel": "Otvoriť košík", "menuLabel": "Menu" },
+  "hero": { "tagline": "Priamo z pily · Komorovo sušené", "line1": "Masívne", "line2": "dosky", "sub": "Predávame prírodné drevo — dosky, hranoly, živá hrana. Dub, orech, buk, javor a ďalšie druhy priamo od nás.", "ctaWood": "Zobraziť drevo", "ctaFurniture": "Nábytok na mieru", "scroll": "Scroll" },
+  "statsLabels": ["Druhov dreva", "Na trhu", "Prírodné materiály", "Spokojných zákazníkov"],
+  "marquee": ["Masívne dosky", "Živá hrana", "Komorovo sušené", "Dub · Orech · Buk", "Priamo z pily", "Stolárske drevo", "Čerešňa · Suar · Oliva", "Vzduchosuché", "Dub bahenný", "Jedálenské stoly", "Monolity XXL", "Priečne rezy", "Hranoly", "Foršty", "Hodiny", "Orech americký", "Korene", "Atyp"],
+  "home": {
+    "woodBadge": "Drevo",
+    "woodTitle": "Masívne dosky a hranoly",
+    "woodSub": "Komorovo sušené, certifikované drevo priamo od nás. Dub, orech, buk a ďalšie druhy.",
+    "naturalEdge": "Živá hrana",
+    "woodCtaTitle": "Nájdite správne drevo",
+    "woodCtaSub": "Filtrujte podľa druhu, hrúbky a povrchu. Všetko skladom, dostupné ihneď.",
+    "woodCtaBtn": "Prejsť na drevo →",
+    "furnitureTitle": "Nábytok na mieru",
+    "furnitureSub": "Okrem dreva vyrábame aj nábytok. Každý kus ručne, z materiálu, ktorý si vyberiete.",
+    "hsBadge": "Kolekcia",
+    "hsTitle1": "Ručne",
+    "hsTitle2": "vyrobené",
+    "hsScroll": "Scrollujte →",
+    "aboutBadge": "O nás",
+    "aboutTitle": "Remeslo odovzdávané\nz generácie na generáciu",
+    "aboutP1": "BeliWood vznikol z lásky k drevu a tradičnému remeselníctvu. Každý náš výrobok prechádza rukami skúsených stolárov, ktorí rešpektujú prirodzenosť materiálu.",
+    "aboutP2": "Nepoužívame lacné náhradky — len masívne drevo, prírodné oleje a vosky. Výsledkom je nábytok, ktorý starne krásne a vydrží celé generácie.",
+    "aboutLink": "Naša kolekcia →"
+  },
+  "products": {
+    "badge": "Kolekcia", "title": "Naše produkty", "sub": "Každý kus ručne vyrobený s láskou k drevu a remeselnej dokonalosti.",
+    "all": "Všetko", "catFurniture": "Nábytok", "catAccessories": "Doplnky", "catKitchen": "Kuchyňa",
+    "count1": "produkt", "count2": "produkty", "count5": "produktov", "addToCart": "Do košíka"
+  },
+  "wood": {
+    "badge": "Masívne drevo", "title": "Predaj dreva",
+    "sub": "Masívne dosky a hranoly priamo zo zásoby. Dubové, orechové, bukové a ďalšie dreviny — sušené aj čerstvé, v rôznych rozmeroch.",
+    "filters": "Filtre", "clearAll": "Zrušiť všetky filtre", "clearCount": "Zrušiť filtre",
+    "noResults": "Žiadne výsledky", "noResultsSub": "Skúste zmeniť kombináciu filtrov.", "resetFilters": "Zrušiť všetky filtre",
+    "inStockOnly": "Len skladom", "filterState": "Stav dreva", "filterSpecies": "Drevina",
+    "filterThickness": "Hrúbka (mm)", "filterSurface": "Povrchová úprava", "filterAvailability": "Dostupnosť",
+    "stateAll": "Všetko", "stateFresh": "Čerstvé", "stateAirDry": "Vzduchosuché", "stateKiln": "Sušené v sušičke",
+    "naturalEdge": "Živá hrana", "inStock": "Skladom", "onOrder": "Na objednávku",
+    "filterCategory": "Typ produktu", "filterPrice": "Cena (€)", "priceFrom": "Od", "priceTo": "Do",
+    "availAll": "Všetko", "availInStock": "Skladom", "availOnOrder": "Na objednávku",
+    "specThickness": "Hrúbka", "specWidth": "Šírka", "specLength": "Dĺžka", "specMoisture": "Vlhkosť", "specSurface": "Povrch",
+    "perPiece": "/ ks", "addToCart": "Do košíka", "inquire": "Dopytovať",
+    "catHodiny": "Hodiny", "catStoly": "Jedálenské stoly", "catKonferencny": "Konferenčný stôl",
+    "catPostele": "Postele", "catKniznice": "Knižnice", "catDoskaUmyvadlo": "Doska pod umývadlo",
+    "catForsty": "Foršty / dosky", "catMonolity": "Monolity XXL", "catHranoly": "Hranoly",
+    "catPriecneRezy": "Priečne rezy / koláče", "catKorene": "Korene", "catAtyp": "Atyp"
+  },
+  "detail": {
+    "home": "Domov", "products": "Produkty", "material": "Materiál", "dimensions": "Rozmery",
+    "production": "Výroba", "productionValue": "Ručná, Slovensko",
+    "addToCart": "Pridať do košíka", "orderNow": "Objednať teraz",
+    "delivery": "Doručenie po celom Slovensku · Individuálne rozmery na požiadanie",
+    "related": "Mohlo by vás zaujímať"
+  },
+  "cart": {
+    "title": "Košík", "close": "Zavrieť košík", "empty": "Košík je prázdny",
+    "browse": "Prezrieť produkty →", "perPiece": "/ ks", "remove": "Odstrániť",
+    "total": "Celková suma", "toCheckout": "Prejsť na objednávku"
+  },
+  "kolekcia": {
+    "badge": "Portfolio",
+    "title": "Ručne vyrobené\nz nášho dreva",
+    "sub": "Každý kus vznikol priamo v našej dielni — z dreva, ktoré sami sušíme a predávame. Remeslo viditeľné na každom detaile.",
+    "madeFrom": "Vyrobené z"
+  },
+  "checkout": { "badge": "Záväzná objednávka", "title": "Objednávka" },
+  "success": {
+    "badge": "Objednávka prijatá", "title": "Ďakujeme!",
+    "sub": "Vaša objednávka bola úspešne odoslaná. Čoskoro vás budeme kontaktovať na dohodnutie detailov doručenia.",
+    "email": "Skontrolujte si emailovú schránku — potvrdenie objednávky vám príde do niekoľkých minút.",
+    "continue": "Pokračovať v nákupe", "home": "Domovská stránka"
+  },
+  "footer": {
+    "tagline": "Ručne vyrábaný drevený nábytok a doplnky s dôrazom na kvalitu materiálov a remeselnú dokonalosť.",
+    "navTitle": "Navigácia", "home": "Domov", "products": "Produkty", "about": "O nás", "order": "Objednávka",
+    "contactTitle": "Kontakt", "rights": "Všetky práva vyhradené.",
+    "bottomTag": "Ručná výroba · Prírodné materiály · Slovenská kvalita"
+  }
+}
