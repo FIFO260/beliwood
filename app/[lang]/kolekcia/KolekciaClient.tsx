@@ -2,13 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, setupGsap, prefersReducedMotion } from "@/components/fx/gsap";
+import PageHeader from "@/components/PageHeader";
 import type { PortfolioItem } from "@/lib/portfolio";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface KolekciaT {
   badge: string;
@@ -18,35 +14,27 @@ interface KolekciaT {
 }
 
 export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t: KolekciaT }) {
-  const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setupGsap();
     const ctx = gsap.context(() => {
-      gsap.from(headerRef.current?.children ?? [], {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power3.out",
-      });
-
+      if (prefersReducedMotion()) return;
       const cards = gridRef.current?.querySelectorAll<HTMLElement>(".portfolio-card");
-      if (cards) {
-        cards.forEach((card) => {
-          gsap.from(card, {
-            y: 60,
-            opacity: 0,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-            },
-          });
+      cards?.forEach((card) => {
+        gsap.from(card, {
+          y: 70,
+          autoAlpha: 0,
+          duration: 1,
+          ease: "beli",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            once: true,
+          },
         });
-      }
-    });
+      });
+    }, gridRef);
     return () => ctx.revert();
   }, []);
 
@@ -55,33 +43,21 @@ export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t
 
   return (
     <div className="bg-[#0D1321] min-h-screen">
-      {/* Header */}
-      <div className="pt-32 pb-16 px-8 md:px-16 lg:px-24">
-        <div ref={headerRef}>
-          <p className="text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase mb-4">
-            {t.badge}
-          </p>
-          <h1 className="font-display text-5xl md:text-6xl font-bold text-[#FFEDDF] mb-6 leading-tight">
-            {t.title}
-          </h1>
-          <p className="text-[#FFEDDF]/50 text-lg max-w-xl">
-            {t.sub}
-          </p>
-        </div>
-      </div>
+      <PageHeader badge={t.badge} title={t.title} sub={t.sub} />
 
       {/* Portfolio grid */}
       <div ref={gridRef} className="px-8 md:px-16 lg:px-24 pb-24 space-y-6">
         {/* Featured item — full width */}
         {featured && (
-          <div className="portfolio-card group relative overflow-hidden" style={{ height: "clamp(360px, 55vw, 700px)" }}>
+          <div className="portfolio-card card-shine group relative overflow-hidden" style={{ height: "clamp(360px, 55vw, 700px)" }}>
             <Image
               src={featured.img}
               alt={featured.name}
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="scale-110 object-cover transition-transform duration-700 group-hover:scale-[1.15]"
               sizes="100vw"
               priority
+              data-speed="auto"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321] via-[#0D1321]/30 to-transparent" />
 
@@ -112,15 +88,16 @@ export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t
           {rest.map((item) => (
             <div
               key={item.id}
-              className="portfolio-card group relative overflow-hidden"
+              className="portfolio-card card-shine group relative overflow-hidden"
               style={{ height: "clamp(280px, 35vw, 520px)" }}
             >
               <Image
                 src={item.img}
                 alt={item.name}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="scale-110 object-cover transition-transform duration-700 group-hover:scale-[1.15]"
                 sizes="50vw"
+                data-speed="auto"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/95 via-[#0D1321]/20 to-transparent" />
               <div className="absolute inset-0 border border-[#C5D86D]/0 group-hover:border-[#C5D86D]/20 transition-all duration-500" />

@@ -51,14 +51,16 @@ export default function WoodCard({ wood, t }: Props) {
   };
 
   return (
-    <div className={`bg-white border border-[#86615C]/15 flex flex-col ${!wood.inStock ? "opacity-70" : ""}`}>
+    <div
+      className={`group flex flex-col border border-[#86615C]/15 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-[#86615C]/35 hover:shadow-[0_18px_40px_-18px_rgba(13,19,33,0.25)] ${!wood.inStock ? "opacity-70" : ""}`}
+    >
       {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#86615C]/10">
+      <div className="card-shine relative aspect-[16/10] overflow-hidden bg-[#86615C]/10">
         <Image
           src={wood.img}
           alt=""
           fill
-          className="object-cover transition-transform duration-500 hover:scale-105"
+          className="object-cover transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute top-3 left-3 flex gap-2 flex-wrap">

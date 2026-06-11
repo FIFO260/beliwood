@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ProductGrid from "@/components/ProductGrid";
+import PageHeader from "@/components/PageHeader";
 import type { Product, Category } from "@/lib/products";
 
 interface ProductsT {
@@ -47,27 +48,15 @@ export default function ProductsClient({
 
   return (
     <>
-      <div className="bg-[#0D1321] pt-32 pb-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase mb-4">
-            {t.badge}
-          </p>
-          <h1 className="font-display text-5xl md:text-6xl font-bold text-[#FFEDDF] mb-6">
-            {t.title}
-          </h1>
-          <p className="text-[#FFEDDF]/50 text-lg max-w-xl">
-            {t.sub}
-          </p>
-        </div>
-      </div>
+      <PageHeader badge={t.badge} title={t.title} sub={t.sub} />
 
-      <div className="bg-[#FFEDDF] border-b border-[#86615C]/20 sticky z-40" style={{ top: "var(--nav-h, 4rem)" }}>
+      <div className="border-b border-[#86615C]/20 bg-[#FFEDDF]">
         <div className="max-w-7xl mx-auto px-6 flex gap-2 overflow-x-auto py-4">
           {categories.map((cat) => (
             <button
               key={cat.value}
               onClick={() => setActive(cat.value)}
-              className={`flex-shrink-0 px-5 py-2 text-sm font-medium transition-colors ${
+              className={`flex-shrink-0 px-5 py-2 text-sm font-medium transition-all duration-300 active:scale-95 ${
                 active === cat.value
                   ? "bg-[#0D1321] text-[#FFEDDF]"
                   : "bg-white border border-[#86615C]/30 text-[#86615C] hover:border-[#0D1321] hover:text-[#0D1321]"
@@ -76,7 +65,7 @@ export default function ProductsClient({
               {cat.label}
             </button>
           ))}
-          <span className="ml-auto flex-shrink-0 self-center text-xs text-[#86615C]">
+          <span className="ml-auto flex-shrink-0 self-center font-mono text-xs text-[#86615C]">
             {filtered.length} {countLabel(filtered.length)}
           </span>
         </div>

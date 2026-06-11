@@ -3,18 +3,15 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, setupGsap, ScrollTrigger, prefersReducedMotion } from "@/components/fx/gsap";
+import { wireReveals } from "@/components/fx/reveal";
+import Magnetic from "@/components/fx/Magnetic";
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import HorizontalScroll from "@/components/HorizontalScroll";
 import type { Product } from "@/lib/products";
 import type { WoodProduct } from "@/lib/wood";
 import type { Dictionary } from "@/lib/i18n";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const statValues = [
   { value: 10, suffix: "+" },
@@ -34,12 +31,16 @@ export default function HomeClient({
   dict: Dictionary;
   lang: string;
 }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const aboutRef = useRef<HTMLElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setupGsap();
     const ctx = gsap.context(() => {
-      // Stats counter
+      wireReveals(rootRef.current!);
+
+      // ── Počítadlá štatistík ───────────────────────────────────
       const statEls = statsRef.current?.querySelectorAll<HTMLElement>(".stat-num");
       statEls?.forEach((el) => {
         const target = parseInt(el.dataset.target ?? "0", 10);
@@ -51,8 +52,8 @@ export default function HomeClient({
           onEnter: () => {
             gsap.to(obj, {
               val: target,
-              duration: 1.5,
-              ease: "power2.out",
+              duration: 1.8,
+              ease: "power3.out",
               onUpdate: () => {
                 el.textContent = Math.round(obj.val).toString();
               },
@@ -61,53 +62,19 @@ export default function HomeClient({
         });
       });
 
-      // About section — line-by-line reveal
-      if (aboutRef.current) {
-        const lines = aboutRef.current.querySelectorAll<HTMLElement>(".reveal-line");
-        lines.forEach((line) => {
-          const inner = line.querySelector<HTMLElement>(".reveal-inner");
-          if (inner) {
-            gsap.from(inner, {
-              yPercent: 100,
-              duration: 0.85,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: line,
-                start: "top 88%",
-              },
-            });
-          }
-        });
-
-        // About image: clip-path reveal
-        const aboutImg = aboutRef.current.querySelector<HTMLElement>(".about-img");
-        if (aboutImg) {
-          gsap.from(aboutImg, {
-            clipPath: "inset(0 100% 0 0)",
-            duration: 1.4,
-            ease: "power3.inOut",
-            scrollTrigger: {
-              trigger: aboutImg,
-              start: "top 80%",
-            },
-          });
-        }
-
-        // About text blocks fade up
-        const reveals = aboutRef.current.querySelectorAll<HTMLElement>(".reveal");
-        gsap.from(reveals, {
-          y: 40,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: aboutRef.current,
-            start: "top 75%",
+      // ── Marquee reaguje na rýchlosť scrollu ───────────────────
+      if (marqueeRef.current && !prefersReducedMotion()) {
+        const track = marqueeRef.current;
+        const skewTo = gsap.quickTo(track, "skewX", { duration: 0.5, ease: "power2.out" });
+        ScrollTrigger.create({
+          onUpdate: (self) => {
+            const v = self.getVelocity();
+            skewTo(gsap.utils.clamp(-8, 8, v / 350));
+            track.style.animationDuration = `${gsap.utils.clamp(12, 40, 40 - Math.abs(v) / 120)}s`;
           },
         });
       }
-    });
+    }, rootRef);
 
     return () => ctx.revert();
   }, []);
@@ -117,94 +84,135 @@ export default function HomeClient({
   const featuredWood = woodProducts.filter((w) => w.inStock).slice(0, 3);
   const statsLabels: string[] = dict.statsLabels as string[];
   const marqueeItems: string[] = dict.marquee as string[];
-
-  // Parse aboutTitle to handle newline
   const aboutTitleParts = dict.home.aboutTitle.split("\n");
 
   return (
-    <>
+    <div ref={rootRef}>
       <Hero t={dict.hero} lang={lang} />
 
-      {/* Stats */}
-      <section className="bg-[#0D1321] py-20 px-6">
+      {/* ── Štatistiky ── */}
+      <section className="border-t border-[#FFEDDF]/5 bg-[#0D1321] px-6 py-24">
         <div
           ref={statsRef}
-          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8"
+          className="mx-auto grid max-w-7xl grid-cols-2 gap-10 md:grid-cols-4"
+          data-reveal="fade"
+          data-children
+          data-stagger="0.1"
         >
           {statValues.map((s, i) => (
-            <div key={i} className="text-center">
-              <p className="font-display text-4xl md:text-5xl font-bold text-[#C5D86D] mb-2">
-                <span className="stat-num" data-target={s.value}>
-                  0
-                </span>
+            <div key={i} className="relative text-center md:border-l md:border-[#FFEDDF]/10 md:first:border-l-0">
+              <p className="mb-3 font-display text-5xl font-bold tabular-nums text-[#C5D86D] md:text-6xl">
+                <span className="stat-num" data-target={s.value}>0</span>
                 <span>{s.suffix}</span>
               </p>
-              <p className="text-[#FFEDDF]/50 text-sm tracking-wide">{statsLabels[i]}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#FFEDDF]/40">
+                {statsLabels[i]}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Marquee strip */}
-      <div className="bg-[#C5D86D] py-3 overflow-hidden">
-        <div className="marquee-track flex gap-0 whitespace-nowrap" aria-hidden>
+      {/* ── Marquee ── */}
+      <div className="overflow-hidden bg-[#C5D86D] py-3">
+        <div ref={marqueeRef} className="marquee-track flex gap-0 whitespace-nowrap" aria-hidden>
           {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-6 text-[#0D1321] text-xs font-semibold tracking-[0.2em] uppercase px-8"
+              className="inline-flex items-center gap-6 px-8 text-xs font-semibold uppercase tracking-[0.2em] text-[#0D1321]"
             >
               {item}
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0D1321]/40 inline-block" />
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#0D1321]/40" />
             </span>
           ))}
         </div>
       </div>
 
-      {/* Featured wood products */}
-      <section className="py-24 px-6 bg-[#FFEDDF]">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-14">
-            <p className="text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase mb-3">{dict.home.woodBadge}</p>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0D1321] mb-4">
-              {dict.home.woodTitle}
-            </h2>
-            <p className="text-[#86615C] text-lg max-w-xl">
-              {dict.home.woodSub}
-            </p>
+      {/* ── Drevo — karty ── */}
+      <section className="bg-[#FFEDDF] px-6 py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p
+                className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#86615C]"
+                data-reveal="fade"
+              >
+                {dict.home.woodBadge}
+              </p>
+              <h2
+                className="mb-4 font-display text-4xl font-bold text-[#0D1321] md:text-6xl"
+                data-reveal="lines"
+              >
+                {dict.home.woodTitle}
+              </h2>
+              <p className="max-w-xl text-lg text-[#86615C]" data-reveal="fade" data-delay="0.15">
+                {dict.home.woodSub}
+              </p>
+            </div>
+            <Link
+              href={`/${lang}/drevo`}
+              className="link-line pb-1 text-sm font-semibold text-[#0D1321]"
+              data-reveal="fade"
+              data-delay="0.3"
+            >
+              {dict.home.woodCtaBtn}
+            </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <div
+            className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            data-reveal="fade"
+            data-children
+            data-stagger="0.12"
+          >
             {featuredWood.map((w) => (
-              <Link key={w.id} href={`/${lang}/drevo`} className="group block bg-[#0D1321] overflow-hidden">
+              <Link
+                key={w.id}
+                href={`/${lang}/drevo`}
+                className="card-shine group block overflow-hidden bg-[#0D1321]"
+                data-cursor="view"
+                data-cursor-label="Pozrieť"
+              >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={w.img}
                     alt={w.label}
                     fill
-                    className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover opacity-80 transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/80 to-transparent" />
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="bg-[#C5D86D] text-[#0D1321] text-[10px] font-bold px-2 py-1 tracking-wide uppercase">
+                  <div className="absolute left-3 top-3 flex gap-2">
+                    <span className="bg-[#C5D86D] px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-[#0D1321]">
                       {w.species}
                     </span>
                     {w.naturalEdge && (
-                      <span className="bg-[#86615C] text-[#FFEDDF] text-[10px] font-semibold px-2 py-1 tracking-wide uppercase">
+                      <span className="bg-[#86615C] px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#FFEDDF]">
                         {dict.home.naturalEdge}
                       </span>
                     )}
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-display text-lg font-semibold text-[#FFEDDF] mb-2 group-hover:text-[#C5D86D] transition-colors">
+                  <h3 className="mb-2 font-display text-lg font-semibold text-[#FFEDDF] transition-colors group-hover:text-[#C5D86D]">
                     {w.label}
                   </h3>
-                  <p className="text-[#FFEDDF]/40 text-xs font-mono mb-4">
+                  <p className="mb-4 font-mono text-xs text-[#FFEDDF]/40">
                     {w.thickness} × {w.width} × {w.length} mm &nbsp;·&nbsp; {w.surface}
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="font-display text-2xl font-bold text-[#C5D86D]">{w.price} €</span>
-                    <span className="text-[#FFEDDF]/40 text-xs tracking-wide uppercase">{w.state}</span>
+                    <span className="flex items-center gap-2 text-xs uppercase tracking-wide text-[#FFEDDF]/40">
+                      {w.state}
+                      <svg
+                        className="h-3.5 w-3.5 -translate-x-1 text-[#C5D86D] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -213,25 +221,49 @@ export default function HomeClient({
         </div>
       </section>
 
-      {/* Primary CTA — drevo */}
-      <section className="py-20 px-6 bg-[#C5D86D]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0D1321] mb-6">
+      {/* ── CTA — drevo ── */}
+      <section className="relative overflow-hidden bg-[#C5D86D] px-6 py-28">
+        <div
+          className="pointer-events-none absolute -bottom-8 left-0 select-none overflow-hidden"
+          data-speed="0.92"
+        >
+          <span
+            className="block font-display font-bold leading-none text-[#0D1321]/[0.05]"
+            style={{ fontSize: "clamp(120px, 16vw, 240px)" }}
+          >
+            BELIWOOD
+          </span>
+        </div>
+        <div className="relative mx-auto max-w-4xl text-center">
+          <h2
+            className="mb-6 font-display text-4xl font-bold text-[#0D1321] md:text-6xl"
+            data-reveal="lines"
+          >
             {dict.home.woodCtaTitle}
           </h2>
-          <p className="text-[#0D1321]/70 text-lg mb-10 max-w-xl mx-auto">
+          <p
+            className="mx-auto mb-12 max-w-xl text-lg text-[#0D1321]/70"
+            data-reveal="fade"
+            data-delay="0.15"
+          >
             {dict.home.woodCtaSub}
           </p>
-          <Link
-            href={`/${lang}/drevo`}
-            className="inline-flex items-center gap-2 bg-[#0D1321] text-[#FFEDDF] px-10 py-4 font-semibold text-sm tracking-wide hover:bg-[#FFEDDF] hover:text-[#0D1321] transition-colors"
-          >
-            {dict.home.woodCtaBtn}
-          </Link>
+          <div data-reveal="fade" data-delay="0.25">
+            <Magnetic>
+              <Link
+                href={`/${lang}/drevo`}
+                className="btn-sweep inline-flex items-center gap-3 bg-[#0D1321] px-10 py-5 text-sm font-semibold tracking-wide text-[#FFEDDF] [--btn-sweep-bg:#86615C]"
+              >
+                <span className="btn-label">
+                  <span data-text={dict.home.woodCtaBtn}>{dict.home.woodCtaBtn}</span>
+                </span>
+              </Link>
+            </Magnetic>
+          </div>
         </div>
       </section>
 
-      {/* Horizontal scroll — furniture (secondary) */}
+      {/* ── Horizontálny scroll — kolekcia ── */}
       <HorizontalScroll
         products={showcase}
         lang={lang}
@@ -243,7 +275,7 @@ export default function HomeClient({
         }}
       />
 
-      {/* Featured furniture grid (secondary) */}
+      {/* ── Nábytok ── */}
       <ProductGrid
         products={featured}
         title={dict.home.furnitureTitle}
@@ -251,37 +283,48 @@ export default function HomeClient({
         addToCartLabel={dict.products.addToCart}
       />
 
-      {/* About */}
-      <section id="about" ref={aboutRef} className="py-24 px-6 bg-[#FFEDDF]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="about-img reveal relative aspect-[4/3] overflow-hidden">
+      {/* ── O nás ── */}
+      <section id="about" className="overflow-hidden bg-[#FFEDDF] px-6 py-28">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-2">
+          <div
+            className="relative aspect-[4/3] overflow-hidden"
+            data-reveal="clip"
+            data-clip="inset(0 100% 0 0)"
+          >
             <Image
               src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80"
               alt="Náš ateliér"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
+              data-speed="auto"
             />
           </div>
 
           <div className="space-y-6">
-            <p className="reveal text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase">
+            <p
+              className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#86615C]"
+              data-reveal="fade"
+            >
               {dict.home.aboutBadge}
             </p>
-            <h2 className="reveal font-display text-4xl md:text-5xl font-bold text-[#0D1321] leading-tight">
+            <h2
+              className="font-display text-4xl font-bold leading-tight text-[#0D1321] md:text-5xl"
+              data-reveal="lines"
+            >
               {aboutTitleParts[0]}
               {aboutTitleParts[1] && <><br />{aboutTitleParts[1]}</>}
             </h2>
-            <p className="reveal text-[#86615C] text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-[#86615C]" data-reveal="lines" data-stagger="0.05">
               {dict.home.aboutP1}
             </p>
-            <p className="reveal text-[#86615C] leading-relaxed">
+            <p className="leading-relaxed text-[#86615C]" data-reveal="lines" data-stagger="0.05">
               {dict.home.aboutP2}
             </p>
-            <div className="reveal pt-2">
+            <div className="pt-2" data-reveal="fade">
               <Link
-                href={`/${lang}/products`}
-                className="inline-flex items-center gap-2 text-[#0D1321] font-semibold text-sm border-b-2 border-[#C5D86D] pb-0.5 hover:border-[#0D1321] transition-colors"
+                href={`/${lang}/kolekcia`}
+                className="link-line is-active inline-flex items-center gap-2 pb-1 text-sm font-semibold text-[#0D1321]"
               >
                 {dict.home.aboutLink}
               </Link>
@@ -289,6 +332,6 @@ export default function HomeClient({
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

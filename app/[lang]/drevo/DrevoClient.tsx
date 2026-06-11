@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { gsap, setupGsap, prefersReducedMotion } from "@/components/fx/gsap";
+import PageHeader from "@/components/PageHeader";
 import WoodCard from "@/components/WoodCard";
 import type { WoodProduct, WoodSpecies, WoodSurface, WoodState, WoodCategory, ThicknessRange } from "@/lib/wood";
 import { allSpecies, allSurfaces, allStates, allCategories, allThicknessRanges, getThicknessRange } from "@/lib/wood";
@@ -96,20 +96,7 @@ export default function DrevoClient({
 }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(headerRef.current?.children ?? [], {
-        y: 30,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power3.out",
-      });
-    });
-    return () => ctx.revert();
-  }, []);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     return woodProducts.filter((w) => {
@@ -125,6 +112,22 @@ export default function DrevoClient({
       return true;
     });
   }, [filters, woodProducts]);
+
+  // jemný stagger kariet pri každej zmene filtrov
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    setupGsap();
+    const cards = gridRef.current?.children;
+    if (!cards?.length) return;
+    const tween = gsap.fromTo(
+      cards,
+      { y: 26, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 0.7, ease: "beli-out", stagger: 0.045, clearProps: "all" },
+    );
+    return () => {
+      tween.kill();
+    };
+  }, [filtered]);
 
   const toggle = <T,>(arr: T[], val: T): T[] =>
     arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val];
@@ -182,19 +185,7 @@ export default function DrevoClient({
 
   return (
     <>
-      <div className="bg-[#0D1321] pt-32 pb-16 px-8 md:px-16 lg:px-24">
-        <div ref={headerRef}>
-          <p className="text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase mb-4">
-            {t.badge}
-          </p>
-          <h1 className="font-display text-5xl md:text-6xl font-bold text-[#FFEDDF] mb-4">
-            {t.title}
-          </h1>
-          <p className="text-[#FFEDDF]/50 text-lg max-w-2xl">
-            {t.sub}
-          </p>
-        </div>
-      </div>
+      <PageHeader badge={t.badge} title={t.title} sub={t.sub} />
 
       <div className="bg-[#FFEDDF] min-h-screen">
         <div className="max-w-7xl mx-auto px-6 py-10">
@@ -396,7 +387,7 @@ export default function DrevoClient({
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filtered.map((w) => (
                     <WoodCard key={w.id} wood={w} t={woodCardT} />
                   ))}

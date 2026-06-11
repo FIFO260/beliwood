@@ -1,6 +1,7 @@
 import { getDictionary } from "@/lib/i18n";
 import { locales, defaultLocale, type Locale } from "@/lib/i18n-config";
 import OrderForm from "@/components/OrderForm";
+import PageHeader from "@/components/PageHeader";
 
 export default async function CheckoutPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: rawLang } = await params;
@@ -9,12 +10,9 @@ export default async function CheckoutPage({ params }: { params: Promise<{ lang:
     : defaultLocale;
   const dict = await getDictionary(lang);
   return (
-    <div className="min-h-screen bg-[#FFEDDF] pt-28 pb-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-14">
-          <p className="text-[#C5D86D] text-xs font-semibold tracking-[0.3em] uppercase mb-3">{dict.checkout.badge}</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0D1321]">{dict.checkout.title}</h1>
-        </div>
+    <div className="min-h-screen bg-[#FFEDDF]">
+      <PageHeader badge={dict.checkout.badge} title={dict.checkout.title} />
+      <div className="max-w-7xl mx-auto px-6 py-14">
         <OrderForm />
       </div>
     </div>

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
+import { gsap, setupGsap, prefersReducedMotion } from "@/components/fx/gsap";
 import type { Product } from "@/lib/products";
 import { useCartStore } from "@/store/cartStore";
 
@@ -37,18 +37,26 @@ export default function ProductDetailClient({
   const { addItem, openCart } = useCartStore();
 
   useEffect(() => {
+    setupGsap();
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion()) return;
       gsap.from(imgRef.current, {
-        x: -60,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out",
+        clipPath: "inset(0 100% 0 0)",
+        duration: 1.2,
+        ease: "beli",
       });
-      gsap.from(infoRef.current, {
-        x: 60,
-        opacity: 0,
+      gsap.from(imgRef.current!.querySelector("img"), {
+        scale: 1.25,
+        duration: 1.6,
+        ease: "beli",
+      });
+      gsap.from(infoRef.current!.children, {
+        y: 36,
+        autoAlpha: 0,
         duration: 0.9,
-        ease: "power3.out",
+        ease: "beli-out",
+        stagger: 0.09,
+        delay: 0.15,
       });
     });
     return () => ctx.revert();
@@ -82,7 +90,7 @@ export default function ProductDetailClient({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div
             ref={imgRef}
-            className="relative aspect-square overflow-hidden bg-[#86615C]/10 lg:sticky lg:top-24"
+            className="card-shine relative aspect-square overflow-hidden bg-[#86615C]/10"
           >
             <Image
               src={product.img}
@@ -140,9 +148,9 @@ export default function ProductDetailClient({
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleAdd}
-                className="flex-1 bg-[#0D1321] text-[#FFEDDF] py-4 font-semibold text-sm tracking-wide hover:bg-[#C5D86D] hover:text-[#0D1321] transition-colors"
+                className="btn-sweep flex-1 bg-[#0D1321] py-4 text-center text-sm font-semibold tracking-wide text-[#FFEDDF] [--btn-sweep-bg:#C5D86D] hover:text-[#0D1321]"
               >
-                {t.addToCart}
+                <span>{t.addToCart}</span>
               </button>
               <Link
                 href={`/${lang}/checkout`}
