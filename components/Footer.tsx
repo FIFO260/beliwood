@@ -120,7 +120,6 @@ export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
               {t.contactTitle}
             </h3>
             <ul className="space-y-3 text-sm">
-              <li>Matej Berník</li>
               <li>
                 <a
                   href="mailto:stolybeliwood@gmail.com"
