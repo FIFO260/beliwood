@@ -46,13 +46,15 @@ export default function ProductCard({ product, addToCartLabel, labels }: Props) 
     >
       <div className="overflow-hidden bg-[#FFEDDF]">
         <div className="product-img-reveal card-shine relative aspect-[4/3] overflow-hidden bg-[#86615C]/10">
-          <Image
-            src={product.img}
-            alt={product.name}
-            fill
-            className="object-cover transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          {product.img && (
+            <Image
+              src={product.img}
+              alt={product.name}
+              fill
+              className="object-cover transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          )}
           <div className="absolute inset-0 bg-[#0D1321]/0 transition-colors duration-300 group-hover:bg-[#0D1321]/10" />
           <span className="absolute left-3 top-3 bg-[#0D1321]/70 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-[#C5D86D] backdrop-blur-sm">
             {labels?.categories?.[product.category] ?? product.category}

@@ -26,13 +26,15 @@ function CardContent({ p, i, lang, t }: { p: Product; i: number; lang: string; t
       }}
     >
       <div className="h-card-img absolute -inset-x-10 inset-y-0 will-change-transform">
-        <Image
-          src={p.img}
-          alt=""
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          sizes="(max-width: 767px) 72vw, 42vw"
-        />
+        {p.img && (
+          <Image
+            src={p.img}
+            alt=""
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 767px) 72vw, 42vw"
+          />
+        )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/90 via-[#0D1321]/20 to-transparent" />
       <span className="absolute right-4 top-4 select-none font-display text-5xl font-bold leading-none text-[#FFEDDF]/10">
