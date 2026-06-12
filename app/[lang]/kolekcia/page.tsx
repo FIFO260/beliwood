@@ -9,5 +9,5 @@ export default async function KolekciaPage({ params }: { params: Promise<{ lang:
     ? (rawLang as Locale)
     : defaultLocale;
   const dict = await getDictionary(lang);
-  return <KolekciaClient items={portfolioItems} t={dict.kolekcia} />;
+  return <KolekciaClient items={portfolioItems} t={dict.kolekcia} speciesLabels={dict.labels.species} />;
 }

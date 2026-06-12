@@ -13,7 +13,15 @@ interface KolekciaT {
   madeFrom: string;
 }
 
-export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t: KolekciaT }) {
+export default function KolekciaClient({
+  items,
+  t,
+  speciesLabels,
+}: {
+  items: PortfolioItem[];
+  t: KolekciaT;
+  speciesLabels: Record<string, string>;
+}) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,7 +72,7 @@ export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-[#C5D86D] text-[#0D1321] text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1">
-                  {featured.woodSpecies}
+                  {speciesLabels[featured.woodSpecies] ?? featured.woodSpecies}
                 </span>
                 <span className="text-[#FFEDDF]/40 text-xs tracking-widest uppercase">
                   {t.madeFrom}
@@ -105,7 +113,7 @@ export default function KolekciaClient({ items, t }: { items: PortfolioItem[]; t
               <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="bg-[#C5D86D] text-[#0D1321] text-[9px] font-bold tracking-[0.2em] uppercase px-2 py-0.5">
-                    {item.woodSpecies}
+                    {speciesLabels[item.woodSpecies] ?? item.woodSpecies}
                   </span>
                   <span className="text-[#FFEDDF]/40 text-[10px] tracking-widest uppercase">
                     {t.madeFrom}

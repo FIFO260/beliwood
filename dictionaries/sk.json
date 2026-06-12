@@ -71,6 +71,13 @@
     "email": "Skontrolujte si emailovú schránku — potvrdenie objednávky vám príde do niekoľkých minút.",
     "continue": "Pokračovať v nákupe", "home": "Domovská stránka"
   },
+  "labels": {
+    "view": "Pozrieť",
+    "species": { "Dub": "Dub", "Buk": "Buk", "Čerešňa": "Čerešňa", "Orech": "Orech", "Orech americký": "Orech americký", "Dub bahenný": "Dub bahenný", "Suar": "Suar", "Oliva": "Oliva", "Javor": "Javor" },
+    "states": { "Čerstvé": "Čerstvé", "Vzduchosuché": "Vzduchosuché", "Sušené v sušičke": "Sušené v sušičke" },
+    "surfaces": { "Bez povrchovej úpravy": "Bez povrchovej úpravy", "Zrovnané na CNC": "Zrovnané na CNC" },
+    "productCategories": { "nábytok": "Nábytok", "doplnky": "Doplnky", "kuchyňa": "Kuchyňa" }
+  },
   "footer": {
     "tagline": "Ručne vyrábaný drevený nábytok a doplnky s dôrazom na kvalitu materiálov a remeselnú dokonalosť.",
     "navTitle": "Navigácia", "home": "Domov", "products": "Produkty", "about": "O nás", "order": "Objednávka",

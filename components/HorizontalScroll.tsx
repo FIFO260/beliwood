@@ -11,9 +11,11 @@ interface HScrollT {
   title1: string;
   title2: string;
   scroll: string;
+  view: string;
+  categories: Record<string, string>;
 }
 
-function CardContent({ p, i, lang }: { p: Product; i: number; lang: string }) {
+function CardContent({ p, i, lang, t }: { p: Product; i: number; lang: string; t: HScrollT }) {
   return (
     <Link
       href={`/${lang}/products/${p.id}`}
@@ -38,7 +40,7 @@ function CardContent({ p, i, lang }: { p: Product; i: number; lang: string }) {
       </span>
       <div className="absolute bottom-0 left-0 right-0 translate-y-2 p-5 transition-transform duration-300 group-hover:translate-y-0">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C5D86D]">
-          {p.category}
+          {t.categories[p.category] ?? p.category}
         </span>
         <h3 className="mt-1 font-display text-lg font-bold leading-tight text-[#FFEDDF] md:text-2xl">
           {p.name}
@@ -46,7 +48,7 @@ function CardContent({ p, i, lang }: { p: Product; i: number; lang: string }) {
         <div className="mt-2 flex items-center justify-between">
           <span className="font-display text-lg font-bold text-[#FFEDDF]">{p.price} €</span>
           <span className="text-xs font-medium tracking-wider text-[#C5D86D] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            Zobraziť →
+            {t.view} →
           </span>
         </div>
       </div>
@@ -156,7 +158,7 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/90 via-[#0D1321]/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
                 <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#C5D86D]">
-                  {p.category}
+                  {t.categories[p.category] ?? p.category}
                 </span>
                 <h3 className="mt-0.5 font-display text-base font-bold leading-snug text-[#FFEDDF]">
                   {p.name}
@@ -175,7 +177,7 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
       <section
         ref={sectionRef}
         className="relative hidden overflow-hidden bg-[#0D1321] md:block"
-        style={{ height: "100vh" }}
+        style={{ height: "100dvh" }}
         data-cursor="drag"
       >
         {/* Hlavička */}
@@ -212,7 +214,7 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
           }}
         >
           {products.map((p, i) => (
-            <CardContent key={p.id} p={p} i={i} lang={lang} />
+            <CardContent key={p.id} p={p} i={i} lang={lang} t={t} />
           ))}
         </div>
 

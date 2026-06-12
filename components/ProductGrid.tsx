@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, setupGsap, prefersReducedMotion } from "@/components/fx/gsap";
 import { wireReveals } from "@/components/fx/reveal";
-import ProductCard from "./ProductCard";
+import ProductCard, { type CardLabels } from "./ProductCard";
 import type { Product } from "@/lib/products";
 
 interface Props {
@@ -11,9 +11,10 @@ interface Props {
   title?: string;
   subtitle?: string;
   addToCartLabel?: string;
+  labels?: CardLabels;
 }
 
-export default function ProductGrid({ products, title, subtitle, addToCartLabel }: Props) {
+export default function ProductGrid({ products, title, subtitle, addToCartLabel, labels }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +73,7 @@ export default function ProductGrid({ products, title, subtitle, addToCartLabel 
         <div ref={gridRef} className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
             <div key={p.id} className="product-card">
-              <ProductCard product={p} addToCartLabel={addToCartLabel} />
+              <ProductCard product={p} addToCartLabel={addToCartLabel} labels={labels} />
             </div>
           ))}
         </div>

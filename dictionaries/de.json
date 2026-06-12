@@ -71,6 +71,13 @@
     "email": "Überprüfen Sie Ihren E-Mail-Posteingang — Sie erhalten die Bestellbestätigung innerhalb weniger Minuten.",
     "continue": "Weiter einkaufen", "home": "Startseite"
   },
+  "labels": {
+    "view": "Ansehen",
+    "species": { "Dub": "Eiche", "Buk": "Buche", "Čerešňa": "Kirschbaum", "Orech": "Nussbaum", "Orech americký": "Amerik. Nussbaum", "Dub bahenný": "Mooreiche", "Suar": "Suar", "Oliva": "Olivenholz", "Javor": "Ahorn" },
+    "states": { "Čerstvé": "Frisch", "Vzduchosuché": "Luftgetrocknet", "Sušené v sušičke": "Kammergetrocknet" },
+    "surfaces": { "Bez povrchovej úpravy": "Unbehandelt", "Zrovnané na CNC": "CNC-geebnet" },
+    "productCategories": { "nábytok": "Möbel", "doplnky": "Accessoires", "kuchyňa": "Küche" }
+  },
   "footer": {
     "tagline": "Handgefertigte Holzmöbel und Zubehör mit Schwerpunkt auf Materialqualität und Handwerkskunst.",
     "navTitle": "Navigation", "home": "Startseite", "products": "Produkte", "about": "Über uns", "order": "Bestellung",

@@ -71,6 +71,13 @@
     "email": "Check your email inbox — you will receive an order confirmation within a few minutes.",
     "continue": "Continue shopping", "home": "Home page"
   },
+  "labels": {
+    "view": "View",
+    "species": { "Dub": "Oak", "Buk": "Beech", "Čerešňa": "Cherry", "Orech": "Walnut", "Orech americký": "American walnut", "Dub bahenný": "Bog oak", "Suar": "Suar", "Oliva": "Olive", "Javor": "Maple" },
+    "states": { "Čerstvé": "Fresh", "Vzduchosuché": "Air dried", "Sušené v sušičke": "Kiln dried" },
+    "surfaces": { "Bez povrchovej úpravy": "Unfinished", "Zrovnané na CNC": "CNC flattened" },
+    "productCategories": { "nábytok": "Furniture", "doplnky": "Accessories", "kuchyňa": "Kitchen" }
+  },
   "footer": {
     "tagline": "Handcrafted wooden furniture and accessories with emphasis on material quality and craftsmanship.",
     "navTitle": "Navigation", "home": "Home", "products": "Products", "about": "About", "order": "Order",

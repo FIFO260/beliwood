@@ -71,6 +71,13 @@
     "email": "Sprawdź swoją skrzynkę e-mail — potwierdzenie zamówienia otrzymasz w ciągu kilku minut.",
     "continue": "Kontynuuj zakupy", "home": "Strona główna"
   },
+  "labels": {
+    "view": "Zobacz",
+    "species": { "Dub": "Dąb", "Buk": "Buk", "Čerešňa": "Czereśnia", "Orech": "Orzech", "Orech americký": "Orzech amerykański", "Dub bahenný": "Dąb bagienny", "Suar": "Suar", "Oliva": "Oliwka", "Javor": "Klon" },
+    "states": { "Čerstvé": "Świeże", "Vzduchosuché": "Suszone powietrzem", "Sušené v sušičke": "Suszone komorowo" },
+    "surfaces": { "Bez povrchovej úpravy": "Bez wykończenia", "Zrovnané na CNC": "Wyrównane CNC" },
+    "productCategories": { "nábytok": "Meble", "doplnky": "Dodatki", "kuchyňa": "Kuchnia" }
+  },
   "footer": {
     "tagline": "Ręcznie wytwarzane drewniane meble i akcesoria z naciskiem na jakość materiałów i doskonałość rzemieślniczą.",
     "navTitle": "Nawigacja", "home": "Strona główna", "products": "Produkty", "about": "O nas", "order": "Zamówienie",

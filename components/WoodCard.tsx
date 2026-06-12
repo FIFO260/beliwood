@@ -16,6 +16,9 @@ export interface WoodCardT {
   specLength: string;
   specMoisture: string;
   specSurface: string;
+  speciesLabels: Record<string, string>;
+  stateLabels: Record<string, string>;
+  surfaceLabels: Record<string, string>;
 }
 
 interface Props {
@@ -32,7 +35,7 @@ function woodToProduct(w: WoodProduct): Product {
     img: w.img,
     description: w.description,
     material: `Masívny ${w.species}`,
-    dimensions: `${w.thickness} × ${w.width} × ${w.length} mm`,
+    dimensions: `${w.thickness / 10} × ${w.width / 10} × ${w.length / 10} cm`,
   };
 }
 
@@ -65,10 +68,10 @@ export default function WoodCard({ wood, t }: Props) {
         />
         <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
           <span className="bg-[#0D1321]/80 text-[#FFEDDF] text-xs font-semibold px-2.5 py-1 tracking-wide">
-            {wood.species}
+            {t.speciesLabels[wood.species] ?? wood.species}
           </span>
           <span className={`text-xs font-semibold px-2.5 py-1 ${stateColors[wood.state] ?? ""}`}>
-            {wood.state}
+            {t.stateLabels[wood.state] ?? wood.state}
           </span>
           {wood.naturalEdge && (
             <span className="bg-[#86615C]/70 text-white text-xs px-2.5 py-1">
@@ -93,11 +96,11 @@ export default function WoodCard({ wood, t }: Props) {
 
         {/* Specs grid */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
-          <Spec label={t.specThickness} value={`${wood.thickness} mm`} />
-          <Spec label={t.specWidth} value={`${wood.width} mm`} />
+          <Spec label={t.specThickness} value={`${wood.thickness / 10} cm`} />
+          <Spec label={t.specWidth} value={`${wood.width / 10} cm`} />
           <Spec label={t.specLength} value={`${(wood.length / 1000).toFixed(1).replace(".", ",")} m`} />
           <Spec label={t.specMoisture} value={`${wood.moisture} %`} />
-          <Spec label={t.specSurface} value={wood.surface} className="col-span-2" />
+          <Spec label={t.specSurface} value={t.surfaceLabels[wood.surface] ?? wood.surface} className="col-span-2" />
         </div>
 
         <p className="text-[#86615C] text-xs leading-relaxed mb-5 line-clamp-2">{wood.description}</p>

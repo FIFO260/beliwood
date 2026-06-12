@@ -9,5 +9,12 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
     ? (rawLang as Locale)
     : defaultLocale;
   const [products, dict] = await Promise.all([getProducts(), getDictionary(lang)]);
-  return <ProductsClient products={products} t={dict.products} lang={lang} />;
+  return (
+    <ProductsClient
+      products={products}
+      t={dict.products}
+      labels={{ categories: dict.labels.productCategories, view: dict.labels.view }}
+      lang={lang}
+    />
+  );
 }

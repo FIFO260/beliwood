@@ -8,12 +8,18 @@ import { gsap, setupGsap } from "@/components/fx/gsap";
 import type { Product } from "@/lib/products";
 import { useLang } from "@/lib/useLang";
 
+export interface CardLabels {
+  categories?: Record<string, string>;
+  view?: string;
+}
+
 interface Props {
   product: Product;
   addToCartLabel?: string;
+  labels?: CardLabels;
 }
 
-export default function ProductCard({ product, addToCartLabel }: Props) {
+export default function ProductCard({ product, addToCartLabel, labels }: Props) {
   const { addItem, openCart } = useCartStore();
   const lang = useLang();
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -36,7 +42,7 @@ export default function ProductCard({ product, addToCartLabel }: Props) {
       href={`/${lang}/products/${product.id}`}
       className="group block"
       data-cursor="view"
-      data-cursor-label="Detail"
+      data-cursor-label={labels?.view ?? "Detail"}
     >
       <div className="overflow-hidden bg-[#FFEDDF]">
         <div className="product-img-reveal card-shine relative aspect-[4/3] overflow-hidden bg-[#86615C]/10">
@@ -49,7 +55,7 @@ export default function ProductCard({ product, addToCartLabel }: Props) {
           />
           <div className="absolute inset-0 bg-[#0D1321]/0 transition-colors duration-300 group-hover:bg-[#0D1321]/10" />
           <span className="absolute left-3 top-3 bg-[#0D1321]/70 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-[#C5D86D] backdrop-blur-sm">
-            {product.category}
+            {labels?.categories?.[product.category] ?? product.category}
           </span>
         </div>
 

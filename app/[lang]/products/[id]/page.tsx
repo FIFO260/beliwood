@@ -20,5 +20,13 @@ export default async function ProductDetailPage({
         .slice(0, 3)
     : [];
 
-  return <ProductDetailClient product={product} related={related} t={dict.detail} lang={lang} />;
+  return (
+    <ProductDetailClient
+      product={product}
+      related={related}
+      t={dict.detail}
+      categoryLabels={dict.labels.productCategories}
+      lang={lang}
+    />
+  );
 }

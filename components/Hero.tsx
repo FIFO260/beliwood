@@ -50,22 +50,32 @@ export default function Hero({ t, lang }: { t: HeroT; lang: string }) {
         .from(scrollLineRef.current, { scaleY: 0, transformOrigin: "top center", duration: 1 }, "-=0.4");
 
       const cancel = onSiteReady(() => tl.play());
+      // poistka — keby signál z preloadera nedorazil (zaseknutý storage,
+      // chyba v inom skripte…), úvodný text sa po chvíli ukáže aj tak
+      const failSafe = window.setTimeout(() => tl.play(), 4000);
 
       // ── Odchod pri scrolle — obsah sa prepadá do hĺbky ────────
-      gsap.to(".hero-content", {
-        yPercent: -18,
-        autoAlpha: 0.25,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "85% top",
-          scrub: true,
+      // explicitný fromTo: štart sa nesmie zachytávať z computed štýlov
+      // (počas page-transition by sa odčítal ako neviditeľný)
+      gsap.fromTo(
+        ".hero-content",
+        { yPercent: 0, autoAlpha: 1 },
+        {
+          yPercent: -18,
+          autoAlpha: 0.25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "85% top",
+            scrub: true,
+          },
         },
-      });
+      );
 
       return () => {
         cancel();
+        window.clearTimeout(failSafe);
         split.revert();
       };
     }, sectionRef);

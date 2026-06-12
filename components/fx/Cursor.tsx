@@ -59,7 +59,7 @@ export default function Cursor() {
       ring.classList.toggle("mix-blend-difference", !(mode === "drag" || mode === "view"));
       if (mode === "drag" || mode === "view") {
         label.textContent = mode === "drag" ? "⟵ ⟶" : text ?? "";
-        gsap.to(ring, { scale: 2.6, backgroundColor: "rgba(197,216,109,0.95)", borderColor: "transparent", duration: 0.35 });
+        gsap.to(ring, { scale: 2, backgroundColor: "rgba(197,216,109,0.9)", borderColor: "transparent", duration: 0.35 });
         gsap.to(label, { autoAlpha: 1, duration: 0.25 });
         gsap.to(dot, { scale: 0, duration: 0.25 });
       } else if (mode === "link") {
@@ -75,12 +75,18 @@ export default function Cursor() {
 
     const onOver = (e: MouseEvent) => {
       const t = e.target as Element;
+      // tlačidlá a polia majú prednosť pred [data-cursor] kontajnerom —
+      // veľký plný kruh by zakryl napr. „Do košíka" vnútri karty
+      if (t.closest("button, input, textarea, select, label, [role='button']")) {
+        setMode("link", null);
+        return;
+      }
       const tagged = t.closest<HTMLElement>("[data-cursor]");
       if (tagged) {
         setMode(tagged.dataset.cursor ?? null, tagged.dataset.cursorLabel ?? null);
         return;
       }
-      if (t.closest("a, button, [role='button'], input, textarea, select, label")) {
+      if (t.closest("a")) {
         setMode("link", null);
         return;
       }
@@ -118,7 +124,7 @@ export default function Cursor() {
       >
         <span
           ref={labelRef}
-          className="select-none text-[8px] font-semibold uppercase tracking-widest text-[#0D1321] opacity-0"
+          className="select-none whitespace-nowrap text-[6.5px] font-semibold uppercase tracking-[0.1em] text-[#0D1321] opacity-0"
         >
         </span>
       </div>

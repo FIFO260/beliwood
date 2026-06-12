@@ -22,10 +22,12 @@ interface ProductsT {
 export default function ProductsClient({
   products,
   t,
+  labels,
   lang,
 }: {
   products: Product[];
   t: ProductsT;
+  labels: { categories: Record<string, string>; view: string };
   lang: string;
 }) {
   const categories: { label: string; value: "all" | Category }[] = [
@@ -71,7 +73,7 @@ export default function ProductsClient({
         </div>
       </div>
 
-      <ProductGrid products={filtered} addToCartLabel={t.addToCart} />
+      <ProductGrid products={filtered} addToCartLabel={t.addToCart} labels={labels} />
     </>
   );
 }

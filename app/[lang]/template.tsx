@@ -17,10 +17,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }
     if (prefersReducedMotion()) return;
     setupGsap();
+    // pozor: žiadne autoAlpha — visibility:hidden by sa dedilo na deti
+    // a GSAP tweens vnútri stránky by si zachytili štart ako alpha 0
     const tween = gsap.fromTo(
       ref.current,
-      { autoAlpha: 0, y: 32 },
-      { autoAlpha: 1, y: 0, duration: 0.85, ease: "beli", clearProps: "all" },
+      { opacity: 0, y: 32 },
+      { opacity: 1, y: 0, duration: 0.85, ease: "beli", clearProps: "all" },
     );
     return () => {
       tween.kill();

@@ -499,7 +499,7 @@ function MobileCard({
             {isProduct ? p.name : w.label}
           </p>
           <p className="text-xs text-[#86615C] mt-0.5">
-            {isProduct ? p.category : `${w.species} · ${w.thickness}×${w.width}×${w.length} mm`}
+            {isProduct ? p.category : `${w.species} · ${w.thickness / 10}×${w.width / 10}×${w.length / 10} cm`}
           </p>
           <div className="flex items-center justify-between mt-1.5">
             <span className="font-semibold text-[#0D1321] text-sm">{item.price} €</span>
@@ -607,7 +607,7 @@ function TableRow({
             )}
           </td>
           <td className="px-4 py-3 text-sm text-[#86615C]">
-            {w.thickness}×{w.width}×{w.length} mm
+            {w.thickness / 10}×{w.width / 10}×{w.length / 10} cm
           </td>
         </>
       )}
@@ -950,7 +950,7 @@ function WoodForm({
       </Field>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <Field label="Hrúbka (mm) *">
+        <Field label="Hrúbka (cm) *">
           <input
             type="number"
             inputMode="numeric"
@@ -960,7 +960,7 @@ function WoodForm({
             min={0}
           />
         </Field>
-        <Field label="Šírka (mm) *">
+        <Field label="Šírka (cm) *">
           <input
             type="number"
             inputMode="numeric"
@@ -970,7 +970,7 @@ function WoodForm({
             min={0}
           />
         </Field>
-        <Field label="Dĺžka (mm) *">
+        <Field label="Dĺžka (cm) *">
           <input
             type="number"
             inputMode="numeric"

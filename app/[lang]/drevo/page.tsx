@@ -9,5 +9,16 @@ export default async function DrevoPage({ params }: { params: Promise<{ lang: st
     ? (rawLang as Locale)
     : defaultLocale;
   const [woodProducts, dict] = await Promise.all([getWoodProducts(), getDictionary(lang)]);
-  return <DrevoClient woodProducts={woodProducts} t={dict.wood} lang={lang} />;
+  return (
+    <DrevoClient
+      woodProducts={woodProducts}
+      t={dict.wood}
+      labels={{
+        species: dict.labels.species,
+        states: dict.labels.states,
+        surfaces: dict.labels.surfaces,
+      }}
+      lang={lang}
+    />
+  );
 }

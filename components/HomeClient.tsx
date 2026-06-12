@@ -15,7 +15,7 @@ import type { Dictionary } from "@/lib/i18n";
 
 const statValues = [
   { value: 10, suffix: "+" },
-  { value: 5, suffix: " rokov" },
+  { value: 5, suffix: "" },
   { value: 100, suffix: "%" },
   { value: 200, suffix: "+" },
 ];
@@ -170,7 +170,7 @@ export default function HomeClient({
                 href={`/${lang}/drevo`}
                 className="card-shine group block overflow-hidden bg-[#0D1321]"
                 data-cursor="view"
-                data-cursor-label="Pozrieť"
+                data-cursor-label={dict.labels.view}
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
@@ -183,7 +183,7 @@ export default function HomeClient({
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/80 to-transparent" />
                   <div className="absolute left-3 top-3 flex gap-2">
                     <span className="bg-[#C5D86D] px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-[#0D1321]">
-                      {w.species}
+                      {dict.labels.species[w.species] ?? w.species}
                     </span>
                     {w.naturalEdge && (
                       <span className="bg-[#86615C] px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#FFEDDF]">
@@ -197,12 +197,12 @@ export default function HomeClient({
                     {w.label}
                   </h3>
                   <p className="mb-4 font-mono text-xs text-[#FFEDDF]/40">
-                    {w.thickness} × {w.width} × {w.length} mm &nbsp;·&nbsp; {w.surface}
+                    {w.thickness / 10} × {w.width / 10} × {w.length / 10} cm &nbsp;·&nbsp; {w.surface}
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="font-display text-2xl font-bold text-[#C5D86D]">{w.price} €</span>
                     <span className="flex items-center gap-2 text-xs uppercase tracking-wide text-[#FFEDDF]/40">
-                      {w.state}
+                      {dict.labels.states[w.state] ?? w.state}
                       <svg
                         className="h-3.5 w-3.5 -translate-x-1 text-[#C5D86D] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                         fill="none"
@@ -271,6 +271,8 @@ export default function HomeClient({
           title1: dict.home.hsTitle1,
           title2: dict.home.hsTitle2,
           scroll: dict.home.hsScroll,
+          view: dict.labels.view,
+          categories: dict.labels.productCategories,
         }}
       />
 
@@ -280,6 +282,7 @@ export default function HomeClient({
         title={dict.home.furnitureTitle}
         subtitle={dict.home.furnitureSub}
         addToCartLabel={dict.products.addToCart}
+        labels={{ categories: dict.labels.productCategories, view: dict.labels.view }}
       />
 
       {/* ── O nás ── */}

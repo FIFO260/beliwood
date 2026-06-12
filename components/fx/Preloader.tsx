@@ -34,7 +34,14 @@ export default function Preloader() {
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const seen = sessionStorage.getItem("beli-preloaded");
+    // storage môže hodiť výnimku (private mode, kvóta) — hero na nás čaká,
+    // takže markReady musí prebehnúť za každých okolností
+    let seen: string | null = null;
+    try {
+      seen = sessionStorage.getItem("beli-preloaded");
+    } catch {
+      /* berieme ako prvú návštevu */
+    }
     if (seen || prefersReducedMotion()) {
       markReady();
       return;
@@ -57,9 +64,14 @@ export default function Preloader() {
     const counter = { v: 0 };
     const tl = gsap.timeline({
       onComplete: () => {
-        sessionStorage.setItem("beli-preloaded", "1");
-        document.documentElement.classList.remove("overflow-hidden");
+        // markReady ako prvé — nič ho nesmie preskočiť
         markReady();
+        document.documentElement.classList.remove("overflow-hidden");
+        try {
+          sessionStorage.setItem("beli-preloaded", "1");
+        } catch {
+          /* nabudúce sa preloader prehrá znova, nevadí */
+        }
         setShow(false);
       },
     });

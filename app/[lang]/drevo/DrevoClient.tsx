@@ -88,10 +88,16 @@ const defaultFilters: Filters = {
 export default function DrevoClient({
   woodProducts,
   t,
+  labels,
   lang,
 }: {
   woodProducts: WoodProduct[];
   t: WoodT;
+  labels: {
+    species: Record<string, string>;
+    states: Record<string, string>;
+    surfaces: Record<string, string>;
+  };
   lang: string;
 }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
@@ -150,9 +156,9 @@ export default function DrevoClient({
   ];
 
   const thicknessLabels: Record<ThicknessRange, string> = {
-    "10-60": "10–60 mm",
-    "60-100": "60–100 mm",
-    "100-150": "100–150 mm",
+    "10-60": "1–6 cm",
+    "60-100": "6–10 cm",
+    "100-150": "10–15 cm",
   };
 
   const categoryLabels: Record<WoodCategory, string> = {
@@ -181,6 +187,9 @@ export default function DrevoClient({
     specLength: t.specLength,
     specMoisture: t.specMoisture,
     specSurface: t.specSurface,
+    speciesLabels: labels.species,
+    stateLabels: labels.states,
+    surfaceLabels: labels.surfaces,
   };
 
   return (
@@ -251,7 +260,7 @@ export default function DrevoClient({
                           onChange={() => setFilters((f) => ({ ...f, species: toggle(f.species, sp) }))}
                           className="accent-[#C5D86D] w-4 h-4 rounded-none"
                         />
-                        <span className="text-sm text-[#0D1321] group-hover:text-[#86615C] transition-colors flex-1">{sp}</span>
+                        <span className="text-sm text-[#0D1321] group-hover:text-[#86615C] transition-colors flex-1">{labels.species[sp] ?? sp}</span>
                         <span className="text-xs text-[#86615C]/60">{count}</span>
                       </label>
                     );
@@ -290,7 +299,7 @@ export default function DrevoClient({
                         onChange={() => setFilters((f) => ({ ...f, surfaces: toggle(f.surfaces, s) }))}
                         className="accent-[#C5D86D] w-4 h-4"
                       />
-                      <span className="text-sm text-[#0D1321] group-hover:text-[#86615C] transition-colors">{s}</span>
+                      <span className="text-sm text-[#0D1321] group-hover:text-[#86615C] transition-colors">{labels.surfaces[s] ?? s}</span>
                     </label>
                   ))}
                 </FilterBlock>

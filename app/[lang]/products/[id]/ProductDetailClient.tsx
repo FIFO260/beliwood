@@ -25,11 +25,13 @@ export default function ProductDetailClient({
   product,
   related,
   t,
+  categoryLabels,
   lang,
 }: {
   product: Product | null;
   related: Product[];
   t: DetailT;
+  categoryLabels: Record<string, string>;
   lang: string;
 }) {
   const imgRef = useRef<HTMLDivElement>(null);
@@ -101,7 +103,7 @@ export default function ProductDetailClient({
               priority
             />
             <span className="absolute top-4 left-4 bg-[#0D1321]/80 text-[#C5D86D] text-xs font-medium px-3 py-1.5 tracking-widest uppercase">
-              {product.category}
+              {categoryLabels[product.category] ?? product.category}
             </span>
           </div>
 

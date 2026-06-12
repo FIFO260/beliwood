@@ -18,7 +18,9 @@ const DATA_DIR = path.join(process.cwd(), "data");
 
 // Na Verceli je súborový systém read-only / efemérny — JSON dáta
 // musia žiť vo Vercel Blob. Lokálne sa ďalej používa priečinok data/.
-const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
+// Auth: klasický token, alebo nový OIDC flow (Vercel injektuje BLOB_STORE_ID
+// + VERCEL_OIDC_TOKEN a SDK si ich nájde samo)
+const useBlob = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 
 // URL blobu sa po prvom čítaní/zápise cachuje (list() je pomalší)
 const blobUrlCache = new Map<string, string>();

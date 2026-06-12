@@ -68,23 +68,6 @@
     "description": "Čerstvo rezaný bukový hranol priamo z pily. Vhodný na sušenie a ďalšie spracovanie."
   },
   {
-    "id": 105,
-    "species": "Orech americký",
-    "label": "Orech americký — doska CNC",
-    "thickness": 52,
-    "width": 300,
-    "length": 2500,
-    "moisture": 8,
-    "state": "Sušené v sušičke",
-    "surface": "Zrovnané na CNC",
-    "category": "stoly",
-    "price": 285,
-    "inStock": true,
-    "naturalEdge": false,
-    "img": "https://images.unsplash.com/photo-1609862212026-cf27f0da3bb6?w=800&q=80",
-    "description": "Americký čierny orech, komorovo sušený, zrovnaný na CNC. Výnimočná kresba dreva pre prémiový nábytok."
-  },
-  {
     "id": 107,
     "species": "Dub bahenný",
     "label": "Dub bahenný — priečny rez",

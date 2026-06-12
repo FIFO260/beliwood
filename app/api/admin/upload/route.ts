@@ -8,7 +8,8 @@ const MAX_SIZE = 8 * 1024 * 1024; // klient komprimuje na ~300 kB, toto je poist
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"]);
 
 // na Verceli je lokálny disk read-only — obrázky musia ísť do Blob storage
-const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
+// (klasický token alebo nový OIDC flow cez BLOB_STORE_ID)
+const useBlob = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 
 export async function POST(req: NextRequest) {
   if (!(await isAdminAuthenticated())) {
