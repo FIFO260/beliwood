@@ -61,19 +61,24 @@ html.fx-cursor * {
 /* ── Filmové zrno cez celú stránku ───────────────────────────── */
 .fx-grain {
   position: fixed;
-  inset: -100%;
+  inset: -5%; /* len malý presah — väčšia vrstva zbytočne žerie GPU pamäť */
   z-index: 100;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 256px 256px;
   opacity: 0.05;
+}
+/* animované zrno len na strojoch s GPU akceleráciou (.fx-anim nastavuje
+   SmoothScroll po WebGL probe) — softvérové renderovanie by stálo ~10 ms/frame */
+.fx-anim .fx-grain {
+  will-change: transform;
   animation: grain-shift 0.9s steps(4) infinite;
 }
 @keyframes grain-shift {
   0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-2%, 1%); }
+  25%  { transform: translate(-1.5%, 1%); }
   50%  { transform: translate(1%, -1.5%); }
-  75%  { transform: translate(-1%, 2%); }
+  75%  { transform: translate(-1%, 1.5%); }
   100% { transform: translate(0, 0); }
 }
 
@@ -170,17 +175,18 @@ button:hover > .btn-label > span {
   content: "";
   position: absolute;
   top: 0;
-  left: -80%;
+  left: 0;
   width: 50%;
   height: 100%;
   background: linear-gradient(100deg, transparent 20%, rgba(255, 237, 223, 0.14) 50%, transparent 80%);
-  transform: skewX(-18deg);
-  transition: left 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  /* transform namiesto left — animácia left spúšťa layout každý frame */
+  transform: translateX(-170%) skewX(-18deg);
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
   pointer-events: none;
   z-index: 2;
 }
 .card-shine:hover::after {
-  left: 130%;
+  transform: translateX(270%) skewX(-18deg);
 }
 
 @media (prefers-reduced-motion: reduce) {

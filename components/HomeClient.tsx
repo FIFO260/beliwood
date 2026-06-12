@@ -63,14 +63,13 @@ export default function HomeClient({
       });
 
       // ── Marquee reaguje na rýchlosť scrollu ───────────────────
+      // (len lacný skew transform; mutácia animationDuration nútila
+      // prehliadač prepočítavať CSS animáciu počas scrollu)
       if (marqueeRef.current && !prefersReducedMotion()) {
-        const track = marqueeRef.current;
-        const skewTo = gsap.quickTo(track, "skewX", { duration: 0.5, ease: "power2.out" });
+        const skewTo = gsap.quickTo(marqueeRef.current, "skewX", { duration: 0.5, ease: "power2.out" });
         ScrollTrigger.create({
           onUpdate: (self) => {
-            const v = self.getVelocity();
-            skewTo(gsap.utils.clamp(-8, 8, v / 350));
-            track.style.animationDuration = `${gsap.utils.clamp(12, 40, 40 - Math.abs(v) / 120)}s`;
+            skewTo(gsap.utils.clamp(-8, 8, self.getVelocity() / 350));
           },
         });
       }

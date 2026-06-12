@@ -47,7 +47,14 @@ export default function Cursor() {
       gsap.to([dot, ring], { autoAlpha: 0, duration: 0.25 });
     };
 
+    let curMode: string | null = null;
+    let curText: string | null = null;
     const setMode = (mode: string | null, text: string | null) => {
+      // mouseover páli pri každom prechode medzi elementmi — bez cache
+      // by sa tu stohovali tweeny aj keď sa nič nemení
+      if (mode === curMode && text === curText) return;
+      curMode = mode;
+      curText = text;
       // plný limetkový krúžok s textom sa nesmie blendovať
       ring.classList.toggle("mix-blend-difference", !(mode === "drag" || mode === "view"));
       if (mode === "drag" || mode === "view") {

@@ -51,15 +51,30 @@ export default function Navbar({ t, lang }: { t: NavT; lang: string }) {
       document.documentElement.style.setProperty("--nav-h", `${h}px`);
     };
 
+    // rAF throttle + tween len pri zmene stavu — pôvodne sa pri každom
+    // scroll evente vytváral nový (stohujúci sa) tween
+    let hidden = false;
+    let ticking = false;
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      setScrolled(currentY > 40);
-      if (currentY > lastScrollY.current && currentY > 120) {
-        gsap.to(nav, { yPercent: -100, duration: 0.4, ease: "beli", onUpdate: updateNavH });
-      } else {
-        gsap.to(nav, { yPercent: 0, duration: 0.4, ease: "beli", onUpdate: updateNavH });
-      }
-      lastScrollY.current = currentY;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const currentY = window.scrollY;
+        setScrolled(currentY > 40);
+        const shouldHide = currentY > lastScrollY.current && currentY > 120;
+        if (shouldHide !== hidden) {
+          hidden = shouldHide;
+          gsap.to(nav, {
+            yPercent: hidden ? -100 : 0,
+            duration: 0.4,
+            ease: "beli",
+            overwrite: true,
+            onUpdate: updateNavH,
+          });
+        }
+        lastScrollY.current = currentY;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -146,7 +161,7 @@ export default function Navbar({ t, lang }: { t: NavT; lang: string }) {
         ref={navRef}
         className={`fixed left-0 right-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
           scrolled || menuOpen || !darkTop
-            ? "border-b border-[#FFEDDF]/10 bg-[#0D1321]/90 backdrop-blur-md"
+            ? "border-b border-[#FFEDDF]/10 bg-[#0D1321]/95 backdrop-blur-sm"
             : "border-b border-transparent bg-transparent"
         }`}
       >

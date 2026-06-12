@@ -28,6 +28,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     setupGsap();
     if (prefersReducedMotion()) return;
 
+    // GPU akcelerácia? Bez nej nechávame dekoratívne animácie (zrno) statické
+    const probe = document.createElement("canvas");
+    if (probe.getContext("webgl2") || probe.getContext("webgl")) {
+      document.documentElement.classList.add("fx-anim");
+    }
+
     const smoother = ScrollSmoother.create({
       wrapper: wrapperRef.current!,
       content: contentRef.current!,

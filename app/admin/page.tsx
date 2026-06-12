@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { compressImage, uploadWithProgress } from "@/lib/compressImage";
 import type { Product, Category } from "@/lib/products";
 import type { WoodProduct, WoodSpecies, WoodSurface, WoodState, WoodCategory } from "@/lib/wood";
 import { allSpecies, allStates, allSurfaces, allCategories } from "@/lib/wood";
@@ -44,6 +45,7 @@ export default function AdminPage() {
   const [tab, setTab] = useState<Tab>("products");
   const [products, setProducts] = useState<Product[]>([]);
   const [woodProducts, setWoodProducts] = useState<WoodProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState<"add" | "edit" | null>(null);
   const [editId, setEditId] = useState<number | null>(null);
   const [productForm, setProductForm] = useState(emptyProduct());
@@ -51,6 +53,7 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [uploadingImg, setUploadingImg] = useState(false);
+  const [uploadPct, setUploadPct] = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   // ── Check auth on mount ──────────────────────────────────────────────────
@@ -63,17 +66,24 @@ export default function AdminPage() {
   // ── Load data after auth ─────────────────────────────────────────────────
   useEffect(() => {
     if (!authed) return;
-    fetchProducts();
-    fetchWood();
+    let cancelled = false;
+    Promise.all([fetchProducts(), fetchWood()]).finally(() => {
+      if (!cancelled) setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [authed]);
 
   async function fetchProducts() {
     const r = await fetch("/api/admin/products");
+    if (r.status === 401) return setAuthed(false);
     if (r.ok) setProducts(await r.json());
   }
 
   async function fetchWood() {
     const r = await fetch("/api/admin/wood");
+    if (r.status === 401) return setAuthed(false);
     if (r.ok) setWoodProducts(await r.json());
   }
 
@@ -123,29 +133,44 @@ export default function AdminPage() {
   }
 
   // ── Upload image ─────────────────────────────────────────────────────────
+  // Mobilné fotky (5–15 MB) sa najprv zmenšia v prehliadači na ~300 kB,
+  // inak upload na pomalej sieti visí a server ho odmietne (limit 4,5 MB)
   async function handleImageUpload(file: File) {
     setUploadingImg(true);
+    setUploadPct(0);
+    setError("");
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      if (!r.ok) throw new Error();
-      const { url } = await r.json();
+      const compressed = await compressImage(file);
+      const { url } = await uploadWithProgress("/api/admin/upload", compressed, setUploadPct);
       if (tab === "products") setProductForm((f) => ({ ...f, img: url }));
       else setWoodForm((f) => ({ ...f, img: url }));
-    } catch {
-      setError("Nahrávanie obrázka zlyhalo");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Nahrávanie obrázka zlyhalo");
     } finally {
       setUploadingImg(false);
+      setUploadPct(null);
     }
   }
 
   // ── Save ─────────────────────────────────────────────────────────────────
   async function handleSave() {
+    const isProduct = tab === "products";
+
+    // validácia s konkrétnou hláškou namiesto tichého zlyhania
+    const name = isProduct ? productForm.name.trim() : woodForm.label.trim();
+    const price = isProduct ? productForm.price : woodForm.price;
+    if (!name) {
+      setError(isProduct ? "Vyplňte názov produktu" : "Vyplňte názov / popis");
+      return;
+    }
+    if (!price || price <= 0) {
+      setError("Zadajte cenu väčšiu ako 0");
+      return;
+    }
+
     setSaving(true);
     setError("");
     try {
-      const isProduct = tab === "products";
       const body = isProduct ? productForm : woodForm;
       const base = isProduct ? "/api/admin/products" : "/api/admin/wood";
       const url = modal === "edit" ? `${base}/${editId}` : base;
@@ -156,7 +181,11 @@ export default function AdminPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      if (!r.ok) throw new Error((await r.json()).error ?? "Chyba");
+      if (r.status === 401) {
+        setAuthed(false);
+        return;
+      }
+      if (!r.ok) throw new Error((await r.json()).error ?? "Chyba pri ukladaní");
 
       if (isProduct) await fetchProducts();
       else await fetchWood();
@@ -201,29 +230,24 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-[#f5ede4]">
       {/* Header */}
-      <header className="bg-[#0D1321] px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <span className="font-display text-[#C5D86D] text-xl font-bold">
-            BeliWood
-          </span>
+      <header className="bg-[#0D1321] px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="font-display text-[#C5D86D] text-xl font-bold">BeliWood</span>
           <span className="text-[#FFEDDF]/40 text-sm">Admin</span>
         </div>
         <button
           onClick={logout}
-          className="text-[#FFEDDF]/60 hover:text-[#FFEDDF] text-sm transition-colors"
+          className="text-[#FFEDDF]/60 hover:text-[#FFEDDF] text-sm transition-colors py-2"
         >
           Odhlásiť sa
         </button>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Tabs + Add button */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-1 bg-white border border-[#86615C]/20 p-1">
-            <TabBtn
-              active={tab === "products"}
-              onClick={() => setTab("products")}
-            >
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 py-5 sm:py-8">
+        {/* Tabs + Add button — na mobile pod sebou */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
+          <div className="flex gap-1 bg-white border border-[#86615C]/20 p-1 self-start">
+            <TabBtn active={tab === "products"} onClick={() => setTab("products")}>
               Produkty ({products.length})
             </TabBtn>
             <TabBtn active={tab === "wood"} onClick={() => setTab("wood")}>
@@ -232,58 +256,29 @@ export default function AdminPage() {
           </div>
           <button
             onClick={openAdd}
-            className="bg-[#C5D86D] text-[#0D1321] px-5 py-2.5 text-sm font-semibold hover:bg-[#b8cc55] transition-colors flex items-center gap-2"
+            className="bg-[#C5D86D] text-[#0D1321] px-5 py-3 text-sm font-semibold hover:bg-[#b8cc55] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
           >
             <span className="text-lg leading-none">+</span> Pridať produkt
           </button>
         </div>
 
-        {/* Table */}
+        {/* Zoznam */}
         <div className="bg-white border border-[#86615C]/15">
-          {items.length === 0 ? (
-            <div className="py-20 text-center text-[#86615C]">
+          {loading ? (
+            <SkeletonList />
+          ) : items.length === 0 ? (
+            <div className="py-20 text-center text-[#86615C] px-4">
               <p className="text-lg font-medium mb-2">Žiadne produkty</p>
               <p className="text-sm opacity-60">
                 Kliknite na &quot;Pridať produkt&quot; pre vytvorenie prvého.
               </p>
             </div>
           ) : (
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[#86615C]/10 bg-[#f5ede4]">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                    Produkt
-                  </th>
-                  {tab === "products" ? (
-                    <>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                        Kategória
-                      </th>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                        Materiál
-                      </th>
-                    </>
-                  ) : (
-                    <>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                        Drevina
-                      </th>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                        Rozmery
-                      </th>
-                    </>
-                  )}
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                    Cena
-                  </th>
-                  <th className="text-right px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase">
-                    Akcie
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
+            <>
+              {/* Mobil: karty */}
+              <ul className="sm:hidden divide-y divide-[#86615C]/10">
                 {items.map((item) => (
-                  <TableRow
+                  <MobileCard
                     key={item.id}
                     item={item}
                     tab={tab}
@@ -291,8 +286,43 @@ export default function AdminPage() {
                     onDelete={() => handleDelete(item.id)}
                   />
                 ))}
-              </tbody>
-            </table>
+              </ul>
+
+              {/* Desktop: tabuľka */}
+              <div className="hidden sm:block overflow-x-auto">
+                <table className="w-full min-w-[640px]">
+                  <thead>
+                    <tr className="border-b border-[#86615C]/10 bg-[#f5ede4]">
+                      <Th>Produkt</Th>
+                      {tab === "products" ? (
+                        <>
+                          <Th>Kategória</Th>
+                          <Th>Materiál</Th>
+                        </>
+                      ) : (
+                        <>
+                          <Th>Drevina</Th>
+                          <Th>Rozmery</Th>
+                        </>
+                      )}
+                      <Th>Cena</Th>
+                      <Th right>Akcie</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {items.map((item) => (
+                      <TableRow
+                        key={item.id}
+                        item={item}
+                        tab={tab}
+                        onEdit={() => openEdit(item)}
+                        onDelete={() => handleDelete(item.id)}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       </div>
@@ -302,6 +332,23 @@ export default function AdminPage() {
         <Modal
           title={modal === "add" ? "Pridať produkt" : "Upraviť produkt"}
           onClose={() => setModal(null)}
+          footer={
+            <div className="flex gap-3">
+              <button
+                onClick={() => setModal(null)}
+                className="flex-1 border border-[#86615C]/30 text-[#86615C] py-3.5 text-sm font-medium hover:border-[#0D1321] hover:text-[#0D1321] transition-colors"
+              >
+                Zrušiť
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving || uploadingImg}
+                className="flex-1 bg-[#0D1321] text-[#FFEDDF] py-3.5 text-sm font-semibold hover:bg-[#C5D86D] hover:text-[#0D1321] active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                {saving ? "Ukladám…" : uploadingImg ? "Čakám na obrázok…" : modal === "add" ? "Pridať" : "Uložiť"}
+              </button>
+            </div>
+          }
         >
           {tab === "products" ? (
             <ProductForm
@@ -310,6 +357,7 @@ export default function AdminPage() {
               onImageUpload={handleImageUpload}
               fileRef={fileRef}
               uploadingImg={uploadingImg}
+              uploadPct={uploadPct}
             />
           ) : (
             <WoodForm
@@ -318,30 +366,15 @@ export default function AdminPage() {
               onImageUpload={handleImageUpload}
               fileRef={fileRef}
               uploadingImg={uploadingImg}
+              uploadPct={uploadPct}
             />
           )}
 
           {error && (
-            <p className="mt-3 text-red-600 text-sm bg-red-50 px-3 py-2 border border-red-200">
+            <p className="mt-4 text-red-600 text-sm bg-red-50 px-3 py-2.5 border border-red-200">
               {error}
             </p>
           )}
-
-          <div className="flex gap-3 mt-6 pt-5 border-t border-[#86615C]/10">
-            <button
-              onClick={() => setModal(null)}
-              className="flex-1 border border-[#86615C]/30 text-[#86615C] py-3 text-sm font-medium hover:border-[#0D1321] hover:text-[#0D1321] transition-colors"
-            >
-              Zrušiť
-            </button>
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="flex-1 bg-[#0D1321] text-[#FFEDDF] py-3 text-sm font-semibold hover:bg-[#C5D86D] hover:text-[#0D1321] transition-colors disabled:opacity-50"
-            >
-              {saving ? "Ukladám..." : modal === "add" ? "Pridať" : "Uložiť"}
-            </button>
-          </div>
         </Modal>
       )}
     </div>
@@ -370,6 +403,8 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
         return;
       }
       onLogin();
+    } catch {
+      setErr("Sieťová chyba — skúste to znova");
     } finally {
       setLoading(false);
     }
@@ -379,9 +414,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
     <div className="min-h-screen bg-[#0D1321] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
-          <p className="font-display text-[#C5D86D] text-3xl font-bold mb-1">
-            BeliWood
-          </p>
+          <p className="font-display text-[#C5D86D] text-3xl font-bold mb-1">BeliWood</p>
           <p className="text-[#FFEDDF]/50 text-sm">Správa produktov</p>
         </div>
 
@@ -395,7 +428,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
               value={pw}
               onChange={(e) => setPw(e.target.value)}
               autoFocus
-              className="w-full bg-white/10 border border-white/20 text-[#FFEDDF] px-4 py-3 text-sm focus:outline-none focus:border-[#C5D86D] transition-colors"
+              className="w-full bg-white/10 border border-white/20 text-[#FFEDDF] px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-[#C5D86D] transition-colors"
               placeholder="Zadajte heslo..."
             />
           </div>
@@ -419,7 +452,112 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-// ─── TABLE ROW ────────────────────────────────────────────────────────────────
+// ─── ITEM THUMB ───────────────────────────────────────────────────────────────
+
+function Thumb({ img, size = "w-12 h-12" }: { img: string; size?: string }) {
+  return img ? (
+    <div className={`relative ${size} flex-shrink-0 overflow-hidden bg-[#86615C]/10`}>
+      <Image
+        src={img}
+        alt=""
+        fill
+        className="object-cover"
+        sizes="64px"
+        unoptimized={img.startsWith("/uploads/")}
+      />
+    </div>
+  ) : (
+    <div className={`${size} flex-shrink-0 bg-[#86615C]/10 flex items-center justify-center`}>
+      <span className="text-[#86615C]/30 text-[10px]">bez foto</span>
+    </div>
+  );
+}
+
+// ─── MOBILE CARD ──────────────────────────────────────────────────────────────
+
+function MobileCard({
+  item,
+  tab,
+  onEdit,
+  onDelete,
+}: {
+  item: Product | WoodProduct;
+  tab: Tab;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  const isProduct = tab === "products";
+  const p = item as Product;
+  const w = item as WoodProduct;
+
+  return (
+    <li className="p-3.5">
+      <div className="flex gap-3">
+        <Thumb img={item.img} size="w-16 h-16" />
+        <div className="min-w-0 flex-1">
+          <p className="font-medium text-[#0D1321] text-sm leading-snug truncate">
+            {isProduct ? p.name : w.label}
+          </p>
+          <p className="text-xs text-[#86615C] mt-0.5">
+            {isProduct ? p.category : `${w.species} · ${w.thickness}×${w.width}×${w.length} mm`}
+          </p>
+          <div className="flex items-center justify-between mt-1.5">
+            <span className="font-semibold text-[#0D1321] text-sm">{item.price} €</span>
+            {!isProduct && !w.inStock && (
+              <span className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 font-medium">
+                vypredané
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={onEdit}
+          className="flex-1 text-xs text-[#86615C] border border-[#86615C]/30 py-2.5 active:bg-[#f5ede4] transition-colors"
+        >
+          Upraviť
+        </button>
+        <button
+          onClick={onDelete}
+          className="flex-1 text-xs text-red-600 border border-red-200 py-2.5 active:bg-red-50 transition-colors"
+        >
+          Vymazať
+        </button>
+      </div>
+    </li>
+  );
+}
+
+// ─── SKELETON ─────────────────────────────────────────────────────────────────
+
+function SkeletonList() {
+  return (
+    <div className="divide-y divide-[#86615C]/10">
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} className="flex items-center gap-3 p-4 animate-pulse">
+          <div className="w-12 h-12 bg-[#86615C]/10 flex-shrink-0" />
+          <div className="flex-1 space-y-2">
+            <div className="h-3 bg-[#86615C]/10 w-1/3" />
+            <div className="h-3 bg-[#86615C]/10 w-1/5" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── TABLE ────────────────────────────────────────────────────────────────────
+
+function Th({ children, right }: { children: React.ReactNode; right?: boolean }) {
+  return (
+    <th
+      className={`${right ? "text-right" : "text-left"} px-4 py-3 text-xs font-semibold text-[#86615C] tracking-wider uppercase`}
+    >
+      {children}
+    </th>
+  );
+}
 
 function TableRow({
   item,
@@ -440,22 +578,7 @@ function TableRow({
     <tr className="border-b border-[#86615C]/10 hover:bg-[#f5ede4]/60 transition-colors">
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
-          {item.img ? (
-            <div className="relative w-12 h-12 flex-shrink-0 overflow-hidden bg-[#86615C]/10">
-              <Image
-                src={item.img}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="48px"
-                unoptimized={item.img.startsWith("/uploads/")}
-              />
-            </div>
-          ) : (
-            <div className="w-12 h-12 flex-shrink-0 bg-[#86615C]/10 flex items-center justify-center">
-              <span className="text-[#86615C]/30 text-xs">bez foto</span>
-            </div>
-          )}
+          <Thumb img={item.img} />
           <span className="font-medium text-[#0D1321] text-sm">
             {isProduct ? p.name : w.label}
           </span>
@@ -489,9 +612,7 @@ function TableRow({
         </>
       )}
 
-      <td className="px-4 py-3 font-semibold text-[#0D1321] text-sm">
-        {item.price} €
-      </td>
+      <td className="px-4 py-3 font-semibold text-[#0D1321] text-sm">{item.price} €</td>
 
       <td className="px-4 py-3">
         <div className="flex items-center justify-end gap-2">
@@ -514,31 +635,50 @@ function TableRow({
 }
 
 // ─── MODAL WRAPPER ────────────────────────────────────────────────────────────
+// Na mobile fullscreen sheet so sticky hlavičkou aj tlačidlami — formulár sa
+// scrolluje, akcie sú vždy na dosah palca
 
 function Modal({
   title,
   onClose,
+  footer,
   children,
 }: {
   title: string;
   onClose: () => void;
+  footer: React.ReactNode;
   children: React.ReactNode;
 }) {
+  // zamkni scroll pozadia, kým je modal otvorený
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-white w-full max-w-2xl mt-8 mb-8 shadow-2xl">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#86615C]/10 bg-[#0D1321]">
-          <h2 className="font-display text-lg font-bold text-[#FFEDDF]">
-            {title}
-          </h2>
+    <div className="fixed inset-0 z-50 bg-black/60 sm:backdrop-blur-sm sm:p-4 flex sm:items-start sm:justify-center">
+      <div className="bg-white w-full h-full sm:h-auto sm:max-h-[calc(100vh-4rem)] sm:max-w-2xl sm:mt-4 shadow-2xl flex flex-col">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-4 bg-[#0D1321] flex-shrink-0">
+          <h2 className="font-display text-lg font-bold text-[#FFEDDF]">{title}</h2>
           <button
             onClick={onClose}
-            className="text-[#FFEDDF]/50 hover:text-[#FFEDDF] text-xl leading-none transition-colors"
+            aria-label="Zavrieť"
+            className="text-[#FFEDDF]/50 hover:text-[#FFEDDF] text-2xl leading-none transition-colors -m-2 p-2"
           >
             ×
           </button>
         </div>
-        <div className="px-6 py-6">{children}</div>
+
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-5">
+          {children}
+        </div>
+
+        <div className="flex-shrink-0 border-t border-[#86615C]/10 bg-white px-4 sm:px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          {footer}
+        </div>
       </div>
     </div>
   );
@@ -552,33 +692,35 @@ function ImageField({
   onUpload,
   fileRef,
   uploading,
+  uploadPct,
 }: {
   imgUrl: string;
   onChange: (url: string) => void;
   onUpload: (file: File) => void;
   fileRef: React.RefObject<HTMLInputElement | null>;
   uploading: boolean;
+  uploadPct: number | null;
 }) {
   return (
     <div>
       <label className="block text-xs font-semibold text-[#86615C] tracking-wider uppercase mb-2">
         Obrázok
       </label>
-      <div className="flex gap-2 mb-2">
+      <div className="flex flex-col sm:flex-row gap-2 mb-2">
         <input
           type="text"
           value={imgUrl}
           onChange={(e) => onChange(e.target.value)}
           placeholder="URL obrázka alebo nahrajte súbor..."
-          className="flex-1 border border-[#86615C]/30 px-3 py-2 text-sm focus:outline-none focus:border-[#0D1321] transition-colors"
+          className="flex-1 border border-[#86615C]/30 px-3 py-2.5 text-base sm:text-sm focus:outline-none focus:border-[#0D1321] transition-colors"
         />
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
           disabled={uploading}
-          className="bg-[#f5ede4] border border-[#86615C]/30 px-4 py-2 text-sm font-medium text-[#86615C] hover:border-[#0D1321] hover:text-[#0D1321] transition-colors disabled:opacity-50 whitespace-nowrap"
+          className="bg-[#f5ede4] border border-[#86615C]/30 px-4 py-2.5 text-sm font-medium text-[#86615C] hover:border-[#0D1321] hover:text-[#0D1321] transition-colors disabled:opacity-60 whitespace-nowrap"
         >
-          {uploading ? "Nahrávam..." : "Nahrať súbor"}
+          {uploading ? `Nahrávam… ${uploadPct ?? 0} %` : "📷 Nahrať fotku"}
         </button>
         <input
           ref={fileRef}
@@ -592,8 +734,19 @@ function ImageField({
           }}
         />
       </div>
-      {imgUrl && (
-        <div className="relative w-full h-32 overflow-hidden bg-[#86615C]/10">
+
+      {/* progres uploadu */}
+      {uploading && (
+        <div className="h-1 bg-[#86615C]/15 mb-2 overflow-hidden">
+          <div
+            className="h-full bg-[#C5D86D] transition-[width] duration-200"
+            style={{ width: `${uploadPct ?? 0}%` }}
+          />
+        </div>
+      )}
+
+      {imgUrl && !uploading && (
+        <div className="relative w-full h-36 sm:h-32 overflow-hidden bg-[#86615C]/10">
           <Image
             src={imgUrl}
             alt="náhľad"
@@ -602,6 +755,13 @@ function ImageField({
             sizes="600px"
             unoptimized={imgUrl.startsWith("/uploads/")}
           />
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="absolute top-2 right-2 bg-[#0D1321]/80 text-[#FFEDDF] text-xs px-2.5 py-1.5 hover:bg-red-600 transition-colors"
+          >
+            ✕ Odstrániť
+          </button>
         </div>
       )}
     </div>
@@ -616,12 +776,14 @@ function ProductForm({
   onImageUpload,
   fileRef,
   uploadingImg,
+  uploadPct,
 }: {
   form: Omit<Product, "id">;
   onChange: (f: Omit<Product, "id">) => void;
   onImageUpload: (file: File) => void;
   fileRef: React.RefObject<HTMLInputElement | null>;
   uploadingImg: boolean;
+  uploadPct: number | null;
 }) {
   const set = (key: keyof typeof form) => (val: string | number) =>
     onChange({ ...form, [key]: val });
@@ -641,6 +803,7 @@ function ProductForm({
         <Field label="Cena (€) *">
           <input
             type="number"
+            inputMode="decimal"
             value={form.price || ""}
             onChange={(e) => set("price")(parseFloat(e.target.value) || 0)}
             className={inputCls}
@@ -699,6 +862,7 @@ function ProductForm({
         onUpload={onImageUpload}
         fileRef={fileRef}
         uploading={uploadingImg}
+        uploadPct={uploadPct}
       />
     </div>
   );
@@ -712,12 +876,14 @@ function WoodForm({
   onImageUpload,
   fileRef,
   uploadingImg,
+  uploadPct,
 }: {
   form: Omit<WoodProduct, "id">;
   onChange: (f: Omit<WoodProduct, "id">) => void;
   onImageUpload: (file: File) => void;
   fileRef: React.RefObject<HTMLInputElement | null>;
   uploadingImg: boolean;
+  uploadPct: number | null;
 }) {
   const set =
     (key: keyof typeof form) => (val: string | number | boolean) =>
@@ -735,7 +901,7 @@ function WoodForm({
         />
       </Field>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
         <Field label="Drevina *">
           <select
             value={form.species}
@@ -783,10 +949,11 @@ function WoodForm({
         </select>
       </Field>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <Field label="Hrúbka (mm) *">
           <input
             type="number"
+            inputMode="numeric"
             value={form.thickness || ""}
             onChange={(e) => set("thickness")(parseInt(e.target.value) || 0)}
             className={inputCls}
@@ -796,6 +963,7 @@ function WoodForm({
         <Field label="Šírka (mm) *">
           <input
             type="number"
+            inputMode="numeric"
             value={form.width || ""}
             onChange={(e) => set("width")(parseInt(e.target.value) || 0)}
             className={inputCls}
@@ -805,6 +973,7 @@ function WoodForm({
         <Field label="Dĺžka (mm) *">
           <input
             type="number"
+            inputMode="numeric"
             value={form.length || ""}
             onChange={(e) => set("length")(parseInt(e.target.value) || 0)}
             className={inputCls}
@@ -814,6 +983,7 @@ function WoodForm({
         <Field label="Vlhkosť (%)">
           <input
             type="number"
+            inputMode="numeric"
             value={form.moisture || ""}
             onChange={(e) => set("moisture")(parseInt(e.target.value) || 0)}
             className={inputCls}
@@ -826,6 +996,7 @@ function WoodForm({
       <Field label="Cena (€) *">
         <input
           type="number"
+          inputMode="decimal"
           value={form.price || ""}
           onChange={(e) => set("price")(parseFloat(e.target.value) || 0)}
           className={inputCls}
@@ -834,25 +1005,23 @@ function WoodForm({
       </Field>
 
       <div className="flex items-center gap-6">
-        <label className="flex items-center gap-2.5 cursor-pointer">
+        <label className="flex items-center gap-2.5 cursor-pointer py-1">
           <input
             type="checkbox"
             checked={form.inStock}
             onChange={(e) => set("inStock")(e.target.checked)}
-            className="accent-[#C5D86D] w-4 h-4"
+            className="accent-[#C5D86D] w-5 h-5"
           />
           <span className="text-sm text-[#0D1321] font-medium">Skladom</span>
         </label>
-        <label className="flex items-center gap-2.5 cursor-pointer">
+        <label className="flex items-center gap-2.5 cursor-pointer py-1">
           <input
             type="checkbox"
             checked={form.naturalEdge}
             onChange={(e) => set("naturalEdge")(e.target.checked)}
-            className="accent-[#C5D86D] w-4 h-4"
+            className="accent-[#C5D86D] w-5 h-5"
           />
-          <span className="text-sm text-[#0D1321] font-medium">
-            Živá hrana
-          </span>
+          <span className="text-sm text-[#0D1321] font-medium">Živá hrana</span>
         </label>
       </div>
 
@@ -872,6 +1041,7 @@ function WoodForm({
         onUpload={onImageUpload}
         fileRef={fileRef}
         uploading={uploadingImg}
+        uploadPct={uploadPct}
       />
     </div>
   );
@@ -879,16 +1049,12 @@ function WoodForm({
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
+// text-base na mobile — pri menšom písme iOS Safari automaticky zoomuje
+// do inputu a rozhádže celý viewport
 const inputCls =
-  "w-full border border-[#86615C]/30 px-3 py-2 text-sm focus:outline-none focus:border-[#0D1321] transition-colors bg-white";
+  "w-full border border-[#86615C]/30 px-3 py-2.5 text-base sm:text-sm focus:outline-none focus:border-[#0D1321] transition-colors bg-white";
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
       <label className="block text-xs font-semibold text-[#86615C] tracking-wider uppercase mb-1.5">
@@ -911,10 +1077,8 @@ function TabBtn({
   return (
     <button
       onClick={onClick}
-      className={`px-5 py-2 text-sm font-semibold transition-colors ${
-        active
-          ? "bg-[#0D1321] text-[#FFEDDF]"
-          : "text-[#86615C] hover:text-[#0D1321]"
+      className={`px-4 sm:px-5 py-2.5 text-sm font-semibold transition-colors ${
+        active ? "bg-[#0D1321] text-[#FFEDDF]" : "text-[#86615C] hover:text-[#0D1321]"
       }`}
     >
       {children}

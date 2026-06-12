@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { gsap, setupGsap, ScrollTrigger, prefersReducedMotion } from "@/components/fx/gsap";
@@ -59,7 +59,7 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current || !trackRef.current) return;
@@ -72,6 +72,23 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
       const images = gsap.utils.toArray<HTMLElement>(".h-card-img", track);
       const cards = gsap.utils.toArray<HTMLElement>(".h-card", track);
       const skewTo = gsap.quickTo(track, "skewX", { duration: 0.4, ease: "power2.out" });
+      const progressSet = progressRef.current
+        ? gsap.quickSetter(progressRef.current, "scaleX")
+        : null;
+
+      // Pozície a settery nacacheované pri refreshi — v onUpdate sa už
+      // z DOM nečíta nič (getBoundingClientRect tu spôsoboval layout
+      // thrashing a trhaný scroll)
+      let vw = window.innerWidth;
+      let total = 0;
+      let centers: number[] = [];
+      let imgSetters: ((v: number) => void)[] = [];
+      const measure = () => {
+        vw = window.innerWidth;
+        total = calc();
+        centers = cards.map((c) => c.offsetLeft + c.offsetWidth / 2);
+        imgSetters = images.map((img) => gsap.quickSetter(img, "xPercent") as (v: number) => void);
+      };
 
       gsap.to(track, {
         x: () => -calc(),
@@ -84,24 +101,24 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onRefresh: measure,
           onUpdate: (self) => {
-            if (progressRef.current) {
-              gsap.set(progressRef.current, { scaleX: self.progress });
+            progressSet?.(self.progress);
+            // index počítadla — priamy zápis do DOM, žiadny re-render
+            if (counterRef.current) {
+              const idx = Math.min(
+                Math.floor((self.progress * total) / (vw * 0.42)),
+                products.length - 1,
+              );
+              counterRef.current.textContent = String(idx + 1).padStart(2, "0");
             }
-            // index počítadla
-            const cardWidth = window.innerWidth * 0.42;
-            setActiveIdx(
-              Math.min(Math.floor((self.progress * calc()) / cardWidth), products.length - 1),
-            );
             if (prefersReducedMotion()) return;
             // skew podľa rýchlosti ťahu
             skewTo(gsap.utils.clamp(-4, 4, self.getVelocity() / 600));
-            // vnútorná parallaxa obrázkov podľa pozície karty na obrazovke
-            const vw = window.innerWidth;
-            for (let i = 0; i < cards.length; i++) {
-              const r = cards[i].getBoundingClientRect();
-              const offset = (r.left + r.width / 2 - vw / 2) / vw; // -0.5 … 0.5
-              gsap.set(images[i], { xPercent: offset * 7 });
+            // vnútorná parallaxa obrázkov — čisto z matematiky transformu
+            const trackX = -self.progress * total;
+            for (let i = 0; i < centers.length; i++) {
+              imgSetters[i]((centers[i] + trackX - vw / 2) / vw * 7);
             }
           },
         },
@@ -175,7 +192,7 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
         {/* Počítadlo */}
         <div className="pointer-events-none absolute right-16 top-14 z-20 text-right">
           <span className="font-display text-5xl font-bold leading-none text-[#FFEDDF]/10">
-            {String(activeIdx + 1).padStart(2, "0")}
+            <span ref={counterRef}>01</span>
           </span>
           <span className="block text-xs tracking-widest text-[#FFEDDF]/20">
             / {String(products.length).padStart(2, "0")}

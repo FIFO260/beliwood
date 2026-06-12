@@ -33,11 +33,15 @@ export default function HeroScene() {
     // bez WebGL (staré GPU, zakázané v prehliadači) sekcia funguje aj bez častíc
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: false,
+        powerPreference: "high-performance",
+      });
     } catch {
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
     mount.appendChild(renderer.domElement);
 
@@ -92,9 +96,9 @@ export default function HeroScene() {
       layers.push({ points, speed, spread });
     };
 
-    makeLayer(420, 0.14, 2, 0.16, 0.8); // popredie — väčšie, rýchlejšie
-    makeLayer(640, 0.09, -2, 0.1, 0.55);
-    makeLayer(900, 0.05, -6, 0.06, 0.35); // pozadie — drobný prach
+    makeLayer(260, 0.14, 2, 0.16, 0.8); // popredie — väčšie, rýchlejšie
+    makeLayer(380, 0.09, -2, 0.1, 0.55);
+    makeLayer(520, 0.05, -6, 0.06, 0.35); // pozadie — drobný prach
 
     const resize = () => {
       const w = mount.clientWidth || 1;
