@@ -4,6 +4,28 @@ import { revalidatePath } from "next/cache";
 import { put, list } from "@vercel/blob";
 import type { Product } from "./products";
 import type { WoodProduct } from "./wood";
+import type { PortfolioItem } from "./portfolio";
+
+export interface HomepageSettings {
+  featuredWoodIds: number[];
+  showcaseProductIds: number[];
+  stats: number[];
+  about: {
+    badge: string;
+    title: string;
+    p1: string;
+    p2: string;
+    link: string;
+    img: string;
+  };
+}
+
+const defaultHomepageSettings: HomepageSettings = {
+  featuredWoodIds: [],
+  showcaseProductIds: [],
+  stats: [10, 5, 100, 200],
+  about: { badge: "", title: "", p1: "", p2: "", link: "", img: "" },
+};
 
 /** Po zmene dát prestav statické stránky, nech verejný web ukáže nový produkt. */
 function revalidatePublic() {
@@ -90,5 +112,26 @@ export async function getWoodProducts(): Promise<WoodProduct[]> {
 
 export async function saveWoodProducts(products: WoodProduct[]): Promise<void> {
   await writeJson("wood.json", products);
+  revalidatePublic();
+}
+
+export async function getPortfolioItems(): Promise<PortfolioItem[]> {
+  return readJson<PortfolioItem[]>("portfolio.json", async () => {
+    const { portfolioItems } = await import("./portfolio");
+    return portfolioItems;
+  });
+}
+
+export async function savePortfolioItems(items: PortfolioItem[]): Promise<void> {
+  await writeJson("portfolio.json", items);
+  revalidatePublic();
+}
+
+export async function getHomepageSettings(): Promise<HomepageSettings> {
+  return readJson<HomepageSettings>("homepage.json", async () => defaultHomepageSettings);
+}
+
+export async function saveHomepageSettings(settings: HomepageSettings): Promise<void> {
+  await writeJson("homepage.json", settings);
   revalidatePublic();
 }

@@ -12,22 +12,20 @@ import HorizontalScroll from "@/components/HorizontalScroll";
 import type { Product } from "@/lib/products";
 import type { WoodProduct } from "@/lib/wood";
 import type { Dictionary } from "@/lib/i18n";
+import type { HomepageSettings } from "@/lib/db";
 
-const statValues = [
-  { value: 10, suffix: "+" },
-  { value: 5, suffix: "" },
-  { value: 100, suffix: "%" },
-  { value: 200, suffix: "+" },
-];
+const STAT_SUFFIXES = ["+", "", "%", "+"];
 
 export default function HomeClient({
   products,
   woodProducts,
   dict,
   lang,
+  settings,
 }: {
   products: Product[];
   woodProducts: WoodProduct[];
+  settings: HomepageSettings;
   dict: Dictionary;
   lang: string;
 }) {
@@ -79,11 +77,33 @@ export default function HomeClient({
   }, []);
 
   const featured = products.slice(0, 3);
-  const showcase = products;
-  const featuredWood = woodProducts.filter((w) => w.inStock).slice(0, 3);
+  const showcase =
+    (settings.showcaseProductIds ?? []).length > 0
+      ? ((settings.showcaseProductIds ?? [])
+          .slice(0, 7)
+          .map((id) => products.find((p) => p.id === id))
+          .filter(Boolean) as Product[])
+      : products;
+  const featuredWood =
+    (settings.featuredWoodIds ?? []).length > 0
+      ? ((settings.featuredWoodIds ?? [])
+          .map((id) => woodProducts.find((w) => w.id === id))
+          .filter(Boolean) as WoodProduct[])
+      : woodProducts.filter((w) => w.inStock).slice(0, 3);
   const statsLabels: string[] = dict.statsLabels as string[];
   const marqueeItems: string[] = dict.marquee as string[];
-  const aboutTitleParts = dict.home.aboutTitle.split("\n");
+  const statValues = (settings.stats ?? [10, 5, 100, 200]).map((value, i) => ({
+    value,
+    suffix: STAT_SUFFIXES[i] ?? "",
+  }));
+  const about = {
+    badge: settings.about?.badge || dict.home.aboutBadge,
+    title: settings.about?.title || dict.home.aboutTitle,
+    p1: settings.about?.p1 || dict.home.aboutP1,
+    p2: settings.about?.p2 || dict.home.aboutP2,
+    link: settings.about?.link || dict.home.aboutLink,
+  };
+  const aboutTitleParts = about.title.split("\n");
 
   return (
     <div ref={rootRef}>
@@ -294,10 +314,11 @@ export default function HomeClient({
             data-clip="inset(0 100% 0 0)"
           >
             <Image
-              src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80"
+              src={settings.about?.img || "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80"}
               alt="Náš ateliér"
               fill
               className="object-cover"
+              unoptimized={!!(settings.about?.img?.startsWith("/uploads/"))}
               sizes="(max-width: 1024px) 100vw, 50vw"
               data-speed="auto"
             />
@@ -308,7 +329,7 @@ export default function HomeClient({
               className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#86615C]"
               data-reveal="fade"
             >
-              {dict.home.aboutBadge}
+              {about.badge}
             </p>
             <h2
               className="font-display text-4xl font-bold leading-tight text-[#0D1321] md:text-5xl"
@@ -318,17 +339,17 @@ export default function HomeClient({
               {aboutTitleParts[1] && <><br />{aboutTitleParts[1]}</>}
             </h2>
             <p className="text-lg leading-relaxed text-[#86615C]" data-reveal="lines" data-stagger="0.05">
-              {dict.home.aboutP1}
+              {about.p1}
             </p>
             <p className="leading-relaxed text-[#86615C]" data-reveal="lines" data-stagger="0.05">
-              {dict.home.aboutP2}
+              {about.p2}
             </p>
             <div className="pt-2" data-reveal="fade">
               <Link
                 href={`/${lang}/kolekcia`}
                 className="link-line is-active inline-flex items-center gap-2 pb-1 text-sm font-semibold text-[#0D1321]"
               >
-                {dict.home.aboutLink}
+                {about.link}
               </Link>
             </div>
           </div>

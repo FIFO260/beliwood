@@ -36,7 +36,7 @@ export default function PageHeader({
           {badge}
         </p>
         <h1
-          className="mb-5 font-display text-5xl font-bold leading-[1.02] text-[#FFEDDF] md:text-7xl"
+          className="mb-5 font-display text-5xl font-bold leading-[1.12] text-[#FFEDDF] md:text-7xl"
           data-reveal="chars"
           data-stagger="0.012"
         >

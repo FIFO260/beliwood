@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "name": "Jedálenský stôl s živou hranou",
+    "img": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=80",
+    "category": "Stôl",
+    "woodSpecies": "Dub",
+    "year": 2024,
+    "description": "Masívna dubová doska s prirodzenou živou hranou, komorovo sušená a olejovaná. Stolovacia plocha pre 8 osôb, nohy z oceľových profilov.",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "name": "Floating police z orechového dreva",
+    "img": "https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=900&q=80",
+    "category": "Polica",
+    "woodSpecies": "Orech",
+    "year": 2024,
+    "description": "Séria troch plávajúcich políc z masívneho orechového dreva. Skryté konzoly, povrch ošetrený prírodným olejom."
+  },
+  {
+    "id": 3,
+    "name": "Kuchynská pracovná plocha",
+    "img": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80",
+    "category": "Kuchyňa",
+    "woodSpecies": "Javor",
+    "year": 2023,
+    "description": "Javorová pracovná plocha na mieru s integrovaným odkvapkávačom. Povrch ošetrený potravinársky bezpečným minerálnym olejom."
+  },
+  {
+    "id": 4,
+    "name": "Záhradná lavica",
+    "img": "https://images.unsplash.com/photo-1597072689227-8882273e8f6a?w=900&q=80",
+    "category": "Lavica",
+    "woodSpecies": "Dub",
+    "year": 2024,
+    "description": "Exteriérová lavica z hrubého dubového dreva s kovanými nohami. Povrchová úprava lodným lakom odolným voči poveternostným vplyvom."
+  },
+  {
+    "id": 6,
+    "name": "Drevená záhradná terasa",
+    "img": "https://images.unsplash.com/photo-1416169607655-0c2b3ce2e1cc?w=900&q=80",
+    "category": "Terasa",
+    "woodSpecies": "Borovica",
+    "year": 2022,
+    "description": "Záhradná terasa z impregnovaného borovicového dreva s plošinou 24 m². Klasická skladba dosiek s dilatačnými škárami."
+  }
+]
