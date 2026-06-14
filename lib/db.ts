@@ -67,7 +67,7 @@ async function readJson<T>(filename: string, fallback: () => Promise<T>): Promis
         url = hit.url;
         blobUrlCache.set(filename, url);
       }
-      const res = await fetch(url, { cache: "no-store" });
+      const res = await fetch(url, { next: { revalidate: 3600 } });
       if (!res.ok) throw new Error(`Blob fetch ${res.status}`);
       return (await res.json()) as T;
     } catch (e) {
