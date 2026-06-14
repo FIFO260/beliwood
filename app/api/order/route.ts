@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { adminEmail, customerEmail, type OrderPayload } from "@/lib/orderEmail";
+import { addOrder } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,10 @@ export async function POST(req: NextRequest) {
     }
 
     const order = body as OrderPayload;
+
+    // uložiť objednávku — nezávisí od e-mailov
+    await addOrder(order);
+
     const resendKey = process.env.RESEND_API_KEY;
     const orderEmail = process.env.ORDER_EMAIL ?? "stolybeliwood@gmail.com";
     // from musí byť na overenej doméne v Resend, inak prejde len e-mail

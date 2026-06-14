@@ -5,6 +5,15 @@ import { put, list } from "@vercel/blob";
 import type { Product } from "./products";
 import type { WoodProduct } from "./wood";
 import type { PortfolioItem } from "./portfolio";
+import type { OrderPayload } from "./orderEmail";
+
+export type OrderStatus = "new" | "confirmed" | "shipped" | "done";
+
+export interface Order extends OrderPayload {
+  id: number;
+  createdAt: string;
+  status: OrderStatus;
+}
 
 export interface HomepageSettings {
   featuredWoodIds: number[];
@@ -134,4 +143,25 @@ export async function getHomepageSettings(): Promise<HomepageSettings> {
 export async function saveHomepageSettings(settings: HomepageSettings): Promise<void> {
   await writeJson("homepage.json", settings);
   revalidatePublic();
+}
+
+export async function getOrders(): Promise<Order[]> {
+  return readJson<Order[]>("orders.json", async () => []);
+}
+
+export async function saveOrders(orders: Order[]): Promise<void> {
+  await writeJson("orders.json", orders);
+}
+
+export async function addOrder(payload: OrderPayload): Promise<Order> {
+  const orders = await getOrders();
+  const maxId = orders.reduce((m, o) => Math.max(m, o.id), 0);
+  const order: Order = {
+    ...payload,
+    id: maxId + 1,
+    createdAt: new Date().toISOString(),
+    status: "new",
+  };
+  await saveOrders([order, ...orders]);
+  return order;
 }

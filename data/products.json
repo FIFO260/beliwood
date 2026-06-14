@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "sku": "BW001DTB",
     "name": "Dubový jedálenský stôl",
     "price": 890,
     "category": "nábytok",
@@ -11,6 +12,7 @@
   },
   {
     "id": 2,
+    "sku": "BW002BSK",
     "name": "Bukové stoličky (2 ks)",
     "price": 340,
     "category": "nábytok",
@@ -21,6 +23,7 @@
   },
   {
     "id": 3,
+    "sku": "BW003NPL",
     "name": "Nástenná polica",
     "price": 185,
     "category": "doplnky",
@@ -31,6 +34,7 @@
   },
   {
     "id": 4,
+    "sku": "BW004OMS",
     "name": "Orechová miska",
     "price": 65,
     "category": "doplnky",
@@ -41,6 +45,7 @@
   },
   {
     "id": 5,
+    "sku": "BW005NCN",
     "name": "Nočný stolík",
     "price": 210,
     "category": "nábytok",
@@ -51,6 +56,7 @@
   },
   {
     "id": 6,
+    "sku": "BW006JLP",
     "name": "Javorový lopár",
     "price": 48,
     "category": "kuchyňa",
@@ -60,13 +66,14 @@
     "dimensions": "38 × 28 × 2 cm"
   },
   {
+    "id": 7,
+    "sku": "BW007STK",
     "name": "stolik",
     "price": 1000,
     "category": "nábytok",
     "img": "/uploads/1780687198734-v7t0jomyde.jpg",
     "description": "sahfkljkdas",
     "material": "BUBISKO",
-    "dimensions": "200X90X23",
-    "id": 7
+    "dimensions": "200X90X23"
   }
 ]

@@ -121,6 +121,16 @@ export default function ProductDetailClient({
             </p>
 
             <div className="border-t border-[#86615C]/20 pt-8 mb-10 space-y-4">
+              {product.sku && (
+                <div className="flex justify-between py-3 border-b border-[#86615C]/10">
+                  <span className="text-xs font-semibold text-[#86615C] tracking-widest uppercase">
+                    SKU
+                  </span>
+                  <span className="text-sm font-mono text-[#86615C]">
+                    {product.sku}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between py-3 border-b border-[#86615C]/10">
                 <span className="text-xs font-semibold text-[#86615C] tracking-widest uppercase">
                   {t.material}

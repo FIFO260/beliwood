@@ -212,6 +212,7 @@ import type { Product } from "./products";
 export function woodToProduct(w: WoodProduct): Product {
   return {
     id: w.id,
+    sku: "",
     name: w.label,
     price: w.price,
     category: "doplnky",

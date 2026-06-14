@@ -7,13 +7,14 @@ import type { Product, Category } from "@/lib/products";
 import type { WoodProduct, WoodSpecies, WoodSurface, WoodState, WoodCategory } from "@/lib/wood";
 import { allSpecies, allStates, allSurfaces, allCategories } from "@/lib/wood";
 import type { PortfolioItem } from "@/lib/portfolio";
-import type { HomepageSettings } from "@/lib/db";
+import type { HomepageSettings, Order, OrderStatus } from "@/lib/db";
 
-type Tab = "products" | "wood" | "portfolio" | "homepage";
+type Tab = "products" | "wood" | "portfolio" | "homepage" | "orders";
 
 // ─── EMPTY FORMS ──────────────────────────────────────────────────────────────
 
 const emptyProduct = (): Omit<Product, "id"> => ({
+  sku: "",
   name: "",
   price: 0,
   category: "nábytok",
@@ -60,6 +61,7 @@ export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [woodProducts, setWoodProducts] = useState<WoodProduct[]>([]);
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [homepageSettings, setHomepageSettings] = useState<HomepageSettings>({
     featuredWoodIds: [],
     showcaseProductIds: [],
@@ -94,7 +96,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (!authed) return;
     let cancelled = false;
-    Promise.all([fetchProducts(), fetchWood(), fetchPortfolio(), fetchHomepageSettings()]).finally(() => {
+    Promise.all([fetchProducts(), fetchWood(), fetchPortfolio(), fetchHomepageSettings(), fetchOrders()]).finally(() => {
       if (!cancelled) setLoading(false);
     });
     return () => {
@@ -126,6 +128,27 @@ export default function AdminPage() {
     if (r.ok) setHomepageSettings(await r.json());
   }
 
+  async function fetchOrders() {
+    const r = await fetch("/api/admin/orders");
+    if (r.status === 401) return setAuthed(false);
+    if (r.ok) setOrders(await r.json());
+  }
+
+  async function handleOrderStatus(id: number, status: OrderStatus) {
+    await fetch(`/api/admin/orders/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    await fetchOrders();
+  }
+
+  async function handleOrderDelete(id: number) {
+    if (!confirm("Vymazať objednávku?")) return;
+    await fetch(`/api/admin/orders/${id}`, { method: "DELETE" });
+    await fetchOrders();
+  }
+
   // ── Open modal ───────────────────────────────────────────────────────────
   function openAdd() {
     if (tab === "products") setProductForm(emptyProduct());
@@ -140,6 +163,7 @@ export default function AdminPage() {
     if (tab === "products") {
       const p = item as Product;
       setProductForm({
+        sku: p.sku ?? "",
         name: p.name,
         price: p.price,
         category: p.category,
@@ -218,6 +242,13 @@ export default function AdminPage() {
     if (!name) {
       setError(isProduct ? "Vyplňte názov produktu" : isWood ? "Vyplňte názov / popis" : "Vyplňte názov projektu");
       return;
+    }
+    if (isProduct) {
+      const sku = productForm.sku.trim();
+      if (!sku || sku.length < 8 || !/^[A-Z0-9]+$/i.test(sku)) {
+        setError("Kód produktu musí mať aspoň 8 znakov (písmená a číslice)");
+        return;
+      }
     }
     if ((isProduct || isWood) && !((isProduct ? productForm.price : woodForm.price) > 0)) {
       setError("Zadajte cenu väčšiu ako 0");
@@ -359,8 +390,15 @@ export default function AdminPage() {
             <TabBtn active={tab === "homepage"} onClick={() => setTab("homepage")}>
               Úvodná stránka
             </TabBtn>
+            <TabBtn active={tab === "orders"} onClick={() => setTab("orders")}>
+              Objednávky {orders.filter(o => o.status === "new").length > 0 && (
+                <span className="ml-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  {orders.filter(o => o.status === "new").length}
+                </span>
+              )}
+            </TabBtn>
           </div>
-          {tab !== "homepage" && (
+          {tab !== "homepage" && tab !== "orders" && (
             <button
               onClick={openAdd}
               className="bg-[#C5D86D] text-[#0D1321] px-5 py-3 text-sm font-semibold hover:bg-[#b8cc55] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
@@ -371,8 +409,15 @@ export default function AdminPage() {
           )}
         </div>
 
-        {/* Homepage settings tab */}
-        {tab === "homepage" ? (
+        {/* Orders tab */}
+        {tab === "orders" ? (
+          <OrdersPanel
+            orders={orders}
+            onStatusChange={handleOrderStatus}
+            onDelete={handleOrderDelete}
+          />
+        ) : /* Homepage settings tab */
+        tab === "homepage" ? (
           <HomepageSettingsPanel
             settings={homepageSettings}
             woodProducts={woodProducts}
@@ -631,7 +676,7 @@ function MobileCard({
   const title = tab === "products" ? p.name : tab === "wood" ? w.label : pf.name;
   const sub =
     tab === "products"
-      ? p.category
+      ? `${p.sku ? p.sku + " · " : ""}${p.category}`
       : tab === "wood"
         ? `${w.species} · ${w.thickness / 10}×${w.width / 10}×${w.length / 10} cm`
         : `${pf.category} · ${pf.year}`;
@@ -728,7 +773,10 @@ function TableRow({
 
       {tab === "products" ? (
         <>
-          <td className="px-4 py-3"><span className="text-xs bg-[#0D1321]/10 text-[#0D1321] px-2 py-1 font-medium">{p.category}</span></td>
+          <td className="px-4 py-3">
+            <span className="text-xs bg-[#0D1321]/10 text-[#0D1321] px-2 py-1 font-medium">{p.category}</span>
+            {p.sku && <span className="ml-2 text-xs font-mono text-[#86615C]">{p.sku}</span>}
+          </td>
           <td className="px-4 py-3 text-sm text-[#86615C]">{p.material}</td>
         </>
       ) : tab === "wood" ? (
@@ -929,7 +977,17 @@ function ProductForm({
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Field label="Kód produktu (SKU) *">
+          <input
+            type="text"
+            value={form.sku}
+            onChange={(e) => set("sku")(e.target.value.toUpperCase())}
+            className={inputCls}
+            placeholder="BW001XYZ"
+            maxLength={20}
+          />
+        </Field>
         <Field label="Názov produktu *">
           <input
             type="text"
@@ -1562,6 +1620,162 @@ function HomepageSettingsPanel({
       >
         {saving ? "Ukladám…" : saved ? "✓ Uložené" : "Uložiť nastavenia"}
       </button>
+    </div>
+  );
+}
+
+// ─── ORDERS PANEL ─────────────────────────────────────────────────────────────
+
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  new: "Nová",
+  confirmed: "Potvrdená",
+  shipped: "Odoslaná",
+  done: "Vybavená",
+};
+
+const STATUS_COLORS: Record<OrderStatus, string> = {
+  new: "bg-red-100 text-red-700",
+  confirmed: "bg-blue-100 text-blue-700",
+  shipped: "bg-yellow-100 text-yellow-700",
+  done: "bg-[#C5D86D]/30 text-[#0D1321]",
+};
+
+const STATUS_NEXT: Record<OrderStatus, OrderStatus | null> = {
+  new: "confirmed",
+  confirmed: "shipped",
+  shipped: "done",
+  done: null,
+};
+
+const STATUS_NEXT_LABEL: Record<OrderStatus, string> = {
+  new: "Potvrdiť",
+  confirmed: "Odoslať",
+  shipped: "Vybaviť",
+  done: "",
+};
+
+function OrdersPanel({
+  orders,
+  onStatusChange,
+  onDelete,
+}: {
+  orders: Order[];
+  onStatusChange: (id: number, status: OrderStatus) => void;
+  onDelete: (id: number) => void;
+}) {
+  const [expanded, setExpanded] = useState<number | null>(null);
+
+  const fmt = (iso: string) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString("sk-SK", { day: "2-digit", month: "2-digit", year: "numeric" })
+      + " " + d.toLocaleTimeString("sk-SK", { hour: "2-digit", minute: "2-digit" });
+  };
+
+  if (orders.length === 0) {
+    return (
+      <div className="bg-white border border-[#86615C]/15 py-20 text-center text-[#86615C] px-4">
+        <p className="text-lg font-medium mb-2">Žiadne objednávky</p>
+        <p className="text-sm opacity-60">Objednávky sa zobrazia hneď po odoslaní zákazníkom.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white border border-[#86615C]/15 divide-y divide-[#86615C]/10">
+      {orders.map((o) => {
+        const isOpen = expanded === o.id;
+        const next = STATUS_NEXT[o.status];
+        return (
+          <div key={o.id}>
+            {/* Hlavička riadku */}
+            <div
+              className="flex items-center gap-3 px-4 py-4 cursor-pointer hover:bg-[#f5ede4]/50 transition-colors"
+              onClick={() => setExpanded(isOpen ? null : o.id)}
+            >
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="font-semibold text-[#0D1321] text-sm">#{o.id} — {o.name}</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 uppercase tracking-wide ${STATUS_COLORS[o.status]}`}>
+                    {STATUS_LABELS[o.status]}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-[#86615C]">
+                  <span>{o.email}</span>
+                  {o.phone && <span>{o.phone}</span>}
+                  <span>{fmt(o.createdAt)}</span>
+                  <span className="font-semibold text-[#0D1321]">{o.total} €</span>
+                </div>
+              </div>
+              <svg
+                className={`w-4 h-4 text-[#86615C] flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+
+            {/* Detail */}
+            {isOpen && (
+              <div className="px-4 pb-5 bg-[#f5ede4]/30 space-y-4">
+                {/* Položky */}
+                <div>
+                  <p className="text-[10px] font-semibold text-[#86615C] uppercase tracking-wider mb-2">Objednané produkty</p>
+                  <ul className="space-y-1">
+                    {o.items.map((item, i) => (
+                      <li key={i} className="flex justify-between text-sm">
+                        <span className="text-[#0D1321]">{item.product.name} × {item.quantity}</span>
+                        <span className="text-[#86615C]">{item.product.price * item.quantity} €</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex justify-between text-sm font-semibold border-t border-[#86615C]/20 mt-2 pt-2">
+                    <span>Celkom</span>
+                    <span>{o.total} €</span>
+                  </div>
+                </div>
+
+                {/* Adresa */}
+                <div>
+                  <p className="text-[10px] font-semibold text-[#86615C] uppercase tracking-wider mb-1">Doručovacia adresa</p>
+                  <p className="text-sm text-[#0D1321]">{o.street}, {o.zip} {o.city}</p>
+                </div>
+
+                {/* Poznámka */}
+                {o.note && (
+                  <div>
+                    <p className="text-[10px] font-semibold text-[#86615C] uppercase tracking-wider mb-1">Poznámka</p>
+                    <p className="text-sm text-[#0D1321]">{o.note}</p>
+                  </div>
+                )}
+
+                {/* Akcie */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {next && (
+                    <button
+                      onClick={() => onStatusChange(o.id, next)}
+                      className="bg-[#0D1321] text-[#FFEDDF] text-xs font-semibold px-4 py-2 hover:bg-[#C5D86D] hover:text-[#0D1321] transition-colors"
+                    >
+                      {STATUS_NEXT_LABEL[o.status]}
+                    </button>
+                  )}
+                  <a
+                    href={`mailto:${o.email}`}
+                    className="border border-[#86615C]/30 text-[#86615C] text-xs font-medium px-4 py-2 hover:border-[#0D1321] hover:text-[#0D1321] transition-colors"
+                  >
+                    Napísať zákazníkovi
+                  </a>
+                  <button
+                    onClick={() => onDelete(o.id)}
+                    className="text-xs text-red-600 border border-red-200 px-4 py-2 hover:bg-red-50 transition-colors ml-auto"
+                  >
+                    Vymazať
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
