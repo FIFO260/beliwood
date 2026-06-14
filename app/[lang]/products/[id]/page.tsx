@@ -3,8 +3,6 @@ import { getProducts } from "@/lib/db";
 import ProductDetailClient from "./ProductDetailClient";
 import { locales, defaultLocale, type Locale } from "@/lib/i18n-config";
 
-export const dynamic = "force-dynamic";
-
 export default async function ProductDetailPage({
   params,
 }: {

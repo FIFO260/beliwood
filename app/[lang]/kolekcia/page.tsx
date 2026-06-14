@@ -3,8 +3,6 @@ import { locales, defaultLocale, type Locale } from "@/lib/i18n-config";
 import { getPortfolioItems } from "@/lib/db";
 import KolekciaClient from "./KolekciaClient";
 
-export const dynamic = "force-dynamic";
-
 export default async function KolekciaPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: rawLang } = await params;
   const lang: Locale = (locales as readonly string[]).includes(rawLang)
