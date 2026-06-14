@@ -113,6 +113,14 @@ export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
                   {t.order}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${lang}/gdpr`}
+                  className="link-line transition-colors hover:text-[#C5D86D]"
+                >
+                  {t.privacy}
+                </Link>
+              </li>
             </ul>
           </div>
 
