@@ -205,6 +205,33 @@
     "order": "Zamówienie",
     "contactTitle": "Kontakt",
     "rights": "Wszystkie prawa zastrzeżone.",
-    "bottomTag": "Ręczna produkcja · Naturalne materiały · Słowacka jakość"
+    "bottomTag": "Ręczna produkcja · Naturalne materiały · Słowacka jakość",
+    "privacy": "Polityka prywatności"
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "updated": "Ostatnia aktualizacja: czerwiec 2026",
+    "intro": "Ta strona opisuje, w jaki sposób BeliWood przetwarza dane osobowe klientów zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).",
+    "s1h": "1. Administrator danych",
+    "s1p": "[IMIĘ I NAZWISKO / NAZWA FIRMY]\n[ADRES]\nE-mail: info@beliwood.sk\n\nUwaga: Dane administratora zostaną uzupełnione po rejestracji działalności.",
+    "s2h": "2. Gromadzone dane osobowe",
+    "s2p": "Podczas składania zamówienia zbieramy następujące dane:",
+    "s2list": "Imię i nazwisko|Adres e-mail|Numer telefonu (opcjonalnie)|Adres dostawy (ulica, miasto, kod pocztowy)|Uwagi do zamówienia (opcjonalnie)",
+    "s3h": "3. Cel i podstawa prawna przetwarzania",
+    "s3p": "Przetwarzamy Twoje dane osobowe wyłącznie w celu realizacji zamówienia, komunikacji z Tobą oraz wypełnienia obowiązków prawnych.\n\nPodstawą prawną przetwarzania jest wykonanie umowy zgodnie z art. 6 ust. 1 lit. b RODO. W przypadkach wymaganych prawem przetwarzamy dane również na podstawie obowiązku prawnego (art. 6 ust. 1 lit. c RODO).",
+    "s4h": "4. Okres przechowywania danych",
+    "s4p": "Przechowujemy dane osobowe przez czas niezbędny do realizacji zamówienia i wypełnienia obowiązków prawnych. Dokumenty księgowe i podatkowe zawierające dane osobowe są przechowywane przez 10 lat zgodnie z obowiązującymi przepisami.",
+    "s5h": "5. Odbiorcy danych",
+    "s5p": "Twoje dane mogą być udostępniane następującym podmiotom przetwarzającym, z którymi zawarliśmy umowy powierzenia przetwarzania danych:",
+    "s5list": "Vercel Inc. – dostawca hostingu i chmurowego przechowywania danych (USA; transfer zabezpieczony standardowymi klauzulami umownymi)|Resend Inc. – usługa wysyłki e-maili transakcyjnych (USA; transfer zabezpieczony standardowymi klauzulami umownymi)",
+    "s5end": "Nie udostępniamy Twoich danych osobowych podmiotom trzecim w celach marketingowych ani innych celach komercyjnych.",
+    "s6h": "6. Twoje prawa",
+    "s6p": "Jako osoba, której dane dotyczą, masz prawo:",
+    "s6list": "Dostępu do swoich danych osobowych (art. 15 RODO)|Sprostowania nieprawidłowych lub niekompletnych danych (art. 16 RODO)|Usunięcia danych (art. 17 RODO)|Ograniczenia przetwarzania (art. 18 RODO)|Przenoszenia danych (art. 20 RODO)|Sprzeciwu wobec przetwarzania (art. 21 RODO)|Wniesienia skargi do właściwego organu nadzorczego",
+    "s6end": "Aby skorzystać ze swoich praw, skontaktuj się z nami: info@beliwood.sk",
+    "s7h": "7. Pliki cookie",
+    "s7p": "Ta witryna używa wyłącznie technicznie niezbędnych plików cookie wymaganych do prawidłowego działania strony (np. zawartość koszyka). Nie używamy plików cookie śledzących, analitycznych ani reklamowych stron trzecich. Twoja zgoda na pliki cookie nie jest wymagana do korzystania z tej strony.",
+    "s8h": "8. Zmiany polityki prywatności",
+    "s8p": "Możemy sporadycznie aktualizować tę politykę w związku ze zmianami w sposobie przetwarzania danych lub obowiązującymi przepisami. Aktualna wersja jest zawsze dostępna na tej stronie."
   }
 }

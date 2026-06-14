@@ -205,6 +205,33 @@
     "order": "Bestellung",
     "contactTitle": "Kontakt",
     "rights": "Alle Rechte vorbehalten.",
-    "bottomTag": "Handgefertigt · Natürliche Materialien · Slowakische Qualität"
+    "bottomTag": "Handgefertigt · Natürliche Materialien · Slowakische Qualität",
+    "privacy": "Datenschutz"
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "updated": "Letzte Aktualisierung: Juni 2026",
+    "intro": "Diese Seite beschreibt, wie BeliWood personenbezogene Daten von Kunden gemäß der Verordnung (EU) 2016/679 des Europäischen Parlaments und des Rates (DSGVO) verarbeitet.",
+    "s1h": "1. Verantwortlicher",
+    "s1p": "[NAME / FIRMENBEZEICHNUNG]\n[ADRESSE]\nE-Mail: info@beliwood.sk\n\nHinweis: Die Angaben zum Verantwortlichen werden nach der Gewerbeanmeldung ergänzt.",
+    "s2h": "2. Erhobene personenbezogene Daten",
+    "s2p": "Bei der Bestellung erheben wir folgende Daten:",
+    "s2list": "Vor- und Nachname|E-Mail-Adresse|Telefonnummer (optional)|Lieferadresse (Straße, Stadt, Postleitzahl)|Bestellnotiz (optional)",
+    "s3h": "3. Zweck und Rechtsgrundlage der Verarbeitung",
+    "s3p": "Wir verarbeiten Ihre personenbezogenen Daten ausschließlich zur Erfüllung Ihrer Bestellung, zur Kommunikation mit Ihnen und zur Erfüllung gesetzlicher Pflichten.\n\nRechtsgrundlage ist die Vertragserfüllung gemäß Art. 6 Abs. 1 lit. b DSGVO. Soweit gesetzlich erforderlich, verarbeiten wir Daten auch auf Basis einer rechtlichen Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO).",
+    "s4h": "4. Speicherdauer",
+    "s4p": "Wir speichern personenbezogene Daten so lange, wie es zur Bestellabwicklung und zur Erfüllung gesetzlicher Pflichten erforderlich ist. Buchhaltungs- und Steuerunterlagen mit personenbezogenen Daten werden gemäß den geltenden Vorschriften 10 Jahre aufbewahrt.",
+    "s5h": "5. Empfänger der Daten",
+    "s5p": "Ihre Daten können an folgende Auftragsverarbeiter weitergegeben werden, mit denen wir Auftragsverarbeitungsverträge abgeschlossen haben:",
+    "s5list": "Vercel Inc. – Hosting-Anbieter und Cloud-Datenspeicher (USA; Übermittlung durch Standardvertragsklauseln gesichert)|Resend Inc. – Dienst für transaktionale E-Mails (USA; Übermittlung durch Standardvertragsklauseln gesichert)",
+    "s5end": "Wir geben Ihre personenbezogenen Daten nicht zu Marketing- oder sonstigen kommerziellen Zwecken an Dritte weiter.",
+    "s6h": "6. Ihre Rechte",
+    "s6p": "Als betroffene Person haben Sie das Recht:",
+    "s6list": "Auf Auskunft über Ihre personenbezogenen Daten (Art. 15 DSGVO)|Auf Berichtigung unrichtiger oder unvollständiger Daten (Art. 16 DSGVO)|Auf Löschung (Art. 17 DSGVO)|Auf Einschränkung der Verarbeitung (Art. 18 DSGVO)|Auf Datenübertragbarkeit (Art. 20 DSGVO)|Auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)|Eine Beschwerde bei der zuständigen Aufsichtsbehörde einzulegen",
+    "s6end": "Zur Ausübung Ihrer Rechte kontaktieren Sie uns bitte unter: info@beliwood.sk",
+    "s7h": "7. Cookies",
+    "s7p": "Diese Website verwendet ausschließlich technisch notwendige Cookies, die für den ordnungsgemäßen Betrieb der Website erforderlich sind (z. B. Warenkorbinhalt). Wir verwenden keine Tracking-, Analyse- oder Werbe-Cookies von Drittanbietern. Ihre Einwilligung zu Cookies ist für den Betrieb dieser Seite nicht erforderlich.",
+    "s8h": "8. Änderungen dieser Datenschutzerklärung",
+    "s8p": "Wir können diese Erklärung gelegentlich aktualisieren, wenn sich die Art der Datenverarbeitung oder die geltenden Rechtsvorschriften ändern. Die aktuelle Version ist stets auf dieser Seite verfügbar."
   }
 }

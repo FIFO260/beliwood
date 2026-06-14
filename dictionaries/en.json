@@ -205,6 +205,33 @@
     "order": "Order",
     "contactTitle": "Contact",
     "rights": "All rights reserved.",
-    "bottomTag": "Handcrafted · Natural materials · Slovak quality"
+    "bottomTag": "Handcrafted · Natural materials · Slovak quality",
+    "privacy": "Privacy Policy"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: June 2026",
+    "intro": "This page describes how BeliWood processes personal data of customers in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR).",
+    "s1h": "1. Data Controller",
+    "s1p": "[NAME / BUSINESS NAME]\n[ADDRESS]\nEmail: info@beliwood.sk\n\nNote: Controller details will be added upon business registration.",
+    "s2h": "2. Personal Data We Collect",
+    "s2p": "When you place an order, we collect the following data:",
+    "s2list": "First and last name|Email address|Phone number (optional)|Delivery address (street, city, postal code)|Order note (optional)",
+    "s3h": "3. Purpose and Legal Basis",
+    "s3p": "We process your personal data solely for the purpose of fulfilling your order, communicating with you, and complying with legal obligations.\n\nThe legal basis for processing is the performance of a contract pursuant to Art. 6(1)(b) GDPR. Where required by law, we also process data on the basis of a legal obligation (Art. 6(1)(c) GDPR).",
+    "s4h": "4. Data Retention",
+    "s4p": "We retain personal data for as long as necessary to fulfil your order and comply with legal obligations. Accounting and tax records containing personal data are retained for 10 years in accordance with applicable legislation.",
+    "s5h": "5. Data Recipients",
+    "s5p": "Your data may be shared with the following processors with whom we have concluded data processing agreements:",
+    "s5list": "Vercel Inc. – hosting provider and cloud data storage (USA; transfer secured by Standard Contractual Clauses)|Resend Inc. – transactional email service (USA; transfer secured by Standard Contractual Clauses)",
+    "s5end": "We do not share your personal data with third parties for marketing or other commercial purposes.",
+    "s6h": "6. Your Rights",
+    "s6p": "As a data subject, you have the right:",
+    "s6list": "To access your personal data (Art. 15 GDPR)|To rectification of inaccurate or incomplete data (Art. 16 GDPR)|To erasure (Art. 17 GDPR)|To restriction of processing (Art. 18 GDPR)|To data portability (Art. 20 GDPR)|To object to processing (Art. 21 GDPR)|To lodge a complaint with the relevant supervisory authority",
+    "s6end": "To exercise your rights, please contact us at: info@beliwood.sk",
+    "s7h": "7. Cookies",
+    "s7p": "This website uses only technically necessary cookies required for the website to function properly (e.g. shopping cart contents). We do not use tracking, analytics, or advertising cookies from third parties. Your consent to cookies is not required for the operation of this site.",
+    "s8h": "8. Changes to This Privacy Policy",
+    "s8p": "We may occasionally update this policy in connection with changes to how we process data or applicable legislation. The current version is always available on this page."
   }
 }

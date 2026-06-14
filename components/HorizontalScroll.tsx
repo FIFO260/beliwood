@@ -140,38 +140,50 @@ export default function HorizontalScroll({ products, t, lang }: { products: Prod
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#C5D86D]">
             {t.badge}
           </p>
-          <h2 className="font-display text-4xl font-bold leading-tight text-[#FFEDDF]">
-            {t.title1}<br />{t.title2}
-          </h2>
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="font-display text-4xl font-bold leading-tight text-[#FFEDDF]">
+              {t.title1}<br />{t.title2}
+            </h2>
+            <span className="mb-1 flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[#FFEDDF]/30">
+              {t.scroll}
+              <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </div>
         </div>
 
-        <div
-          className="flex flex-row gap-4 overflow-x-auto pb-10 pl-6"
-          style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
-        >
-          {products.map((p) => (
-            <Link
-              key={p.id}
-              href={`/${lang}/products/${p.id}`}
-              className="relative block flex-shrink-0 overflow-hidden"
-              style={{ width: "75vw", height: "55vw", scrollSnapAlign: "start" }}
-            >
-              <Image src={p.img} alt="" fill className="object-cover" sizes="75vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/90 via-[#0D1321]/10 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#C5D86D]">
-                  {t.categories[p.category] ?? p.category}
-                </span>
-                <h3 className="mt-0.5 font-display text-base font-bold leading-snug text-[#FFEDDF]">
-                  {p.name}
-                </h3>
-                <span className="font-display text-base font-bold text-[#FFEDDF]">
-                  {p.price} €
-                </span>
-              </div>
-            </Link>
-          ))}
-          <div className="w-2 flex-shrink-0" />
+        <div className="relative">
+          <div
+            className="flex flex-row gap-4 overflow-x-auto pb-10 pl-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
+          >
+            {products.map((p) => (
+              <Link
+                key={p.id}
+                href={`/${lang}/products/${p.id}`}
+                className="relative block flex-shrink-0 overflow-hidden"
+                style={{ width: "72vw", height: "52vw", scrollSnapAlign: "start" }}
+              >
+                <Image src={p.img} alt="" fill className="object-cover" sizes="72vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D1321]/90 via-[#0D1321]/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#C5D86D]">
+                    {t.categories[p.category] ?? p.category}
+                  </span>
+                  <h3 className="mt-0.5 font-display text-base font-bold leading-snug text-[#FFEDDF]">
+                    {p.name}
+                  </h3>
+                  <span className="font-display text-base font-bold text-[#FFEDDF]">
+                    {p.price} €
+                  </span>
+                </div>
+              </Link>
+            ))}
+            <div className="w-4 flex-shrink-0" />
+          </div>
+          {/* pravý fade — naznačuje ďalší obsah */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#0D1321] to-transparent" />
         </div>
       </div>
 

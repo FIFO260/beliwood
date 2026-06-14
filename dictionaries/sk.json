@@ -205,6 +205,33 @@
     "order": "Objednávka",
     "contactTitle": "Kontakt",
     "rights": "Všetky práva vyhradené.",
-    "bottomTag": "Ručná výroba · Prírodné materiály · Slovenská kvalita"
+    "bottomTag": "Ručná výroba · Prírodné materiály · Slovenská kvalita",
+    "privacy": "Ochrana osobných údajov"
+  },
+  "privacy": {
+    "title": "Zásady ochrany osobných údajov",
+    "updated": "Posledná aktualizácia: jún 2026",
+    "intro": "Táto stránka opisuje, ako BeliWood spracúva osobné údaje zákazníkov v súlade s Nariadením Európskeho parlamentu a Rady (EÚ) 2016/679 (GDPR) a zákonom č. 18/2018 Z. z. o ochrane osobných údajov.",
+    "s1h": "1. Prevádzkovateľ",
+    "s1p": "[MENO / OBCHODNÝ NÁZOV]\n[ADRESA]\nE-mail: info@beliwood.sk\n\nPoznámka: Prevádzkovateľ bude doplnený po registrácii podnikania.",
+    "s2h": "2. Aké osobné údaje spracúvame",
+    "s2p": "Pri odoslaní objednávky zbierame nasledujúce údaje:",
+    "s2list": "Meno a priezvisko|E-mailová adresa|Telefónne číslo (nepovinné)|Doručovacia adresa (ulica, mesto, PSČ)|Poznámka k objednávke (nepovinné)",
+    "s3h": "3. Účel a právny základ spracovania",
+    "s3p": "Vaše osobné údaje spracúvame výhradne za účelom vybavenia objednávky, komunikácie s vami a splnenia zákonných povinností.\n\nPrávnym základom spracovania je plnenie zmluvy v zmysle čl. 6 ods. 1 písm. b) GDPR. V prípadoch, kde to vyžaduje zákon, spracúvame údaje aj na základe zákonnej povinnosti (čl. 6 ods. 1 písm. c) GDPR).",
+    "s4h": "4. Doba uchovávania údajov",
+    "s4p": "Osobné údaje uchovávame po dobu nevyhnutnú na vybavenie objednávky a splnenie zákonných povinností. Účtovné a daňové doklady obsahujúce osobné údaje uchovávame 10 rokov v súlade s platnou legislatívou SR.",
+    "s5h": "5. Príjemcovia osobných údajov",
+    "s5p": "Vaše údaje môžu byť sprístupnené nasledujúcim spracovateľom, s ktorými máme uzatvorené zmluvy o spracovaní osobných údajov:",
+    "s5list": "Vercel Inc. – hostingový provider a cloudové uložisko dát (USA; prenos zabezpečený štandardnými zmluvnými doložkami)|Resend Inc. – služba na odosielanie transakčných e-mailov (USA; prenos zabezpečený štandardnými zmluvnými doložkami)",
+    "s5end": "Vaše osobné údaje neposkytujeme tretím stranám na marketingové ani iné komerčné účely.",
+    "s6h": "6. Vaše práva",
+    "s6p": "Ako dotknutá osoba máte právo:",
+    "s6list": "Na prístup k vašim osobným údajom (čl. 15 GDPR)|Na opravu nepresných alebo neúplných údajov (čl. 16 GDPR)|Na vymazanie údajov (čl. 17 GDPR)|Na obmedzenie spracovania (čl. 18 GDPR)|Na prenosnosť údajov (čl. 20 GDPR)|Namietať voči spracovaniu (čl. 21 GDPR)|Podať sťažnosť na Úrad na ochranu osobných údajov SR (www.dataprotection.gov.sk)",
+    "s6end": "Na uplatnenie svojich práv nás kontaktujte e-mailom: info@beliwood.sk",
+    "s7h": "7. Cookies",
+    "s7p": "Táto webová stránka používa iba technicky nevyhnutné súbory cookie potrebné na správnu funkciu webu (napr. obsah košíka). Nepoužívame sledovacie, analytické ani reklamné cookies tretích strán. Váš súhlas s cookies nie je na prevádzku stránky potrebný.",
+    "s8h": "8. Zmeny zásad ochrany osobných údajov",
+    "s8p": "Tieto zásady môžeme príležitostne aktualizovať v súvislosti so zmenami v spôsobe spracovania údajov alebo platnej legislatívy. Aktuálna verzia je vždy dostupná na tejto stránke."
   }
 }

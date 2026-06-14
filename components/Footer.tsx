@@ -16,6 +16,7 @@ interface FooterT {
   contactTitle: string;
   rights: string;
   bottomTag: string;
+  privacy: string;
 }
 
 export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
@@ -141,9 +142,17 @@ export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
           <p>
             © {new Date().getFullYear()} BeliWood. {t.rights}
           </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em]">
-            {t.bottomTag}
-          </p>
+          <div className="flex items-center gap-6">
+            <Link
+              href={`/${lang}/gdpr`}
+              className="transition-colors hover:text-[#C5D86D]"
+            >
+              {t.privacy}
+            </Link>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em]">
+              {t.bottomTag}
+            </p>
+          </div>
         </div>
       </div>
     </footer>
