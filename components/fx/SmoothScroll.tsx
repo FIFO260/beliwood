@@ -55,6 +55,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   // Po navigácii hore + prepočet trigger pozícií pre novú výšku obsahu
   useLayoutEffect(() => {
     const id = window.setTimeout(() => {
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target && window.__smoother) {
+          ScrollTrigger.refresh();
+          window.__smoother.scrollTo(target, false, "top 100px");
+          return;
+        }
+      }
       window.__smoother?.scrollTop(0);
       ScrollTrigger.refresh();
     }, 60);

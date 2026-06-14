@@ -45,13 +45,13 @@ export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
           </p>
           <Magnetic strength={0.12} className="block w-fit max-w-full">
             <a
-              href="mailto:stolybeliwood@gmail.com"
+              href="mailto:info@beliwood.sk"
               className="group block w-fit max-w-full"
               data-reveal="lines"
             >
               <span className="font-display text-3xl font-bold leading-tight text-[#FFEDDF] transition-colors duration-300 group-hover:text-[#C5D86D] sm:text-5xl md:text-7xl break-all sm:break-normal">
-                stolybeliwood<em className="italic text-[#C5D86D]">@</em>
-                gmail.com
+                info<em className="italic text-[#C5D86D]">@</em>
+                beliwood.sk
               </span>
               <span className="mt-4 block h-px w-full origin-left scale-x-0 bg-[#C5D86D] transition-transform duration-500 [transition-timing-function:cubic-bezier(0.76,0,0.24,1)] group-hover:scale-x-100" />
             </a>
@@ -122,10 +122,10 @@ export default function Footer({ t, lang }: { t: FooterT; lang: string }) {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="mailto:stolybeliwood@gmail.com"
+                  href="mailto:info@beliwood.sk"
                   className="link-line transition-colors hover:text-[#C5D86D]"
                 >
-                  stolybeliwood@gmail.com
+                  info@beliwood.sk
                 </a>
               </li>
               <li>+421 901 700 854</li>

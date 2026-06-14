@@ -265,10 +265,10 @@ export default function Navbar({ t, lang }: { t: NavT; lang: string }) {
             Beliwood — Slovensko
           </span>
           <a
-            href="mailto:stolybeliwood@gmail.com"
+            href="mailto:info@beliwood.sk"
             className="m-meta text-sm text-[#C5D86D]"
           >
-            stolybeliwood@gmail.com
+            info@beliwood.sk
           </a>
         </div>
       </div>
