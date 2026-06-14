@@ -19,6 +19,8 @@ export default async function DrevoPage({ params }: { params: Promise<{ lang: st
         species: dict.labels.species,
         states: dict.labels.states,
         surfaces: dict.labels.surfaces,
+        view: dict.labels.view,
+        viewDetail: dict.labels.viewDetail,
       }}
       lang={lang}
     />

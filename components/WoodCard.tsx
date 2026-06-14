@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
-import type { WoodProduct } from "@/lib/wood";
-import type { Product } from "@/lib/products";
+import { woodToProduct, type WoodProduct } from "@/lib/wood";
 
 export interface WoodCardT {
   naturalEdge: string;
@@ -19,24 +19,14 @@ export interface WoodCardT {
   speciesLabels: Record<string, string>;
   stateLabels: Record<string, string>;
   surfaceLabels: Record<string, string>;
+  viewDetail: string;
+  viewLabel: string;
 }
 
 interface Props {
   wood: WoodProduct;
   t: WoodCardT;
-}
-
-function woodToProduct(w: WoodProduct): Product {
-  return {
-    id: w.id,
-    name: w.label,
-    price: w.price,
-    category: "doplnky",
-    img: w.img,
-    description: w.description,
-    material: `Masívny ${w.species}`,
-    dimensions: `${w.thickness / 10} × ${w.width / 10} × ${w.length / 10} cm`,
-  };
+  lang: string;
 }
 
 const stateColors: Record<string, string> = {
@@ -45,8 +35,9 @@ const stateColors: Record<string, string> = {
   Čerstvé: "bg-[#0D1321]/70 text-[#FFEDDF]",
 };
 
-export default function WoodCard({ wood, t }: Props) {
+export default function WoodCard({ wood, t, lang }: Props) {
   const { addItem, openCart } = useCartStore();
+  const href = `/${lang}/drevo/${wood.id}`;
 
   const handleAdd = () => {
     addItem(woodToProduct(wood));
@@ -57,8 +48,14 @@ export default function WoodCard({ wood, t }: Props) {
     <div
       className={`group flex flex-col border border-[#86615C]/15 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-[#86615C]/35 hover:shadow-[0_18px_40px_-18px_rgba(13,19,33,0.25)] ${!wood.inStock ? "opacity-70" : ""}`}
     >
-      {/* Image */}
-      <div className="card-shine relative aspect-[16/10] overflow-hidden bg-[#86615C]/10">
+      {/* Image — klik na detail */}
+      <Link
+        href={href}
+        aria-label={wood.label}
+        className="card-shine relative aspect-[16/10] overflow-hidden bg-[#86615C]/10 block"
+        data-cursor="view"
+        data-cursor-label={t.viewLabel}
+      >
         <Image
           src={wood.img}
           alt=""
@@ -86,12 +83,14 @@ export default function WoodCard({ wood, t }: Props) {
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <h3 className="font-display font-semibold text-[#0D1321] text-base mb-3 leading-snug">
-          {wood.label}
+          <Link href={href} className="transition-colors hover:text-[#86615C]">
+            {wood.label}
+          </Link>
         </h3>
 
         {/* Specs grid */}
@@ -103,7 +102,16 @@ export default function WoodCard({ wood, t }: Props) {
           <Spec label={t.specSurface} value={t.surfaceLabels[wood.surface] ?? wood.surface} className="col-span-2" />
         </div>
 
-        <p className="text-[#86615C] text-xs leading-relaxed mb-5 line-clamp-2">{wood.description}</p>
+        <Link href={href} className="text-[#86615C] text-xs leading-relaxed mb-3 line-clamp-2 block hover:text-[#0D1321] transition-colors">
+          {wood.description}
+        </Link>
+
+        <Link
+          href={href}
+          className="link-line mb-5 inline-flex w-fit items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[#0D1321]"
+        >
+          {t.viewDetail} →
+        </Link>
 
         <div className="mt-auto flex items-center justify-between gap-3">
           <div>

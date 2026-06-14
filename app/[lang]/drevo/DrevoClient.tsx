@@ -97,6 +97,8 @@ export default function DrevoClient({
     species: Record<string, string>;
     states: Record<string, string>;
     surfaces: Record<string, string>;
+    view: string;
+    viewDetail: string;
   };
   lang: string;
 }) {
@@ -190,6 +192,8 @@ export default function DrevoClient({
     speciesLabels: labels.species,
     stateLabels: labels.states,
     surfaceLabels: labels.surfaces,
+    viewDetail: labels.viewDetail,
+    viewLabel: labels.view,
   };
 
   return (
@@ -398,7 +402,7 @@ export default function DrevoClient({
               ) : (
                 <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filtered.map((w) => (
-                    <WoodCard key={w.id} wood={w} t={woodCardT} />
+                    <WoodCard key={w.id} wood={w} t={woodCardT} lang={lang} />
                   ))}
                 </div>
               )}

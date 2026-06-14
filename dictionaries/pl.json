@@ -1,8 +1,48 @@
 {
-  "nav": { "home": "Strona główna", "wood": "Lite drewno", "kolekcia": "Portfolio", "furniture": "Meble", "about": "O nas", "cartLabel": "Otwórz koszyk", "menuLabel": "Menu" },
-  "hero": { "tagline": "Prosto z tartaku · Suszone komorowo", "line1": "Masywne", "line2": "deski", "sub": "Sprzedajemy naturalne drewno — deski, kantówki, żywa krawędź. Dąb, orzech, buk, klon i inne gatunki bezpośrednio od nas.", "ctaWood": "Zobacz drewno", "ctaFurniture": "Meble na wymiar", "scroll": "Przewiń" },
-  "statsLabels": ["Gatunków drewna", "Lat na rynku", "Naturalne materiały", "Zadowolonych klientów"],
-  "marquee": ["Masywne deski", "Żywa krawędź", "Suszone komorowo", "Dąb · Orzech · Buk", "Prosto z tartaku", "Drewno stolarskie", "Czereśnia · Suar · Oliwa", "Suszone powietrzem", "Dąb szypułkowy", "Stoły jadalniowe", "Monolity XXL", "Przekroje", "Kantówki", "Tarcica", "Zegary", "Orzech amerykański", "Korzenie", "Atypowe"],
+  "nav": {
+    "home": "Strona główna",
+    "wood": "Lite drewno",
+    "kolekcia": "Portfolio",
+    "furniture": "Meble",
+    "about": "O nas",
+    "cartLabel": "Otwórz koszyk",
+    "menuLabel": "Menu"
+  },
+  "hero": {
+    "tagline": "Prosto z tartaku · Suszone komorowo",
+    "line1": "Masywne",
+    "line2": "deski",
+    "sub": "Sprzedajemy naturalne drewno — deski, kantówki, żywa krawędź. Dąb, orzech, buk, klon i inne gatunki bezpośrednio od nas.",
+    "ctaWood": "Zobacz drewno",
+    "ctaFurniture": "Meble na wymiar",
+    "scroll": "Przewiń"
+  },
+  "statsLabels": [
+    "Gatunków drewna",
+    "Lat na rynku",
+    "Naturalne materiały",
+    "Zadowolonych klientów"
+  ],
+  "marquee": [
+    "Masywne deski",
+    "Żywa krawędź",
+    "Suszone komorowo",
+    "Dąb · Orzech · Buk",
+    "Prosto z tartaku",
+    "Drewno stolarskie",
+    "Czereśnia · Suar · Oliwa",
+    "Suszone powietrzem",
+    "Dąb szypułkowy",
+    "Stoły jadalniowe",
+    "Monolity XXL",
+    "Przekroje",
+    "Kantówki",
+    "Tarcica",
+    "Zegary",
+    "Orzech amerykański",
+    "Korzenie",
+    "Atypowe"
+  ],
   "home": {
     "woodBadge": "Drewno",
     "woodTitle": "Masywne deski i kantówki",
@@ -24,39 +64,90 @@
     "aboutLink": "Nasza kolekcja →"
   },
   "products": {
-    "badge": "Kolekcja", "title": "Nasze produkty", "sub": "Każdy element wykonany ręcznie z miłością do drewna i rzemiosła.",
-    "all": "Wszystko", "catFurniture": "Meble", "catAccessories": "Akcesoria", "catKitchen": "Kuchnia",
-    "count1": "produkt", "count2": "produkty", "count5": "produktów", "addToCart": "Do koszyka"
+    "badge": "Kolekcja",
+    "title": "Nasze produkty",
+    "sub": "Każdy element wykonany ręcznie z miłością do drewna i rzemiosła.",
+    "all": "Wszystko",
+    "catFurniture": "Meble",
+    "catAccessories": "Akcesoria",
+    "catKitchen": "Kuchnia",
+    "count1": "produkt",
+    "count2": "produkty",
+    "count5": "produktów",
+    "addToCart": "Do koszyka"
   },
   "wood": {
-    "badge": "Lite drewno", "title": "Sprzedaż drewna",
+    "badge": "Lite drewno",
+    "title": "Sprzedaż drewna",
     "sub": "Masywne deski i kantówki bezpośrednio z magazynu. Dębowe, orzechowe, bukowe i inne gatunki — suszone i świeże, w różnych wymiarach.",
-    "filters": "Filtry", "clearAll": "Usuń wszystkie filtry", "clearCount": "Usuń filtry",
-    "noResults": "Brak wyników", "noResultsSub": "Spróbuj zmienić kombinację filtrów.", "resetFilters": "Usuń wszystkie filtry",
-    "inStockOnly": "Tylko w magazynie", "filterState": "Stan drewna", "filterSpecies": "Gatunek",
-    "filterThickness": "Grubość (mm)", "filterSurface": "Wykończenie", "filterAvailability": "Dostępność",
-    "stateAll": "Wszystko", "stateFresh": "Świeże", "stateAirDry": "Suszone powietrzem", "stateKiln": "Suszone komorowo",
-    "naturalEdge": "Żywa krawędź", "inStock": "W magazynie", "onOrder": "Na zamówienie",
-    "filterCategory": "Typ produktu", "filterPrice": "Cena (€)", "priceFrom": "Od", "priceTo": "Do",
-    "availAll": "Wszystko", "availInStock": "W magazynie", "availOnOrder": "Na zamówienie",
-    "specThickness": "Grubość", "specWidth": "Szerokość", "specLength": "Długość", "specMoisture": "Wilgotność", "specSurface": "Powierzchnia",
-    "perPiece": "/ szt", "addToCart": "Do koszyka", "inquire": "Zapytaj",
-    "catHodiny": "Zegary", "catStoly": "Stoły jadalniowe", "catKonferencny": "Stół kawowy",
-    "catPostele": "Łóżka", "catKniznice": "Regały", "catDoskaUmyvadlo": "Blat pod umywalkę",
-    "catForsty": "Deski / tarcica", "catMonolity": "Monolity XXL", "catHranoly": "Kantówki",
-    "catPriecneRezy": "Przekroje / plastry", "catKorene": "Korzenie", "catAtyp": "Atypowe"
+    "filters": "Filtry",
+    "clearAll": "Usuń wszystkie filtry",
+    "clearCount": "Usuń filtry",
+    "noResults": "Brak wyników",
+    "noResultsSub": "Spróbuj zmienić kombinację filtrów.",
+    "resetFilters": "Usuń wszystkie filtry",
+    "inStockOnly": "Tylko w magazynie",
+    "filterState": "Stan drewna",
+    "filterSpecies": "Gatunek",
+    "filterThickness": "Grubość (mm)",
+    "filterSurface": "Wykończenie",
+    "filterAvailability": "Dostępność",
+    "stateAll": "Wszystko",
+    "stateFresh": "Świeże",
+    "stateAirDry": "Suszone powietrzem",
+    "stateKiln": "Suszone komorowo",
+    "naturalEdge": "Żywa krawędź",
+    "inStock": "W magazynie",
+    "onOrder": "Na zamówienie",
+    "filterCategory": "Typ produktu",
+    "filterPrice": "Cena (€)",
+    "priceFrom": "Od",
+    "priceTo": "Do",
+    "availAll": "Wszystko",
+    "availInStock": "W magazynie",
+    "availOnOrder": "Na zamówienie",
+    "specThickness": "Grubość",
+    "specWidth": "Szerokość",
+    "specLength": "Długość",
+    "specMoisture": "Wilgotność",
+    "specSurface": "Powierzchnia",
+    "perPiece": "/ szt",
+    "addToCart": "Do koszyka",
+    "inquire": "Zapytaj",
+    "catHodiny": "Zegary",
+    "catStoly": "Stoły jadalniowe",
+    "catKonferencny": "Stół kawowy",
+    "catPostele": "Łóżka",
+    "catKniznice": "Regały",
+    "catDoskaUmyvadlo": "Blat pod umywalkę",
+    "catForsty": "Deski / tarcica",
+    "catMonolity": "Monolity XXL",
+    "catHranoly": "Kantówki",
+    "catPriecneRezy": "Przekroje / plastry",
+    "catKorene": "Korzenie",
+    "catAtyp": "Atypowe"
   },
   "detail": {
-    "home": "Strona główna", "products": "Produkty", "material": "Materiał", "dimensions": "Wymiary",
-    "production": "Produkcja", "productionValue": "Ręczna, Słowacja",
-    "addToCart": "Do koszyka", "orderNow": "Zamów teraz",
+    "home": "Strona główna",
+    "products": "Produkty",
+    "material": "Materiał",
+    "dimensions": "Wymiary",
+    "production": "Produkcja",
+    "productionValue": "Ręczna, Słowacja",
+    "addToCart": "Do koszyka",
+    "orderNow": "Zamów teraz",
     "delivery": "Dostawa na terenie Słowacji · Wymiary niestandardowe na życzenie",
     "related": "Może Cię zainteresować"
   },
   "cart": {
-    "title": "Koszyk", "close": "Zamknij koszyk", "empty": "Koszyk jest pusty",
-    "browse": "Przeglądaj produkty →", "perPiece": "/ szt", "remove": "Usuń",
-    "total": "Łączna kwota", "toCheckout": "Przejdź do zamówienia"
+    "title": "Koszyk",
+    "close": "Zamknij koszyk",
+    "empty": "Koszyk jest pusty",
+    "browse": "Przeglądaj produkty →",
+    "perPiece": "/ szt",
+    "remove": "Usuń",
+    "total": "Łączna kwota",
+    "toCheckout": "Przejdź do zamówienia"
   },
   "kolekcia": {
     "badge": "Portfolio",
@@ -64,24 +155,56 @@
     "sub": "Każdy element powstał w naszym warsztacie — z drewna, które sami suszymy i sprzedajemy. Rzemiosło widoczne w każdym szczególe.",
     "madeFrom": "Wykonane z"
   },
-  "checkout": { "badge": "Wiążące zamówienie", "title": "Zamówienie" },
+  "checkout": {
+    "badge": "Wiążące zamówienie",
+    "title": "Zamówienie"
+  },
   "success": {
-    "badge": "Zamówienie przyjęte", "title": "Dziękujemy!",
+    "badge": "Zamówienie przyjęte",
+    "title": "Dziękujemy!",
     "sub": "Twoje zamówienie zostało pomyślnie wysłane. Wkrótce skontaktujemy się z Tobą w celu ustalenia szczegółów dostawy.",
     "email": "Sprawdź swoją skrzynkę e-mail — potwierdzenie zamówienia otrzymasz w ciągu kilku minut.",
-    "continue": "Kontynuuj zakupy", "home": "Strona główna"
+    "continue": "Kontynuuj zakupy",
+    "home": "Strona główna"
   },
   "labels": {
     "view": "Zobacz",
-    "species": { "Dub": "Dąb", "Buk": "Buk", "Čerešňa": "Czereśnia", "Orech": "Orzech", "Orech americký": "Orzech amerykański", "Dub bahenný": "Dąb bagienny", "Suar": "Suar", "Oliva": "Oliwka", "Javor": "Klon" },
-    "states": { "Čerstvé": "Świeże", "Vzduchosuché": "Suszone powietrzem", "Sušené v sušičke": "Suszone komorowo" },
-    "surfaces": { "Bez povrchovej úpravy": "Bez wykończenia", "Zrovnané na CNC": "Wyrównane CNC" },
-    "productCategories": { "nábytok": "Meble", "doplnky": "Dodatki", "kuchyňa": "Kuchnia" }
+    "species": {
+      "Dub": "Dąb",
+      "Buk": "Buk",
+      "Čerešňa": "Czereśnia",
+      "Orech": "Orzech",
+      "Orech americký": "Orzech amerykański",
+      "Dub bahenný": "Dąb bagienny",
+      "Suar": "Suar",
+      "Oliva": "Oliwka",
+      "Javor": "Klon"
+    },
+    "states": {
+      "Čerstvé": "Świeże",
+      "Vzduchosuché": "Suszone powietrzem",
+      "Sušené v sušičke": "Suszone komorowo"
+    },
+    "surfaces": {
+      "Bez povrchovej úpravy": "Bez wykończenia",
+      "Zrovnané na CNC": "Wyrównane CNC"
+    },
+    "productCategories": {
+      "nábytok": "Meble",
+      "doplnky": "Dodatki",
+      "kuchyňa": "Kuchnia"
+    },
+    "viewDetail": "Zobacz szczegóły"
   },
   "footer": {
     "tagline": "Ręcznie wytwarzane drewniane meble i akcesoria z naciskiem na jakość materiałów i doskonałość rzemieślniczą.",
-    "navTitle": "Nawigacja", "home": "Strona główna", "products": "Produkty", "about": "O nas", "order": "Zamówienie",
-    "contactTitle": "Kontakt", "rights": "Wszystkie prawa zastrzeżone.",
+    "navTitle": "Nawigacja",
+    "home": "Strona główna",
+    "products": "Produkty",
+    "about": "O nas",
+    "order": "Zamówienie",
+    "contactTitle": "Kontakt",
+    "rights": "Wszystkie prawa zastrzeżone.",
     "bottomTag": "Ręczna produkcja · Naturalne materiały · Słowacka jakość"
   }
 }

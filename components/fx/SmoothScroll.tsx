@@ -37,10 +37,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const smoother = ScrollSmoother.create({
       wrapper: wrapperRef.current!,
       content: contentRef.current!,
-      smooth: 1.1,
+      smooth: 1,
       effects: true,
       smoothTouch: false,
-      normalizeScroll: true,
+      // normalizeScroll preberá celý scroll do JS — na desktope to pridáva
+      // latenciu navyše; necháme natívny scroll a len ho doháňame
+      normalizeScroll: false,
     });
     window.__smoother = smoother;
 

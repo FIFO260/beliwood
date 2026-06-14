@@ -96,9 +96,9 @@ export default function HeroScene() {
       layers.push({ points, speed, spread });
     };
 
-    makeLayer(260, 0.14, 2, 0.16, 0.8); // popredie — väčšie, rýchlejšie
-    makeLayer(380, 0.09, -2, 0.1, 0.55);
-    makeLayer(520, 0.05, -6, 0.06, 0.35); // pozadie — drobný prach
+    makeLayer(170, 0.14, 2, 0.16, 0.8); // popredie — väčšie, rýchlejšie
+    makeLayer(240, 0.09, -2, 0.1, 0.55);
+    makeLayer(320, 0.05, -6, 0.06, 0.35); // pozadie — drobný prach
 
     const resize = () => {
       const w = mount.clientWidth || 1;
@@ -124,29 +124,34 @@ export default function HeroScene() {
 
     const clock = new THREE.Clock();
     let raf = 0;
+    let acc = 0;
+    const FRAME = 1 / 30; // dekoratívny prach stačí na 30 fps — polovičná záťaž
     const animate = () => {
       raf = requestAnimationFrame(animate);
       if (!visible || document.hidden) return;
+      acc += clock.getDelta();
+      if (acc < FRAME) return;
+      acc %= FRAME;
       const t = clock.getElapsedTime();
 
-      mouse.x += (mouse.tx - mouse.x) * 0.04;
-      mouse.y += (mouse.ty - mouse.y) * 0.04;
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
       camera.position.x = mouse.x * 0.9;
       camera.position.y = -mouse.y * 0.6;
       camera.lookAt(0, 0, 0);
 
       for (const layer of layers) {
         const pos = layer.points.geometry.getAttribute("position") as THREE.BufferAttribute;
-        const phases = layer.points.geometry.userData.phases as Float32Array;
         const arr = pos.array as Float32Array;
         const half = layer.spread / 2;
-        for (let i = 0; i < pos.count; i++) {
-          // pomalé stúpanie + sínusové unášanie ako prach vo vzduchu
-          arr[i * 3 + 1] += layer.speed * 0.016;
-          arr[i * 3] += Math.sin(t * 0.5 + phases[i]) * 0.0016;
-          if (arr[i * 3 + 1] > half * 0.7) arr[i * 3 + 1] = -half * 0.7;
+        // len stúpanie + wrap (lacný add/compare); horizontálne hojdanie
+        // rieši transform celej vrstvy, nie per-vertex Math.sin
+        for (let i = 1; i < arr.length; i += 3) {
+          arr[i] += layer.speed * FRAME;
+          if (arr[i] > half * 0.7) arr[i] = -half * 0.7;
         }
         pos.needsUpdate = true;
+        layer.points.position.x = Math.sin(t * 0.3 + layer.spread) * 0.4;
         layer.points.rotation.y = Math.sin(t * 0.05) * 0.04;
       }
 

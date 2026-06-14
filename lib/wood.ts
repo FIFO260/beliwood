@@ -205,3 +205,19 @@ export const allCategories: WoodCategory[] = [
   "hodiny", "stoly", "konferencny-stol", "postele", "kniznice",
   "doska-umyvadlo", "forsty", "monolity", "hranoly", "priecne-rezy", "korene", "atyp",
 ];
+
+import type { Product } from "./products";
+
+/** Drevo ako položka košíka (zdieľané kartou aj detailom). */
+export function woodToProduct(w: WoodProduct): Product {
+  return {
+    id: w.id,
+    name: w.label,
+    price: w.price,
+    category: "doplnky",
+    img: w.img,
+    description: w.description,
+    material: `Masívny ${w.species}`,
+    dimensions: `${w.thickness / 10} × ${w.width / 10} × ${w.length / 10} cm`,
+  };
+}

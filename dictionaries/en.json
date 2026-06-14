@@ -1,8 +1,48 @@
 {
-  "nav": { "home": "Home", "wood": "Solid Wood", "kolekcia": "Portfolio", "furniture": "Furniture", "about": "About", "cartLabel": "Open cart", "menuLabel": "Menu" },
-  "hero": { "tagline": "Direct from sawmill · Kiln dried", "line1": "Solid", "line2": "wood", "sub": "We sell natural wood — boards, beams, live edge. Oak, walnut, beech, maple and more, directly from us.", "ctaWood": "Browse wood", "ctaFurniture": "Custom furniture", "scroll": "Scroll" },
-  "statsLabels": ["Wood species", "Years in business", "Natural materials", "Happy customers"],
-  "marquee": ["Solid boards", "Live edge", "Kiln dried", "Oak · Walnut · Beech", "Direct from sawmill", "Joinery wood", "Cherry · Suar · Olive", "Air dried", "Bog oak", "Dining tables", "Monoliths XXL", "Cross cuts", "Beams", "Planks", "Clocks", "American walnut", "Roots", "Atypical"],
+  "nav": {
+    "home": "Home",
+    "wood": "Solid Wood",
+    "kolekcia": "Portfolio",
+    "furniture": "Furniture",
+    "about": "About",
+    "cartLabel": "Open cart",
+    "menuLabel": "Menu"
+  },
+  "hero": {
+    "tagline": "Direct from sawmill · Kiln dried",
+    "line1": "Solid",
+    "line2": "wood",
+    "sub": "We sell natural wood — boards, beams, live edge. Oak, walnut, beech, maple and more, directly from us.",
+    "ctaWood": "Browse wood",
+    "ctaFurniture": "Custom furniture",
+    "scroll": "Scroll"
+  },
+  "statsLabels": [
+    "Wood species",
+    "Years in business",
+    "Natural materials",
+    "Happy customers"
+  ],
+  "marquee": [
+    "Solid boards",
+    "Live edge",
+    "Kiln dried",
+    "Oak · Walnut · Beech",
+    "Direct from sawmill",
+    "Joinery wood",
+    "Cherry · Suar · Olive",
+    "Air dried",
+    "Bog oak",
+    "Dining tables",
+    "Monoliths XXL",
+    "Cross cuts",
+    "Beams",
+    "Planks",
+    "Clocks",
+    "American walnut",
+    "Roots",
+    "Atypical"
+  ],
   "home": {
     "woodBadge": "Wood",
     "woodTitle": "Solid boards and beams",
@@ -24,39 +64,90 @@
     "aboutLink": "Our collection →"
   },
   "products": {
-    "badge": "Collection", "title": "Our products", "sub": "Every piece handcrafted with love for wood and craftsmanship.",
-    "all": "All", "catFurniture": "Furniture", "catAccessories": "Accessories", "catKitchen": "Kitchen",
-    "count1": "product", "count2": "products", "count5": "products", "addToCart": "Add to cart"
+    "badge": "Collection",
+    "title": "Our products",
+    "sub": "Every piece handcrafted with love for wood and craftsmanship.",
+    "all": "All",
+    "catFurniture": "Furniture",
+    "catAccessories": "Accessories",
+    "catKitchen": "Kitchen",
+    "count1": "product",
+    "count2": "products",
+    "count5": "products",
+    "addToCart": "Add to cart"
   },
   "wood": {
-    "badge": "Solid wood", "title": "Wood for sale",
+    "badge": "Solid wood",
+    "title": "Wood for sale",
     "sub": "Solid boards and beams from stock. Oak, walnut, beech and other species — dried and fresh, in various dimensions.",
-    "filters": "Filters", "clearAll": "Clear all filters", "clearCount": "Clear filters",
-    "noResults": "No results", "noResultsSub": "Try changing the filter combination.", "resetFilters": "Clear all filters",
-    "inStockOnly": "In stock only", "filterState": "Wood state", "filterSpecies": "Species",
-    "filterThickness": "Thickness (mm)", "filterSurface": "Surface finish", "filterAvailability": "Availability",
-    "stateAll": "All", "stateFresh": "Fresh", "stateAirDry": "Air dried", "stateKiln": "Kiln dried",
-    "naturalEdge": "Live edge", "inStock": "In stock", "onOrder": "On order",
-    "filterCategory": "Product type", "filterPrice": "Price (€)", "priceFrom": "From", "priceTo": "To",
-    "availAll": "All", "availInStock": "In stock", "availOnOrder": "On order",
-    "specThickness": "Thickness", "specWidth": "Width", "specLength": "Length", "specMoisture": "Moisture", "specSurface": "Surface",
-    "perPiece": "/ pc", "addToCart": "Add to cart", "inquire": "Inquire",
-    "catHodiny": "Clocks", "catStoly": "Dining tables", "catKonferencny": "Coffee table",
-    "catPostele": "Beds", "catKniznice": "Bookcases", "catDoskaUmyvadlo": "Vanity top",
-    "catForsty": "Planks / boards", "catMonolity": "Monoliths XXL", "catHranoly": "Beams",
-    "catPriecneRezy": "Cross cuts / slices", "catKorene": "Roots", "catAtyp": "Atypical"
+    "filters": "Filters",
+    "clearAll": "Clear all filters",
+    "clearCount": "Clear filters",
+    "noResults": "No results",
+    "noResultsSub": "Try changing the filter combination.",
+    "resetFilters": "Clear all filters",
+    "inStockOnly": "In stock only",
+    "filterState": "Wood state",
+    "filterSpecies": "Species",
+    "filterThickness": "Thickness (mm)",
+    "filterSurface": "Surface finish",
+    "filterAvailability": "Availability",
+    "stateAll": "All",
+    "stateFresh": "Fresh",
+    "stateAirDry": "Air dried",
+    "stateKiln": "Kiln dried",
+    "naturalEdge": "Live edge",
+    "inStock": "In stock",
+    "onOrder": "On order",
+    "filterCategory": "Product type",
+    "filterPrice": "Price (€)",
+    "priceFrom": "From",
+    "priceTo": "To",
+    "availAll": "All",
+    "availInStock": "In stock",
+    "availOnOrder": "On order",
+    "specThickness": "Thickness",
+    "specWidth": "Width",
+    "specLength": "Length",
+    "specMoisture": "Moisture",
+    "specSurface": "Surface",
+    "perPiece": "/ pc",
+    "addToCart": "Add to cart",
+    "inquire": "Inquire",
+    "catHodiny": "Clocks",
+    "catStoly": "Dining tables",
+    "catKonferencny": "Coffee table",
+    "catPostele": "Beds",
+    "catKniznice": "Bookcases",
+    "catDoskaUmyvadlo": "Vanity top",
+    "catForsty": "Planks / boards",
+    "catMonolity": "Monoliths XXL",
+    "catHranoly": "Beams",
+    "catPriecneRezy": "Cross cuts / slices",
+    "catKorene": "Roots",
+    "catAtyp": "Atypical"
   },
   "detail": {
-    "home": "Home", "products": "Products", "material": "Material", "dimensions": "Dimensions",
-    "production": "Production", "productionValue": "Handmade, Slovakia",
-    "addToCart": "Add to cart", "orderNow": "Order now",
+    "home": "Home",
+    "products": "Products",
+    "material": "Material",
+    "dimensions": "Dimensions",
+    "production": "Production",
+    "productionValue": "Handmade, Slovakia",
+    "addToCart": "Add to cart",
+    "orderNow": "Order now",
     "delivery": "Delivery across Slovakia · Custom dimensions on request",
     "related": "You might also like"
   },
   "cart": {
-    "title": "Cart", "close": "Close cart", "empty": "Your cart is empty",
-    "browse": "Browse products →", "perPiece": "/ pc", "remove": "Remove",
-    "total": "Total", "toCheckout": "Go to checkout"
+    "title": "Cart",
+    "close": "Close cart",
+    "empty": "Your cart is empty",
+    "browse": "Browse products →",
+    "perPiece": "/ pc",
+    "remove": "Remove",
+    "total": "Total",
+    "toCheckout": "Go to checkout"
   },
   "kolekcia": {
     "badge": "Portfolio",
@@ -64,24 +155,56 @@
     "sub": "Every piece was made right in our workshop — from the wood we dry and sell ourselves. Craftsmanship visible in every detail.",
     "madeFrom": "Made from"
   },
-  "checkout": { "badge": "Binding order", "title": "Order" },
+  "checkout": {
+    "badge": "Binding order",
+    "title": "Order"
+  },
   "success": {
-    "badge": "Order received", "title": "Thank you!",
+    "badge": "Order received",
+    "title": "Thank you!",
     "sub": "Your order has been successfully sent. We will contact you soon to arrange delivery details.",
     "email": "Check your email inbox — you will receive an order confirmation within a few minutes.",
-    "continue": "Continue shopping", "home": "Home page"
+    "continue": "Continue shopping",
+    "home": "Home page"
   },
   "labels": {
     "view": "View",
-    "species": { "Dub": "Oak", "Buk": "Beech", "Čerešňa": "Cherry", "Orech": "Walnut", "Orech americký": "American walnut", "Dub bahenný": "Bog oak", "Suar": "Suar", "Oliva": "Olive", "Javor": "Maple" },
-    "states": { "Čerstvé": "Fresh", "Vzduchosuché": "Air dried", "Sušené v sušičke": "Kiln dried" },
-    "surfaces": { "Bez povrchovej úpravy": "Unfinished", "Zrovnané na CNC": "CNC flattened" },
-    "productCategories": { "nábytok": "Furniture", "doplnky": "Accessories", "kuchyňa": "Kitchen" }
+    "species": {
+      "Dub": "Oak",
+      "Buk": "Beech",
+      "Čerešňa": "Cherry",
+      "Orech": "Walnut",
+      "Orech americký": "American walnut",
+      "Dub bahenný": "Bog oak",
+      "Suar": "Suar",
+      "Oliva": "Olive",
+      "Javor": "Maple"
+    },
+    "states": {
+      "Čerstvé": "Fresh",
+      "Vzduchosuché": "Air dried",
+      "Sušené v sušičke": "Kiln dried"
+    },
+    "surfaces": {
+      "Bez povrchovej úpravy": "Unfinished",
+      "Zrovnané na CNC": "CNC flattened"
+    },
+    "productCategories": {
+      "nábytok": "Furniture",
+      "doplnky": "Accessories",
+      "kuchyňa": "Kitchen"
+    },
+    "viewDetail": "View detail"
   },
   "footer": {
     "tagline": "Handcrafted wooden furniture and accessories with emphasis on material quality and craftsmanship.",
-    "navTitle": "Navigation", "home": "Home", "products": "Products", "about": "About", "order": "Order",
-    "contactTitle": "Contact", "rights": "All rights reserved.",
+    "navTitle": "Navigation",
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "order": "Order",
+    "contactTitle": "Contact",
+    "rights": "All rights reserved.",
     "bottomTag": "Handcrafted · Natural materials · Slovak quality"
   }
 }
