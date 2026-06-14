@@ -149,7 +149,7 @@ export function customerEmail(o: OrderPayload) {
   <p style="margin:18px 0 0;color:${ROSE};font-size:13px;line-height:1.6;">
     Doručovacia adresa: ${esc(o.street)}, ${esc(o.zip)} ${esc(o.city)}<br>
     V prípade otázok odpovedzte na tento e-mail alebo nás kontaktujte na
-    <a href="mailto:stolybeliwood@gmail.com" style="color:${INK};">stolybeliwood@gmail.com</a>.
+    <a href="mailto:info@beliwood.sk" style="color:${INK};">info@beliwood.sk</a>.
   </p>`;
 
   return {
@@ -164,6 +164,6 @@ export function customerEmail(o: OrderPayload) {
             `- ${i.product.name} (${i.quantity} × ${i.product.price} €) = ${i.product.price * i.quantity} €`
         )
         .join("\n") +
-      `\n\nCelkom: ${o.total} €\n\nBeliWood · stolybeliwood@gmail.com`,
+      `\n\nCelkom: ${o.total} €\n\nBeliWood · info@beliwood.sk`,
   };
 }
